@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og"
+import { MARK_W, MARK_H, MARK_PATH } from "@/components/logo-mark"
 
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
@@ -19,18 +20,25 @@ export default function Image() {
       >
         {/* Top: logo wordmark with new geometric S mark */}
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <div style={{ display: "flex", width: "56px", height: "56px" }}>
-            <svg width="56" height="56" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <div
+            style={{
+              display: "flex",
+              width: "64px",
+              height: "64px",
+              background: "#2d5a1b",
+              borderRadius: "16px",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg width="42" height="42" viewBox={`0 0 ${MARK_W} ${MARK_H}`} xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="og-s" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <linearGradient id="og-s" x1="0" y1="0" x2={MARK_W} y2={MARK_H} gradientUnits="userSpaceOnUse">
                   <stop offset="0" stopColor="#a8e070" />
                   <stop offset="1" stopColor="#6abf47" />
                 </linearGradient>
               </defs>
-              <rect width="100" height="100" rx="24" fill="#2d5a1b" />
-              <path d="M74 34 C74 22 56 22 46 28 C36 34 36 45 52 51" stroke="url(#og-s)" strokeWidth="13" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M26 66 C26 78 44 78 54 72 C64 66 64 55 48 49" stroke="#2d5a1b" strokeWidth="22" fill="none" strokeLinecap="round" />
-              <path d="M26 66 C26 78 44 78 54 72 C64 66 64 55 48 49" stroke="url(#og-s)" strokeWidth="13" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              <path d={MARK_PATH} fill="url(#og-s)" />
             </svg>
           </div>
           <span
