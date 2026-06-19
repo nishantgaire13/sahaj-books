@@ -376,15 +376,121 @@ function PayrollMockup() {
   )
 }
 
+const mobileCards = [
+  {
+    label: "Bookkeeping & VAT",
+    title: "Accurate records and MTD VAT returns, every quarter",
+    desc: "We maintain your records and file your VAT returns in full compliance with HMRC Making Tax Digital requirements.",
+    status: "Q4 2024 — Filed on time",
+    metrics: [
+      { label: "Output VAT", value: "£12,480" },
+      { label: "Input VAT", value: "£3,820" },
+      { label: "Net Due", value: "£8,660" },
+    ],
+    cols: 3,
+  },
+  {
+    label: "Payroll & RTI",
+    title: "Your team paid correctly, your HMRC submissions on time",
+    desc: "We calculate wages, tax and National Insurance and submit RTI reports to HMRC every pay period.",
+    status: "November 2024 — RTI Submitted",
+    metrics: [
+      { label: "Gross Pay", value: "£18,400" },
+      { label: "Net Pay", value: "£13,479" },
+    ],
+    cols: 2,
+  },
+]
+
 export default function Solutions() {
   const isMobile = useIsMobile()
 
+  if (isMobile) {
+    return (
+      <section style={{ background: "white", padding: "56px 0" }} id="solutions">
+        <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 20px" }}>
+
+          {/* Mobile header */}
+          <div style={{ marginBottom: "28px" }}>
+            <div style={{ fontSize: "12px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "14px" }}>
+              Solutions
+            </div>
+            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "30px", color: "#111", lineHeight: 1.1, letterSpacing: "-0.5px", marginBottom: "14px" }}>
+              Handle your compliance end to end
+            </h2>
+            <p style={{ fontSize: "14px", color: "#6b6b6b", lineHeight: 1.7, marginBottom: "18px" }}>
+              Everything your business needs to stay on the right side of HMRC, priced fairly, delivered on time.
+            </p>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" as const }}>
+              {["99% on-time", "ACCA qualified", "40% cheaper"].map((stat) => (
+                <div key={stat} style={{ display: "flex", alignItems: "center", gap: "5px", background: "rgba(106,191,71,0.08)", border: "1px solid rgba(106,191,71,0.2)", borderRadius: "100px", padding: "4px 10px" }}>
+                  <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#6abf47", flexShrink: 0 }} />
+                  <span style={{ fontSize: "11px", fontWeight: 700, color: "#1a3318" }}>{stat}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile solution cards */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            {mobileCards.map((card, i) => (
+              <motion.div
+                key={card.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                style={{ background: "white", borderRadius: "18px", border: "1px solid #e8e8e4", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.05)" }}
+              >
+                {/* Card header */}
+                <div style={{ background: "#1a3318", padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                    {card.label}
+                  </div>
+                  <div style={{ background: "rgba(106,191,71,0.2)", border: "1px solid rgba(106,191,71,0.35)", borderRadius: "100px", padding: "3px 10px", fontSize: "9px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    Active
+                  </div>
+                </div>
+
+                {/* Card body */}
+                <div style={{ padding: "18px" }}>
+                  <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "20px", color: "#111", lineHeight: 1.2, marginBottom: "10px" }}>
+                    {card.title}
+                  </h3>
+                  <p style={{ fontSize: "13px", color: "#6b6b6b", lineHeight: 1.65, marginBottom: "16px" }}>
+                    {card.desc}
+                  </p>
+
+                  {/* Mini data grid */}
+                  <div style={{ display: "grid", gridTemplateColumns: card.cols === 3 ? "1fr 1fr 1fr" : "1fr 1fr", gap: "8px", marginBottom: "14px" }}>
+                    {card.metrics.map((m) => (
+                      <div key={m.label} style={{ background: "#f5f5f0", borderRadius: "10px", padding: "10px 12px" }}>
+                        <div style={{ fontSize: "9px", color: "#aaa", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>{m.label}</div>
+                        <div style={{ fontSize: "15px", fontWeight: 700, color: "#111", fontFamily: "'Instrument Serif', serif" }}>{m.value}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Status row */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingTop: "12px", borderTop: "1px solid #f0f0f0" }}>
+                    <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", flexShrink: 0 }} />
+                    <span style={{ fontSize: "11px", fontWeight: 600, color: "#6b6b6b" }}>{card.status}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
-    <section style={{ background: "white", padding: isMobile ? "60px 0" : "120px 0" }} id="solutions">
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
+    <section style={{ background: "white", padding: "120px 0" }} id="solutions">
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 64px" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: isMobile ? "32px" : "96px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "32px" : "80px", alignItems: "center" }}>
+        <div style={{ marginBottom: "96px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }}>
           <div>
             <div style={{
               fontSize: "13px", fontWeight: 700,
@@ -418,7 +524,7 @@ export default function Solutions() {
             </div>
           </div>
 
-          {!isMobile && <SolutionsIllustration />}
+          <SolutionsIllustration />
         </div>
 
         {/* Solution rows */}
@@ -427,13 +533,13 @@ export default function Solutions() {
             key={sol.label}
             style={{
               display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-              gap: isMobile ? "32px" : "80px",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "80px",
               alignItems: "center",
-              marginBottom: isMobile ? "32px" : "120px",
+              marginBottom: "120px",
             }}
           >
-            <div style={{ order: isMobile ? 1 : (i % 2 === 1 ? 2 : 1) }}>
+            <div style={{ order: i % 2 === 1 ? 2 : 1 }}>
               <div style={{
                 fontSize: "11px", fontWeight: 700,
                 color: "#aaa", textTransform: "uppercase",
@@ -470,11 +576,9 @@ export default function Solutions() {
               </button>
             </div>
 
-            {!isMobile && (
-              <div style={{ order: i % 2 === 1 ? 1 : 2 }}>
-                {sol.mockup === "vat" ? <VATMockup /> : <PayrollMockup />}
-              </div>
-            )}
+            <div style={{ order: i % 2 === 1 ? 1 : 2 }}>
+              {sol.mockup === "vat" ? <VATMockup /> : <PayrollMockup />}
+            </div>
           </div>
         ))}
       </div>

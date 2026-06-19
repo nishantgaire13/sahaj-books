@@ -48,23 +48,23 @@ export default function Stats() {
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
 
         {/* Top label + heading centered */}
-        <div style={{ textAlign: "center", marginBottom: isMobile ? "40px" : "80px" }}>
+        <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "80px" }}>
           <div style={{
             fontSize: "13px", fontWeight: 700, color: "#6abf47",
-            textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "16px",
+            textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "14px",
           }}>
             By the numbers
           </div>
           <h2 style={{
             fontFamily: "'Instrument Serif', serif",
-            fontSize: "clamp(34px, 4vw, 52px)",
+            fontSize: isMobile ? "28px" : "clamp(34px, 4vw, 52px)",
             color: "#111", lineHeight: 1.1,
-            letterSpacing: "-0.5px", marginBottom: "16px",
+            letterSpacing: "-0.5px", marginBottom: "12px",
           }}>
             Built for UK businesses,<br />delivered from Kathmandu
           </h2>
           <p style={{
-            fontSize: "16px", color: "#6b6b6b",
+            fontSize: isMobile ? "14px" : "16px", color: "#6b6b6b",
             lineHeight: 1.7, maxWidth: "480px", margin: "0 auto",
           }}>
             Remote delivery at a fraction of UK firm prices, with the same accuracy and compliance standards your business deserves.
@@ -77,7 +77,7 @@ export default function Stats() {
           gap: "1px", background: "#e8e8e4",
           borderRadius: "20px", overflow: "hidden",
           border: "1px solid #e8e8e4",
-          marginBottom: isMobile ? "0" : "64px",
+          marginBottom: isMobile ? "20px" : "64px",
         }}>
           {stats.map((stat, i) => (
             <motion.div
@@ -89,29 +89,99 @@ export default function Stats() {
               whileHover={{ backgroundColor: "#f0fae8" }}
               style={{
                 background: "white",
-                padding: isMobile ? "24px 16px" : "40px 32px",
+                padding: isMobile ? "28px 16px" : "40px 32px",
                 textAlign: "center",
               }}
             >
               <div style={{
                 fontFamily: "'Instrument Serif', serif",
-                fontSize: isMobile ? "40px" : "56px", color: "#1a3318",
-                lineHeight: 1, marginBottom: "12px",
+                fontSize: isMobile ? "44px" : "56px", color: "#1a3318",
+                lineHeight: 1, marginBottom: "10px",
               }}>
                 <CountUp target={stat.num} suffix={stat.suffix} />
               </div>
               <div style={{
-                fontSize: "14px", fontWeight: 700,
-                color: "#111", marginBottom: "4px",
+                fontSize: isMobile ? "12px" : "14px", fontWeight: 700,
+                color: "#111", marginBottom: "3px",
               }}>
                 {stat.label}
               </div>
-              <div style={{ fontSize: "12px", color: "#aaa" }}>
+              <div style={{ fontSize: isMobile ? "11px" : "12px", color: "#aaa", lineHeight: 1.4 }}>
                 {stat.sub}
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* Bottom — mobile version */}
+        {isMobile && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "2px" }}>
+              Recent filings
+            </div>
+            {filings.map((f, i) => (
+              <motion.div
+                key={f.label}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                style={{ background: "#f5f5f0", borderRadius: "12px", padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", border: "1px solid #e8e8e4" }}
+              >
+                <div>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "3px" }}>{f.label}</div>
+                  <div style={{ fontSize: "13px", fontWeight: 600, color: "#111" }}>{f.detail}</div>
+                </div>
+                <div style={{ background: "#1a3318", borderRadius: "100px", padding: "4px 12px", fontSize: "10px", fontWeight: 700, color: "#6abf47", whiteSpace: "nowrap" as const }}>
+                  {f.status}
+                </div>
+              </motion.div>
+            ))}
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              style={{ background: "linear-gradient(135deg, #1a3318 0%, #2d5a1b 100%)", borderRadius: "16px", padding: "22px", marginTop: "4px" }}
+            >
+              <div style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Average client saving</div>
+              <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "44px", color: "white", lineHeight: 1, marginBottom: "4px" }}>£2,400</div>
+              <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", marginBottom: "20px" }}>Per year vs typical UK firm</div>
+
+              <div style={{ marginBottom: "10px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
+                  <span style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.6)" }}>SahajBooks</span>
+                  <span style={{ fontSize: "12px", fontWeight: 700, color: "#6abf47" }}>£1,200/yr</span>
+                </div>
+                <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "100px", height: "5px", overflow: "hidden" }}>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "35%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.3 }}
+                    style={{ height: "100%", background: "#6abf47", borderRadius: "100px" }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
+                  <span style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.6)" }}>Typical UK firm</span>
+                  <span style={{ fontSize: "12px", fontWeight: 700, color: "rgba(255,255,255,0.5)" }}>£3,600/yr</span>
+                </div>
+                <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "100px", height: "5px", overflow: "hidden" }}>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    style={{ height: "100%", background: "rgba(255,255,255,0.2)", borderRadius: "100px" }}
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
 
         {/* Bottom — two columns (desktop only) */}
         {!isMobile && <div style={{
