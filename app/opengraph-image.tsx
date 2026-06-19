@@ -47,10 +47,11 @@ export default function Image() {
           </span>
         </div>
 
-        {/* Middle: headline */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        {/* Middle: headline — each div has one child only (Satori rule) */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           <div
             style={{
+              display: "flex",
               fontSize: "78px",
               fontWeight: 800,
               color: "white",
@@ -58,14 +59,27 @@ export default function Image() {
               letterSpacing: "-2px",
             }}
           >
-            UK Accounting &amp;{" "}
-            <span style={{ color: "#a8e070" }}>Bookkeeping</span>
+            UK Accounting &amp; Bookkeeping
           </div>
           <div
             style={{
-              fontSize: "28px",
-              color: "rgba(255,255,255,0.55)",
+              display: "flex",
+              fontSize: "36px",
+              fontWeight: 800,
+              color: "#a8e070",
+              lineHeight: 1.05,
+              letterSpacing: "-1px",
+            }}
+          >
+            for UK Businesses
+          </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: "26px",
+              color: "rgba(255,255,255,0.5)",
               fontWeight: 400,
+              marginTop: "16px",
             }}
           >
             Payroll · VAT Returns · Corporation Tax · Year-End Accounts
@@ -74,24 +88,48 @@ export default function Image() {
 
         {/* Bottom: trust pills */}
         <div style={{ display: "flex", gap: "16px" }}>
-          {["ACCA Qualified", "40% cheaper than UK firms", "Reply within 24 hours"].map(
-            (label) => (
-              <div
-                key={label}
-                style={{
-                  background: "rgba(106,191,71,0.12)",
-                  border: "1px solid rgba(106,191,71,0.35)",
-                  borderRadius: "100px",
-                  padding: "10px 26px",
-                  fontSize: "20px",
-                  color: "#6abf47",
-                  fontWeight: 600,
-                }}
-              >
-                {label}
-              </div>
-            )
-          )}
+          <div
+            style={{
+              display: "flex",
+              background: "rgba(106,191,71,0.12)",
+              border: "1px solid rgba(106,191,71,0.35)",
+              borderRadius: "100px",
+              padding: "10px 26px",
+              fontSize: "20px",
+              color: "#6abf47",
+              fontWeight: 600,
+            }}
+          >
+            ACCA Qualified
+          </div>
+          <div
+            style={{
+              display: "flex",
+              background: "rgba(106,191,71,0.12)",
+              border: "1px solid rgba(106,191,71,0.35)",
+              borderRadius: "100px",
+              padding: "10px 26px",
+              fontSize: "20px",
+              color: "#6abf47",
+              fontWeight: 600,
+            }}
+          >
+            40% cheaper than UK firms
+          </div>
+          <div
+            style={{
+              display: "flex",
+              background: "rgba(106,191,71,0.12)",
+              border: "1px solid rgba(106,191,71,0.35)",
+              borderRadius: "100px",
+              padding: "10px 26px",
+              fontSize: "20px",
+              color: "#6abf47",
+              fontWeight: 600,
+            }}
+          >
+            Reply within 24 hours
+          </div>
         </div>
       </div>
     ),
