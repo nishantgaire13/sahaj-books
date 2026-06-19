@@ -267,7 +267,7 @@ export default function PricingPage() {
             </div>
 
             {isMobile ? (
-              <div style={{ background: "white", borderRadius: "16px", overflow: "hidden", border: "1px solid #e8e8e4", marginBottom: "48px" }}>
+              <div style={{ background: "white", borderRadius: "16px", border: "1px solid #e8e8e4", marginBottom: "48px", overflow: "hidden" }}>
                 {services.map((s, i) => (
                   <motion.div
                     key={s.name}
@@ -277,7 +277,7 @@ export default function PricingPage() {
                     transition={{ delay: i * 0.05 }}
                     style={{
                       display: "flex", alignItems: "center", gap: "14px",
-                      padding: "15px 16px",
+                      padding: i === services.length - 1 ? "15px 16px 20px" : "15px 16px",
                       borderBottom: i < services.length - 1 ? "1px solid rgba(0,0,0,0.05)" : "none",
                     }}
                   >
@@ -338,39 +338,46 @@ export default function PricingPage() {
             </div>
 
             {isMobile ? (
-              <div style={{ background: "white", borderRadius: "20px", overflow: "hidden", border: "1px solid #e8e8e4", marginBottom: "32px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px", marginBottom: "32px" }}>
                 {plans.map((plan, i) => (
-                  <div key={plan.name} style={{
-                    padding: "20px 18px",
-                    borderBottom: i < plans.length - 1 ? `1px solid ${plan.highlight ? "rgba(255,255,255,0.1)" : "#e8e8e4"}` : "none",
-                    background: plan.highlight ? "#1a3318" : "white",
-                    position: "relative",
-                  }}>
+                  <motion.div
+                    key={plan.name}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08 }}
+                    style={{
+                      background: plan.highlight ? "#1a3318" : "white",
+                      borderRadius: "14px",
+                      padding: "14px 10px 16px",
+                      border: plan.highlight ? "2px solid rgba(106,191,71,0.5)" : "1px solid #e8e8e4",
+                      position: "relative",
+                      display: "flex", flexDirection: "column" as const,
+                    }}
+                  >
                     {plan.highlight && (
-                      <div style={{ position: "absolute", top: "16px", right: "14px", background: "#6abf47", color: "white", fontSize: "9px", fontWeight: 700, padding: "3px 10px", borderRadius: "100px", textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>
+                      <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#6abf47", color: "white", fontSize: "8px", fontWeight: 700, padding: "2px 8px", borderRadius: "100px", whiteSpace: "nowrap" as const, letterSpacing: "0.04em" }}>
                         Popular
                       </div>
                     )}
-                    <div style={{ fontSize: "10px", fontWeight: 700, color: plan.highlight ? "rgba(255,255,255,0.35)" : "#aaa", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: "5px" }}>{plan.name}</div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px", marginBottom: "10px" }}>
-                      <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "34px", color: plan.highlight ? "white" : "#111", lineHeight: 1 }}>{plan.price}</span>
-                      <span style={{ fontSize: "12px", color: plan.highlight ? "rgba(255,255,255,0.3)" : "#aaa" }}>/mo + VAT</span>
-                    </div>
-                    <div style={{ display: "flex", flexWrap: "wrap" as const, gap: "6px", marginBottom: "14px" }}>
+                    <div style={{ fontSize: "8px", fontWeight: 700, color: plan.highlight ? "rgba(255,255,255,0.4)" : "#aaa", textTransform: "uppercase" as const, letterSpacing: "0.08em", marginBottom: "6px" }}>{plan.name}</div>
+                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "22px", color: plan.highlight ? "white" : "#111", lineHeight: 1, marginBottom: "2px" }}>{plan.price}</div>
+                    <div style={{ fontSize: "9px", color: plan.highlight ? "rgba(255,255,255,0.3)" : "#aaa", marginBottom: "10px" }}>/mo + VAT</div>
+                    <div style={{ flex: 1, marginBottom: "10px", display: "flex", flexDirection: "column" as const, gap: "5px" }}>
                       {plan.includes.map((f) => (
-                        <span key={f} style={{ fontSize: "11px", color: plan.highlight ? "rgba(255,255,255,0.65)" : "#6b6b6b", background: plan.highlight ? "rgba(255,255,255,0.08)" : "#f5f5f0", padding: "3px 9px", borderRadius: "100px", border: `1px solid ${plan.highlight ? "rgba(255,255,255,0.1)" : "#e8e8e4"}` }}>
-                          {f}
-                        </span>
+                        <div key={f} style={{ display: "flex", alignItems: "flex-start", gap: "4px" }}>
+                          <svg style={{ flexShrink: 0, marginTop: "2px" }} width="8" height="8" viewBox="0 0 9 9" fill="none" stroke="#6abf47" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 4.5l2 2 4-4"/></svg>
+                          <span style={{ fontSize: "9px", color: plan.highlight ? "rgba(255,255,255,0.65)" : "#6b6b6b", lineHeight: 1.4 }}>{f}</span>
+                        </div>
                       ))}
                     </div>
                     <a href="/contact" style={{
                       display: "block", textAlign: "center" as const,
-                      background: plan.highlight ? "#6abf47" : "#f0fae8",
-                      color: plan.highlight ? "white" : "#1a3318",
-                      fontWeight: 700, fontSize: "13px",
-                      padding: "11px", borderRadius: "10px", textDecoration: "none",
-                    }}>Get started</a>
-                  </div>
+                      background: plan.highlight ? "#6abf47" : "#1a3318",
+                      color: "white", fontWeight: 700, fontSize: "10px",
+                      padding: "8px 4px", borderRadius: "8px", textDecoration: "none",
+                    }}>Start</a>
+                  </motion.div>
                 ))}
               </div>
             ) : (

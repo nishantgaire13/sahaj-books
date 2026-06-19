@@ -62,18 +62,18 @@ export default function CTA() {
 
           <h2 style={{
             fontFamily: "'Instrument Serif', serif",
-            fontSize: "clamp(42px, 6vw, 72px)",
-            color: "white", lineHeight: 1.05,
-            letterSpacing: "-1px", marginBottom: "24px",
+            fontSize: isMobile ? "clamp(30px, 8vw, 38px)" : "clamp(42px, 6vw, 72px)",
+            color: "white", lineHeight: 1.1,
+            letterSpacing: isMobile ? "-0.5px" : "-1px", marginBottom: isMobile ? "16px" : "24px",
           }}>
             Simplifying compliance<br />
             for <span style={{ color: "#a8e070", fontStyle: "italic" }}>growing businesses</span>
           </h2>
 
           <p style={{
-            fontSize: "18px", color: "rgba(255,255,255,0.5)",
+            fontSize: isMobile ? "14px" : "18px", color: "rgba(255,255,255,0.5)",
             lineHeight: 1.7, marginBottom: isMobile ? "28px" : "48px",
-            maxWidth: "520px", margin: `0 auto ${isMobile ? "28px" : "48px"}`,
+            maxWidth: "520px", margin: `0 auto ${isMobile ? "24px" : "48px"}`,
           }}>
             Join UK businesses already working with SahajBooks. Clean books, zero stress, fair pricing.
           </p>
@@ -146,29 +146,41 @@ export default function CTA() {
           </div>
 
           {/* Trust row */}
-          <div style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            gap: "32px", marginTop: isMobile ? "36px" : "64px", flexWrap: "wrap",
-          }}>
-            {[
-              "No contract required",
-              "ACCA qualified team",
-              "Reply within 24 hours",
-            ].map((item) => (
-              <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <div style={{
-                  width: "16px", height: "16px", borderRadius: "50%",
-                  background: "rgba(106,191,71,0.2)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
+          {isMobile ? (
+            <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "28px", flexWrap: "wrap" as const }}>
+              {["No contract", "ACCA qualified", "24h response"].map((item) => (
+                <div key={item} style={{
+                  display: "flex", alignItems: "center", gap: "5px",
+                  background: "rgba(106,191,71,0.08)",
+                  border: "1px solid rgba(106,191,71,0.2)",
+                  borderRadius: "100px", padding: "5px 12px",
                 }}>
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="#6abf47" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1.5 4l1.5 1.5 3-3"/>
-                  </svg>
+                  <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#6abf47", flexShrink: 0 }} />
+                  <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.55)", fontWeight: 600 }}>{item}</span>
                 </div>
-                <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", fontWeight: 500 }}>{item}</span>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "center",
+              gap: "32px", marginTop: "64px", flexWrap: "wrap" as const,
+            }}>
+              {["No contract required", "ACCA qualified team", "Reply within 24 hours"].map((item) => (
+                <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <div style={{
+                    width: "16px", height: "16px", borderRadius: "50%",
+                    background: "rgba(106,191,71,0.2)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="#6abf47" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M1.5 4l1.5 1.5 3-3"/>
+                    </svg>
+                  </div>
+                  <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", fontWeight: 500 }}>{item}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </motion.div>
       </div>
     </section>

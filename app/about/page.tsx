@@ -5,11 +5,6 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { useIsMobile } from "@/hooks/use-mobile"
 
-const team = [
-  { initials: "N", name: "Nishant Gaire", role: "Co-founder", bg: "#1a3318", desc: "Specialises in UK corporation tax, year-end accounts and financial reporting." },
-  { initials: "A", name: "Aashish Dhakal", role: "Co-founder", bg: "#2d5a1b", desc: "Specialises in payroll, VAT returns and bookkeeping for UK small businesses." },
-]
-
 const values = [
   { icon: "⏱", title: "Always on time", desc: "We have never missed a filing deadline. Every submission is tracked and completed ahead of schedule." },
   { icon: "💬", title: "24 hour response", desc: "Every email gets a reply within 24 hours. No chasing, no waiting, no frustration." },
@@ -147,49 +142,19 @@ export default function AboutPage() {
 
         {/* Who we are */}
         <section style={{ padding: isMobile ? "24px 0 48px" : "60px 0 80px", background: "white" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "32px" : "48px", alignItems: "center" }}>
-              <FloatingCard delay={0}>
-                <div style={{ fontSize: "13px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "16px" }}>Who we are</div>
-                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "28px" : "36px", color: "#111", marginBottom: "20px", lineHeight: 1.2 }}>
-                  A small team with a big commitment
-                </h2>
-                <p style={{ fontSize: "15px", color: "#6b6b6b", lineHeight: 1.8, marginBottom: "16px" }}>
-                  We are a small team of ACCA qualified accounting professionals based in Kathmandu, Nepal. We specialise in UK compliance including payroll, VAT, corporation tax and year-end accounts.
-                </p>
-                <p style={{ fontSize: "15px", color: "#6b6b6b", lineHeight: 1.8 }}>
-                  Remote delivery means lower overhead for us and lower prices for you. Every file is securely handled, every deadline is tracked, and every submission is made on time.
-                </p>
-              </FloatingCard>
-
-              <FloatingCard delay={0.15}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                  {team.map((member) => (
-                    <motion.div
-                      key={member.name}
-                      whileHover={{ x: 4 }}
-                      style={{
-                        background: "#f5f5f0", borderRadius: "16px",
-                        padding: "20px 24px", border: "1px solid #e8e8e4",
-                        display: "flex", alignItems: "flex-start", gap: "16px",
-                      }}
-                    >
-                      <div style={{
-                        width: "48px", height: "48px", borderRadius: "50%",
-                        background: member.bg,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        fontSize: "18px", fontWeight: 700, color: "white", flexShrink: 0,
-                      }}>{member.initials}</div>
-                      <div>
-                        <div style={{ fontSize: "15px", fontWeight: 700, color: "#111", marginBottom: "2px" }}>{member.name}</div>
-                        <div style={{ fontSize: "12px", color: "#6abf47", fontWeight: 600, marginBottom: "6px" }}>{member.role}</div>
-                        <div style={{ fontSize: "13px", color: "#6b6b6b", lineHeight: 1.6 }}>{member.desc}</div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </FloatingCard>
-            </div>
+          <div style={{ maxWidth: "700px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
+            <FloatingCard delay={0}>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "16px" }}>Who we are</div>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "28px" : "36px", color: "#111", marginBottom: "20px", lineHeight: 1.2 }}>
+                A small team with a big commitment
+              </h2>
+              <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#6b6b6b", lineHeight: 1.8, marginBottom: "16px" }}>
+                We are a small team of ACCA qualified accounting professionals based in Kathmandu, Nepal. We specialise in UK compliance including payroll, VAT, corporation tax and year-end accounts.
+              </p>
+              <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#6b6b6b", lineHeight: 1.8 }}>
+                Remote delivery means lower overhead for us and lower prices for you. Every file is securely handled, every deadline is tracked, and every submission is made on time.
+              </p>
+            </FloatingCard>
           </div>
         </section>
 
@@ -213,7 +178,7 @@ export default function AboutPage() {
                     transition={{ delay: i * 0.08 }}
                     style={{
                       display: "flex", alignItems: "flex-start", gap: "14px",
-                      padding: "16px 18px",
+                      padding: i === values.length - 1 ? "16px 18px 22px" : "16px 18px",
                       borderBottom: i < values.length - 1 ? "1px solid #e8e8e4" : "none",
                     }}
                   >
