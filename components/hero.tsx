@@ -123,6 +123,43 @@ export default function Hero() {
               Trusted by UK businesses
             </motion.span>
           </div>
+
+          {/* Mobile service cards */}
+          {isMobile && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "28px" }}
+            >
+              {[
+                { emoji: "💼", title: "Payroll & RTI", status: "Filed on time" },
+                { emoji: "📋", title: "VAT Returns", status: "MTD compliant" },
+                { emoji: "📊", title: "Bookkeeping", status: "Always current" },
+                { emoji: "📑", title: "Corporation Tax", status: "CT600 handled" },
+              ].map((card, i) => (
+                <motion.div
+                  key={card.title}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.0 + i * 0.08 }}
+                  style={{
+                    background: "rgba(255,255,255,0.07)",
+                    borderRadius: "14px",
+                    padding: "14px",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                  }}
+                >
+                  <div style={{ fontSize: "20px", marginBottom: "8px" }}>{card.emoji}</div>
+                  <div style={{ fontSize: "12px", fontWeight: 700, color: "white", marginBottom: "8px", lineHeight: 1.3 }}>{card.title}</div>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "rgba(106,191,71,0.15)", borderRadius: "100px", padding: "3px 8px" }}>
+                    <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#6abf47" }} />
+                    <span style={{ fontSize: "10px", fontWeight: 700, color: "#6abf47" }}>{card.status}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </motion.div>
 
         {/* RIGHT — dashboard (hidden on mobile) */}

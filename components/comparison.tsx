@@ -74,30 +74,47 @@ export default function Comparison() {
         </div>
 
         {isMobile ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ background: "white", borderRadius: "16px", overflow: "hidden", border: "1px solid #e8e8e4", boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}
+          >
+            {/* Header */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", background: "#1a3318" }}>
+              <div style={{ padding: "10px 8px", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>Feature</div>
+              <div style={{ padding: "10px 8px", fontSize: "9px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, background: "rgba(106,191,71,0.12)", display: "flex", alignItems: "center", gap: "4px" }}>
+                <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#6abf47", flexShrink: 0 }} />
+                SahajBooks
+              </div>
+              <div style={{ padding: "10px 8px", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>UK Firm</div>
+            </div>
             {rows.map((row, i) => (
-              <motion.div
+              <div
                 key={row.feature}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                style={{ background: "white", borderRadius: "14px", padding: "16px 18px", border: "1px solid #e8e8e4" }}
+                style={{
+                  display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+                  borderBottom: i < rows.length - 1 ? "1px solid #e8e8e4" : "none",
+                  background: i % 2 === 0 ? "white" : "#fafafa",
+                }}
               >
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px" }}>{row.feature}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <Check />
-                    <span style={{ fontSize: "13px", fontWeight: 600, color: "#1a3318" }}>{row.ours}</span>
+                <div style={{ padding: "9px 8px", fontSize: "10px", fontWeight: 600, color: "#111", lineHeight: 1.4 }}>{row.feature}</div>
+                <div style={{ padding: "9px 8px", background: i % 2 === 0 ? "rgba(106,191,71,0.03)" : "rgba(106,191,71,0.05)", display: "flex", alignItems: "flex-start", gap: "5px" }}>
+                  <div style={{ width: "13px", height: "13px", borderRadius: "50%", background: "rgba(106,191,71,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "1px" }}>
+                    <svg width="7" height="7" viewBox="0 0 10 10" fill="none" stroke="#6abf47" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 5l2 2 4-4"/></svg>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <Cross />
-                    <span style={{ fontSize: "12px", color: "#aaa" }}>{row.theirs}</span>
-                  </div>
+                  <span style={{ fontSize: "10px", fontWeight: 600, color: "#1a3318", lineHeight: 1.4 }}>{row.ours}</span>
                 </div>
-              </motion.div>
+                <div style={{ padding: "9px 8px", display: "flex", alignItems: "flex-start", gap: "5px" }}>
+                  <div style={{ width: "13px", height: "13px", borderRadius: "50%", background: "rgba(224,92,92,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "1px" }}>
+                    <svg width="7" height="7" viewBox="0 0 10 10" fill="none" stroke="#e05c5c" strokeWidth="2.2" strokeLinecap="round"><path d="M3 3l4 4M7 3l-4 4"/></svg>
+                  </div>
+                  <span style={{ fontSize: "10px", color: "#6b6b6b", lineHeight: 1.4 }}>{row.theirs}</span>
+                </div>
+              </div>
             ))}
-          </div>
+          </motion.div>
         ) : (
           <motion.div
             initial={{ opacity: 0, y: 24 }}

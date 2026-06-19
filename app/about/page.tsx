@@ -202,79 +202,57 @@ export default function AboutPage() {
                 What we stand for
               </h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "20px" }}>
-              {values.map((v, i) => (
-                <motion.div
-                  key={v.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ y: -4, boxShadow: "0 16px 48px rgba(26,51,24,0.1)" }}
-                  style={{
-                    background: "white", borderRadius: "16px",
-                    padding: isMobile ? "24px" : "28px 32px", border: "1px solid #e8e8e4",
-                    cursor: "default",
-                  }}
-                >
-                  <div style={{ fontSize: "28px", marginBottom: "16px" }}>{v.icon}</div>
-                  <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "20px", color: "#111", marginBottom: "10px" }}>{v.title}</h3>
-                  <p style={{ fontSize: "14px", color: "#6b6b6b", lineHeight: 1.75 }}>{v.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section style={{ padding: isMobile ? "48px 0" : "80px 0", background: "white" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              style={{
-                background: "linear-gradient(135deg, #1a3318 0%, #2d5a1b 100%)",
-                borderRadius: "24px", padding: isMobile ? "40px 28px" : "56px",
-                textAlign: "center", position: "relative", overflow: "hidden",
-              }}
-            >
-              <div style={{
-                position: "absolute", top: 0, right: 0, bottom: 0, left: 0,
-                background: "radial-gradient(circle at 70% 50%, rgba(106,191,71,0.1) 0%, transparent 60%)",
-                pointerEvents: "none",
-              }} />
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "28px" : "36px", color: "white", marginBottom: "16px", position: "relative", zIndex: 1 }}>
-                Ready to work with us?
-              </h2>
-              <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.5)", marginBottom: "32px", position: "relative", zIndex: 1 }}>
-                Get a free quote today. No contract, no setup fee.
-              </p>
-
-              <a
-                href="/contact"
-                style={{
-                  display: "inline-block",
-                  background: "#6abf47", color: "white",
-                  fontWeight: 700, fontSize: "15px",
-                  padding: "14px 36px", borderRadius: "12px",
-                  textDecoration: "none", position: "relative", zIndex: 1,
-                  transition: "all 0.2s",
-                }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.background = "white"
-                  el.style.color = "#1a3318"
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.background = "#6abf47"
-                  el.style.color = "white"
-                }}
-              >
-                Contact Us
-              </a>
-            </motion.div>
+            {isMobile ? (
+              <div style={{ background: "white", borderRadius: "16px", overflow: "hidden", border: "1px solid #e8e8e4" }}>
+                {values.map((v, i) => (
+                  <motion.div
+                    key={v.title}
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08 }}
+                    style={{
+                      display: "flex", alignItems: "flex-start", gap: "14px",
+                      padding: "16px 18px",
+                      borderBottom: i < values.length - 1 ? "1px solid #e8e8e4" : "none",
+                    }}
+                  >
+                    <div style={{
+                      width: "38px", height: "38px", borderRadius: "10px",
+                      background: "rgba(106,191,71,0.1)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      flexShrink: 0, fontSize: "18px",
+                    }}>{v.icon}</div>
+                    <div>
+                      <div style={{ fontSize: "14px", fontWeight: 700, color: "#111", marginBottom: "4px" }}>{v.title}</div>
+                      <div style={{ fontSize: "12px", color: "#6b6b6b", lineHeight: 1.6 }}>{v.desc}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "20px" }}>
+                {values.map((v, i) => (
+                  <motion.div
+                    key={v.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    whileHover={{ y: -4, boxShadow: "0 16px 48px rgba(26,51,24,0.1)" }}
+                    style={{
+                      background: "white", borderRadius: "16px",
+                      padding: "28px 32px", border: "1px solid #e8e8e4",
+                      cursor: "default",
+                    }}
+                  >
+                    <div style={{ fontSize: "28px", marginBottom: "16px" }}>{v.icon}</div>
+                    <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "20px", color: "#111", marginBottom: "10px" }}>{v.title}</h3>
+                    <p style={{ fontSize: "14px", color: "#6b6b6b", lineHeight: 1.75 }}>{v.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

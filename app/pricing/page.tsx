@@ -266,27 +266,63 @@ export default function PricingPage() {
               </h2>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "16px" : "20px", marginBottom: isMobile ? "48px" : "80px" }}>
-              {services.map((s, i) => (
-                <motion.div key={s.name}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                  whileHover={{ y: -4 }}
-                  style={{ background: "white", borderRadius: "16px", padding: isMobile ? "22px" : "28px", border: "1px solid #e8e8e4", cursor: "default" }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
-                    <div style={{ fontSize: "14px", fontWeight: 700, color: "#111" }}>{s.name}</div>
-                    <span style={{ fontSize: "10px", fontWeight: 700, color: "#6abf47", background: "rgba(106,191,71,0.1)", padding: "3px 8px", borderRadius: "100px", textTransform: "uppercase" as const, letterSpacing: "0.05em", whiteSpace: "nowrap" as const }}>{s.tag}</span>
-                  </div>
-                  <div style={{ marginBottom: "8px" }}>
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "40px", color: "#1a3318", lineHeight: 1 }}>{s.price}</span>
-                    <span style={{ fontSize: "13px", color: "#aaa", marginLeft: "4px" }}>+ VAT {s.period}</span>
-                  </div>
-                  <div style={{ fontSize: "12px", color: "#6abf47", fontWeight: 700, marginBottom: "12px" }}>equiv. {s.monthly}</div>
-                  <p style={{ fontSize: "13px", color: "#6b6b6b", lineHeight: 1.65 }}>{s.desc}</p>
-                </motion.div>
-              ))}
-            </div>
+            {isMobile ? (
+              <div style={{ background: "white", borderRadius: "16px", overflow: "hidden", border: "1px solid #e8e8e4", marginBottom: "48px" }}>
+                {services.map((s, i) => (
+                  <motion.div
+                    key={s.name}
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    style={{
+                      display: "flex", alignItems: "center", gap: "14px",
+                      padding: "15px 16px",
+                      borderBottom: i < services.length - 1 ? "1px solid rgba(0,0,0,0.05)" : "none",
+                    }}
+                  >
+                    <div style={{
+                      width: "38px", height: "38px", borderRadius: "10px",
+                      background: "#f0fae8", flexShrink: 0,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: "11px", fontWeight: 800, color: "#1a3318",
+                    }}>
+                      {s.tag === "Monthly" ? "Mo" : s.tag === "Annual" ? "Ann" : "Qtr"}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#111", lineHeight: 1.3, marginBottom: "2px" }}>{s.name}</div>
+                      <div style={{ fontSize: "11px", color: "#aaa" }}>{s.period}</div>
+                    </div>
+                    <div style={{ textAlign: "right" as const, flexShrink: 0 }}>
+                      <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "18px", color: "#1a3318", lineHeight: 1 }}>{s.price}</div>
+                      <div style={{ fontSize: "10px", color: "#6abf47", fontWeight: 700, textTransform: "uppercase" as const, marginTop: "2px" }}>{s.tag}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", marginBottom: "80px" }}>
+                {services.map((s, i) => (
+                  <motion.div key={s.name}
+                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                    whileHover={{ y: -4 }}
+                    style={{ background: "white", borderRadius: "16px", padding: "28px", border: "1px solid #e8e8e4", cursor: "default" }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
+                      <div style={{ fontSize: "14px", fontWeight: 700, color: "#111" }}>{s.name}</div>
+                      <span style={{ fontSize: "10px", fontWeight: 700, color: "#6abf47", background: "rgba(106,191,71,0.1)", padding: "3px 8px", borderRadius: "100px", textTransform: "uppercase" as const, letterSpacing: "0.05em", whiteSpace: "nowrap" as const }}>{s.tag}</span>
+                    </div>
+                    <div style={{ marginBottom: "8px" }}>
+                      <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "40px", color: "#1a3318", lineHeight: 1 }}>{s.price}</span>
+                      <span style={{ fontSize: "13px", color: "#aaa", marginLeft: "4px" }}>+ VAT {s.period}</span>
+                    </div>
+                    <div style={{ fontSize: "12px", color: "#6abf47", fontWeight: 700, marginBottom: "12px" }}>equiv. {s.monthly}</div>
+                    <p style={{ fontSize: "13px", color: "#6b6b6b", lineHeight: 1.65 }}>{s.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -301,54 +337,92 @@ export default function PricingPage() {
               <p style={{ fontSize: "16px", color: "#6b6b6b" }}>Combine services under one monthly plan for a simpler billing experience.</p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "20px" : "24px", marginBottom: isMobile ? "32px" : "48px" }}>
-              {plans.map((plan, i) => (
-                <motion.div key={plan.name}
-                  initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                  whileHover={{ y: plan.highlight ? 0 : -6 }}
-                  style={{
+            {isMobile ? (
+              <div style={{ background: "white", borderRadius: "20px", overflow: "hidden", border: "1px solid #e8e8e4", marginBottom: "32px" }}>
+                {plans.map((plan, i) => (
+                  <div key={plan.name} style={{
+                    padding: "20px 18px",
+                    borderBottom: i < plans.length - 1 ? `1px solid ${plan.highlight ? "rgba(255,255,255,0.1)" : "#e8e8e4"}` : "none",
                     background: plan.highlight ? "#1a3318" : "white",
-                    borderRadius: "20px", padding: isMobile ? "28px 24px" : "36px 32px",
-                    border: plan.highlight ? "none" : "1px solid #e8e8e4",
                     position: "relative",
-                    boxShadow: plan.highlight ? "0 32px 80px rgba(26,51,24,0.3)" : "0 4px 24px rgba(0,0,0,0.04)",
-                    transform: (!isMobile && plan.highlight) ? "scale(1.03)" : "none",
-                    cursor: "default",
-                  }}
-                >
-                  {plan.highlight && (
-                    <div style={{ position: "absolute", top: "-14px", left: "50%", transform: "translateX(-50%)", background: "#6abf47", color: "white", fontSize: "11px", fontWeight: 700, padding: "5px 18px", borderRadius: "100px", textTransform: "uppercase" as const, letterSpacing: "0.08em", whiteSpace: "nowrap" as const }}>
-                      Most Popular
-                    </div>
-                  )}
-                  <div style={{ fontSize: "12px", fontWeight: 700, color: plan.highlight ? "rgba(255,255,255,0.4)" : "#aaa", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: "10px" }}>{plan.name}</div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "44px" : "52px", color: plan.highlight ? "white" : "#111", lineHeight: 1 }}>{plan.price}</span>
-                    <span style={{ fontSize: "14px", color: plan.highlight ? "rgba(255,255,255,0.35)" : "#aaa" }}>{plan.period} + VAT</span>
-                  </div>
-                  <p style={{ fontSize: "13px", color: plan.highlight ? "rgba(255,255,255,0.45)" : "#6b6b6b", marginBottom: "24px", lineHeight: 1.6 }}>{plan.desc}</p>
-                  <div style={{ marginBottom: "28px" }}>
-                    {plan.includes.map((f) => (
-                      <div key={f} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-                        <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: plan.highlight ? "rgba(106,191,71,0.2)" : "rgba(106,191,71,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                          <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="#6abf47" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 4.5l2 2 4-4"/></svg>
-                        </div>
-                        <span style={{ fontSize: "13px", color: plan.highlight ? "rgba(255,255,255,0.65)" : "#6b6b6b" }}>{f}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <a href="/contact" style={{
-                    display: "block", textAlign: "center" as const,
-                    background: plan.highlight ? "#6abf47" : "#1a3318",
-                    color: "white", fontWeight: 700, fontSize: "14px",
-                    padding: "14px", borderRadius: "12px", textDecoration: "none", transition: "all 0.2s",
                   }}>
-                    Get started
-                  </a>
-                </motion.div>
-              ))}
-            </div>
+                    {plan.highlight && (
+                      <div style={{ position: "absolute", top: "16px", right: "14px", background: "#6abf47", color: "white", fontSize: "9px", fontWeight: 700, padding: "3px 10px", borderRadius: "100px", textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>
+                        Popular
+                      </div>
+                    )}
+                    <div style={{ fontSize: "10px", fontWeight: 700, color: plan.highlight ? "rgba(255,255,255,0.35)" : "#aaa", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: "5px" }}>{plan.name}</div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "3px", marginBottom: "10px" }}>
+                      <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "34px", color: plan.highlight ? "white" : "#111", lineHeight: 1 }}>{plan.price}</span>
+                      <span style={{ fontSize: "12px", color: plan.highlight ? "rgba(255,255,255,0.3)" : "#aaa" }}>/mo + VAT</span>
+                    </div>
+                    <div style={{ display: "flex", flexWrap: "wrap" as const, gap: "6px", marginBottom: "14px" }}>
+                      {plan.includes.map((f) => (
+                        <span key={f} style={{ fontSize: "11px", color: plan.highlight ? "rgba(255,255,255,0.65)" : "#6b6b6b", background: plan.highlight ? "rgba(255,255,255,0.08)" : "#f5f5f0", padding: "3px 9px", borderRadius: "100px", border: `1px solid ${plan.highlight ? "rgba(255,255,255,0.1)" : "#e8e8e4"}` }}>
+                          {f}
+                        </span>
+                      ))}
+                    </div>
+                    <a href="/contact" style={{
+                      display: "block", textAlign: "center" as const,
+                      background: plan.highlight ? "#6abf47" : "#f0fae8",
+                      color: plan.highlight ? "white" : "#1a3318",
+                      fontWeight: 700, fontSize: "13px",
+                      padding: "11px", borderRadius: "10px", textDecoration: "none",
+                    }}>Get started</a>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", marginBottom: "48px" }}>
+                {plans.map((plan, i) => (
+                  <motion.div key={plan.name}
+                    initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                    whileHover={{ y: plan.highlight ? 0 : -6 }}
+                    style={{
+                      background: plan.highlight ? "#1a3318" : "white",
+                      borderRadius: "20px", padding: "36px 32px",
+                      border: plan.highlight ? "none" : "1px solid #e8e8e4",
+                      position: "relative",
+                      boxShadow: plan.highlight ? "0 32px 80px rgba(26,51,24,0.3)" : "0 4px 24px rgba(0,0,0,0.04)",
+                      transform: plan.highlight ? "scale(1.03)" : "none",
+                      cursor: "default",
+                    }}
+                  >
+                    {plan.highlight && (
+                      <div style={{ position: "absolute", top: "-14px", left: "50%", transform: "translateX(-50%)", background: "#6abf47", color: "white", fontSize: "11px", fontWeight: 700, padding: "5px 18px", borderRadius: "100px", textTransform: "uppercase" as const, letterSpacing: "0.08em", whiteSpace: "nowrap" as const }}>
+                        Most Popular
+                      </div>
+                    )}
+                    <div style={{ fontSize: "12px", fontWeight: 700, color: plan.highlight ? "rgba(255,255,255,0.4)" : "#aaa", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: "10px" }}>{plan.name}</div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
+                      <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "52px", color: plan.highlight ? "white" : "#111", lineHeight: 1 }}>{plan.price}</span>
+                      <span style={{ fontSize: "14px", color: plan.highlight ? "rgba(255,255,255,0.35)" : "#aaa" }}>{plan.period} + VAT</span>
+                    </div>
+                    <p style={{ fontSize: "13px", color: plan.highlight ? "rgba(255,255,255,0.45)" : "#6b6b6b", marginBottom: "24px", lineHeight: 1.6 }}>{plan.desc}</p>
+                    <div style={{ marginBottom: "28px" }}>
+                      {plan.includes.map((f) => (
+                        <div key={f} style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+                          <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: plan.highlight ? "rgba(106,191,71,0.2)" : "rgba(106,191,71,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="#6abf47" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 4.5l2 2 4-4"/></svg>
+                          </div>
+                          <span style={{ fontSize: "13px", color: plan.highlight ? "rgba(255,255,255,0.65)" : "#6b6b6b" }}>{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <a href="/contact" style={{
+                      display: "block", textAlign: "center" as const,
+                      background: plan.highlight ? "#6abf47" : "#1a3318",
+                      color: "white", fontWeight: 700, fontSize: "14px",
+                      padding: "14px", borderRadius: "12px", textDecoration: "none", transition: "all 0.2s",
+                    }}>
+                      Get started
+                    </a>
+                  </motion.div>
+                ))}
+              </div>
+            )}
 
             {/* Free consultation banner */}
             <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}

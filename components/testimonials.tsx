@@ -113,42 +113,13 @@ export default function Testimonials() {
         {isMobile ? (
           <div style={{
             display: "flex",
-            gap: "12px",
-            overflowX: "auto",
-            scrollSnapType: "x mandatory",
-            WebkitOverflowScrolling: "touch",
-            margin: "0 -20px",
-            padding: "4px 20px 20px",
-            msOverflowStyle: "none",
-            scrollbarWidth: "none",
+            justifyContent: "center",
+            maxHeight: "440px",
+            overflow: "hidden",
+            maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
           }}>
-            {[...testimonials].map((t, i) => (
-              <div key={i} style={{
-                flexShrink: 0,
-                width: "calc(85vw - 40px)",
-                maxWidth: "280px",
-                scrollSnapAlign: "start",
-                background: "white",
-                borderRadius: "16px",
-                padding: "20px",
-                border: "1px solid #e8e8e4",
-                boxShadow: "0 2px 16px rgba(0,0,0,0.06)",
-              }}>
-                <div style={{ display: "flex", gap: "3px", marginBottom: "12px" }}>
-                  {[...Array(5)].map((_, s) => (
-                    <div key={s} style={{ width: "10px", height: "10px", background: "#6abf47", clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)" }} />
-                  ))}
-                </div>
-                <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "14px", lineHeight: 1.65, color: "#111", marginBottom: "16px", fontStyle: "italic" }}>{t.text}</p>
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <div style={{ width: "34px", height: "34px", borderRadius: "50%", background: t.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: 700, color: "white", flexShrink: 0 }}>{t.initials}</div>
-                  <div>
-                    <div style={{ fontSize: "12px", fontWeight: 700, color: "#111" }}>{t.name}</div>
-                    <div style={{ fontSize: "10px", color: "#6b6b6b" }}>{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <TestimonialsColumn testimonials={firstColumn} duration={18} />
           </div>
         ) : (
           <div style={{
