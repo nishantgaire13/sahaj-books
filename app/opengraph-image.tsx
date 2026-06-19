@@ -20,13 +20,17 @@ export default function Image() {
         {/* Top: logo wordmark with new geometric S mark */}
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <div style={{ display: "flex", width: "56px", height: "56px" }}>
-            <svg width="56" height="56" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-              <rect width="160" height="160" rx="30" fill="#2d5a1b" />
-              <rect x="18" y="18" width="124" height="24" fill="white" />
-              <rect x="106" y="42" width="36" height="28" fill="white" />
-              <polygon points="106,70 142,70 54,90 18,90" fill="#6abf47" />
-              <rect x="18" y="90" width="36" height="28" fill="white" />
-              <rect x="18" y="118" width="124" height="24" fill="white" />
+            <svg width="56" height="56" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="og-s" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#a8e070" />
+                  <stop offset="1" stopColor="#6abf47" />
+                </linearGradient>
+              </defs>
+              <rect width="100" height="100" rx="24" fill="#2d5a1b" />
+              <path d="M74 34 C74 22 56 22 46 28 C36 34 36 45 52 51" stroke="url(#og-s)" strokeWidth="13" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M26 66 C26 78 44 78 54 72 C64 66 64 55 48 49" stroke="#2d5a1b" strokeWidth="22" fill="none" strokeLinecap="round" />
+              <path d="M26 66 C26 78 44 78 54 72 C64 66 64 55 48 49" stroke="url(#og-s)" strokeWidth="13" fill="none" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
           <span
