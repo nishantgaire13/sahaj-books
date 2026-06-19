@@ -330,85 +330,42 @@ function MobileHero() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease, delay: 0.18 }}
-          style={{ display: "flex", flexDirection: "column", gap: "11px", marginBottom: "26px" }}
+          style={{ display: "flex", gap: "10px", marginBottom: "34px" }}
         >
           <Link
             href="/contact"
             style={{
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-              background: "#6abf47", color: "#0f2609", fontWeight: 700, fontSize: "16px",
-              padding: "16px 0", borderRadius: "14px", textDecoration: "none",
-              boxShadow: "0 10px 30px rgba(106,191,71,0.35)",
+              flex: 1.35,
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
+              background: "#6abf47", color: "#0f2609", fontWeight: 700, fontSize: "15px",
+              padding: "13px 0", borderRadius: "12px", textDecoration: "none",
+              boxShadow: "0 8px 24px rgba(106,191,71,0.3)",
             }}
           >
             Contact Us
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
           </Link>
           <Link
             href="/pricing"
             style={{
+              flex: 1,
               display: "flex", alignItems: "center", justifyContent: "center",
               background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.16)",
               color: "white", fontWeight: 600, fontSize: "15px",
-              padding: "14px 0", borderRadius: "14px", textDecoration: "none",
+              padding: "13px 0", borderRadius: "12px", textDecoration: "none",
             }}
           >
-            View pricing
+            Pricing
           </Link>
-        </motion.div>
-
-        {/* Social proof */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "34px" }}
-        >
-          <div style={{ display: "flex" }}>
-            {avatars.map((a, i) => (
-              <div
-                key={a.letter}
-                style={{
-                  width: "34px", height: "34px", borderRadius: "50%",
-                  border: "2px solid #14300f", background: a.bg,
-                  marginLeft: i === 0 ? 0 : -10,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "13px", fontWeight: 700, color: "white",
-                  position: "relative", zIndex: 4 - i,
-                }}
-              >
-                {a.letter}
-              </div>
-            ))}
-          </div>
-          <div>
-            <div style={{ display: "flex", gap: "2px", marginBottom: "3px" }}>
-              {[0, 1, 2, 3, 4].map((s) => (
-                <svg key={s} width="13" height="13" viewBox="0 0 24 24" fill="#6abf47"><path d="M12 2l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.8 5.9 20.3 7.2 13.6 2.2 9l6.8-.8z" /></svg>
-              ))}
-            </div>
-            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", fontWeight: 500 }}>Trusted by UK businesses</span>
-          </div>
         </motion.div>
 
         {/* Dashboard preview */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease, delay: 0.34 }}
-          style={{ background: "white", borderRadius: "20px", overflow: "hidden", boxShadow: "0 30px 70px rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.08)" }}
+          transition={{ duration: 0.7, ease, delay: 0.28 }}
+          style={{ background: "white", borderRadius: "18px", overflow: "hidden", boxShadow: "0 24px 60px rgba(0,0,0,0.42)", border: "1px solid rgba(255,255,255,0.08)", marginBottom: "22px" }}
         >
-          {/* Chrome */}
-          <div style={{ background: "#142e14", padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", gap: "6px" }}>
-              <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ff5f57" }} />
-              <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ffbd2e" }} />
-              <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#28c840" }} />
-            </div>
-            <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)", fontWeight: 600, letterSpacing: "0.14em" }}>SAHAJBOOKS</div>
-            <div style={{ width: "42px" }} />
-          </div>
-
           {/* Body */}
           <div style={{ background: "#f8f9f6", padding: "16px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
@@ -422,10 +379,10 @@ function MobileHero() {
             {/* Stat tiles */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "8px", marginBottom: "12px" }}>
               {stats.map((s) => (
-                <div key={s.label} style={{ background: "white", borderRadius: "11px", padding: "10px 9px", border: "1px solid #e8e8e4" }}>
-                  <div style={{ fontSize: "8px", color: "#7a7a7a", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "4px" }}>{s.label}</div>
-                  <div style={{ fontSize: "16px", fontWeight: 700, color: "#111", lineHeight: 1, marginBottom: "4px" }}>{s.value}</div>
-                  <div style={{ fontSize: "9px", fontWeight: 700, color: s.up ? "#52a72c" : "#e0962a" }}>{s.up ? "↑" : "↓"} {s.change}</div>
+                <div key={s.label} style={{ background: "white", borderRadius: "11px", padding: "11px 9px", border: "1px solid #e8e8e4" }}>
+                  <div style={{ fontSize: "9px", color: "#7a7a7a", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "5px" }}>{s.label}</div>
+                  <div style={{ fontSize: "17px", fontWeight: 700, color: "#111", lineHeight: 1, marginBottom: "5px" }}>{s.value}</div>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: s.up ? "#52a72c" : "#e0962a" }}>{s.up ? "↑" : "↓"} {s.change}</div>
                 </div>
               ))}
             </div>
@@ -433,8 +390,8 @@ function MobileHero() {
             {/* Chart */}
             <div style={{ background: "white", borderRadius: "11px", border: "1px solid #e8e8e4", padding: "12px", marginBottom: "12px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                <span style={{ fontSize: "11px", fontWeight: 700, color: "#111" }}>Monthly Revenue</span>
-                <span style={{ fontSize: "9px", color: "#7a7a7a", background: "#f1f1ec", padding: "2px 8px", borderRadius: "5px", fontWeight: 600 }}>2024</span>
+                <span style={{ fontSize: "12px", fontWeight: 700, color: "#111" }}>Monthly Revenue</span>
+                <span style={{ fontSize: "10px", color: "#7a7a7a", background: "#f1f1ec", padding: "2px 8px", borderRadius: "5px", fontWeight: 600 }}>2024</span>
               </div>
               <div style={{ display: "flex", alignItems: "flex-end", gap: "4px", height: "56px" }}>
                 {bars.map((h, i) => (
@@ -458,14 +415,48 @@ function MobileHero() {
                       <CheckIcon />
                     </div>
                     <div>
-                      <div style={{ fontSize: "11px", fontWeight: 700, color: "#111", lineHeight: 1.2 }}>{f.name}</div>
-                      <div style={{ fontSize: "9px", color: "#8a8a8a", marginTop: "2px" }}>{f.sub}</div>
+                      <div style={{ fontSize: "12px", fontWeight: 700, color: "#111", lineHeight: 1.2 }}>{f.name}</div>
+                      <div style={{ fontSize: "10px", color: "#8a8a8a", marginTop: "2px" }}>{f.sub}</div>
                     </div>
                   </div>
-                  <span style={{ fontSize: "11px", fontWeight: 700, color: "#52a72c" }}>{f.tag}</span>
+                  <span style={{ fontSize: "12px", fontWeight: 700, color: "#52a72c" }}>{f.tag}</span>
                 </div>
               ))}
             </div>
+          </div>
+        </motion.div>
+
+        {/* Social proof */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px" }}
+        >
+          <div style={{ display: "flex" }}>
+            {avatars.map((a, i) => (
+              <div
+                key={a.letter}
+                style={{
+                  width: "30px", height: "30px", borderRadius: "50%",
+                  border: "2px solid #14300f", background: a.bg,
+                  marginLeft: i === 0 ? 0 : -9,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "12px", fontWeight: 700, color: "white",
+                  position: "relative", zIndex: 4 - i,
+                }}
+              >
+                {a.letter}
+              </div>
+            ))}
+          </div>
+          <div>
+            <div style={{ display: "flex", gap: "2px", marginBottom: "3px" }}>
+              {[0, 1, 2, 3, 4].map((s) => (
+                <svg key={s} width="12" height="12" viewBox="0 0 24 24" fill="#6abf47"><path d="M12 2l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.8 5.9 20.3 7.2 13.6 2.2 9l6.8-.8z" /></svg>
+              ))}
+            </div>
+            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", fontWeight: 500 }}>Trusted by UK businesses</span>
           </div>
         </motion.div>
       </div>
