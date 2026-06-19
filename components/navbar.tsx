@@ -56,6 +56,16 @@ export default function Navbar() {
 
   const isDark = !scrolled && !isLightPage
 
+  // Home: when already on "/", ScrollToTop won't fire (pathname unchanged),
+  // so scroll to top manually instead of letting the Link navigate.
+  const handleHomeClick = (e: React.MouseEvent) => {
+    setMenuOpen(false)
+    if (pathname === "/") {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }
+
   // Services needs special handling: hash navigation is unreliable because
   // ScrollToTop fires on pathname change and cancels the anchor scroll.
   // Instead: if already on homepage scroll directly; otherwise signal via
@@ -135,6 +145,7 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={link.href}
+                      onClick={link.label === "Home" ? handleHomeClick : undefined}
                       style={{
                         fontSize: "14px", fontWeight: 500,
                         color: isDark ? "rgba(255,255,255,0.7)" : "#6b6b6b",
@@ -259,7 +270,7 @@ export default function Navbar() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={link.label === "Home" ? handleHomeClick : () => setMenuOpen(false)}
                   style={menuLinkStyle}
                 >
                   {link.label}

@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import Link from "next/link"
-import { notFound } from "next/navigation"
+import { notFound, useRouter } from "next/navigation"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 type Row = { label: string; value: string; highlight?: boolean }
@@ -430,6 +430,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
   const { slug } = use(params)
   const service = services.find(s => s.slug === slug)
   const isMobile = useIsMobile()
+  const router = useRouter()
 
   if (!service) {
     notFound()
@@ -460,14 +461,19 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
 
           <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px", position: "relative", zIndex: 1 }}>
             {/* Breadcrumb */}
-            <Link
+            <a
               href="/"
+              onClick={e => {
+                e.preventDefault()
+                sessionStorage.setItem("pendingScroll", "services")
+                router.push("/")
+              }}
               style={{
                 display: "inline-flex", alignItems: "center", gap: "6px",
                 fontSize: "13px", fontWeight: 600,
                 color: "rgba(255,255,255,0.4)", textDecoration: "none",
                 marginBottom: isMobile ? "24px" : "36px",
-                transition: "color 0.2s",
+                transition: "color 0.2s", cursor: "pointer",
               }}
               onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.8)"}
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)"}
@@ -476,7 +482,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                 <path d="M9 11L5 7l4-4" />
               </svg>
               All Services
-            </Link>
+            </a>
 
             <div style={{
               display: "grid",
