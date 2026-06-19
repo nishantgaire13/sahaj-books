@@ -1,10 +1,12 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 const services = [
   {
     num: "01",
+    slug: "payroll-rti",
     title: "Payroll & RTI Filing",
     desc: "Full payroll management including wages, tax and National Insurance. RTI reports submitted to HMRC every pay period.",
     icon: (
@@ -18,6 +20,7 @@ const services = [
   },
   {
     num: "02",
+    slug: "bookkeeping-vat",
     title: "Bookkeeping & VAT Returns",
     desc: "Accurate financial records maintained throughout the year. VAT returns filed quarterly in full compliance with MTD requirements.",
     icon: (
@@ -31,6 +34,7 @@ const services = [
   },
   {
     num: "03",
+    slug: "corporation-tax",
     title: "Corporation Tax CT600",
     desc: "Annual CT600 prepared and filed with HMRC. All allowable expenses and reliefs identified to minimise your tax liability.",
     icon: (
@@ -42,6 +46,7 @@ const services = [
   },
   {
     num: "04",
+    slug: "year-end-accounts",
     title: "Year-End Statutory Accounts",
     desc: "Statutory financial statements prepared and submitted to Companies House in full compliance with FRS 105 and FRS 102.",
     icon: (
@@ -54,6 +59,7 @@ const services = [
   },
   {
     num: "05",
+    slug: "self-assessment",
     title: "Self Assessment SA100",
     desc: "Personal tax returns for sole traders, directors and landlords. All income reported, all expenses claimed, filed before January deadline.",
     icon: (
@@ -65,6 +71,7 @@ const services = [
   },
   {
     num: "06",
+    slug: "cis-scheme",
     title: "CIS Construction Scheme",
     desc: "Full CIS compliance for contractors and subcontractors. Verification, correct deduction rates and monthly returns filed on time.",
     icon: (
@@ -76,6 +83,7 @@ const services = [
   },
   {
     num: "07",
+    slug: "management-accounts",
     title: "Quarterly Management Accounts",
     desc: "Clear structured management accounts every quarter covering profit and loss, cash flow and key financial indicators.",
     icon: (
@@ -269,86 +277,105 @@ export default function Services() {
           border: "1px solid rgba(106,191,71,0.1)",
         }}>
           {services.map((service, i) => (
-            <motion.div
+            <Link
               key={service.num}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-              whileHover={{
-                y: -6,
-                backgroundColor: "rgba(106,191,71,0.12)",
-                transition: { duration: 0.2 },
-              }}
+              href={`/services/${service.slug}`}
               style={{
-                background: "rgba(255,255,255,0.03)",
-                padding: "36px 32px",
-                cursor: "default",
+                textDecoration: "none",
+                display: "block",
                 gridColumn: i === 6 ? "1 / -1" : "auto",
-                borderBottom: i < 6 ? "1px solid rgba(106,191,71,0.08)" : "none",
-                position: "relative",
               }}
             >
-              <div style={{
-                fontSize: "11px", fontWeight: 700,
-                color: "rgba(255,255,255,0.2)",
-                letterSpacing: "0.1em", marginBottom: "20px",
-              }}>
-                {service.num}
-              </div>
-
               <motion.div
-                whileHover={{ scale: 1.12, rotate: 6 }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+                whileHover={{
+                  y: -6,
+                  backgroundColor: "rgba(106,191,71,0.12)",
+                  transition: { duration: 0.2 },
+                }}
                 style={{
-                  width: "44px", height: "44px",
-                  background: "rgba(106,191,71,0.08)",
-                  border: "1px solid rgba(106,191,71,0.15)",
-                  borderRadius: "12px",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  marginBottom: "18px",
+                  background: "rgba(255,255,255,0.03)",
+                  padding: "36px 32px",
+                  cursor: "pointer",
+                  borderBottom: i < 6 ? "1px solid rgba(106,191,71,0.08)" : "none",
+                  position: "relative",
+                  height: "100%",
                 }}
               >
-                {service.icon}
+                <div style={{
+                  fontSize: "11px", fontWeight: 700,
+                  color: "rgba(255,255,255,0.2)",
+                  letterSpacing: "0.1em", marginBottom: "20px",
+                }}>
+                  {service.num}
+                </div>
+
+                <motion.div
+                  whileHover={{ scale: 1.12, rotate: 6 }}
+                  style={{
+                    width: "44px", height: "44px",
+                    background: "rgba(106,191,71,0.08)",
+                    border: "1px solid rgba(106,191,71,0.15)",
+                    borderRadius: "12px",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    marginBottom: "18px",
+                  }}
+                >
+                  {service.icon}
+                </motion.div>
+
+                <h3 style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: i === 6 ? "22px" : "19px",
+                  color: "white",
+                  marginBottom: "12px", lineHeight: 1.2,
+                }}>
+                  {service.title}
+                </h3>
+
+                <p style={{
+                  fontSize: "13px", lineHeight: 1.75,
+                  color: "rgba(255,255,255,0.4)",
+                  maxWidth: i === 6 ? "600px" : "none",
+                }}>
+                  {service.desc}
+                </p>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "20px" }}>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "48px" }}
+                    transition={{ duration: 0.25 }}
+                    style={{
+                      height: "2px", background: "#6abf47",
+                      borderRadius: "100px",
+                    }}
+                  />
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", whiteSpace: "nowrap" as const }}
+                  >
+                    Learn more →
+                  </motion.span>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileHover={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.2 }}
+                  style={{
+                    position: "absolute", top: "16px", right: "16px",
+                    width: "8px", height: "8px",
+                    borderRadius: "50%", background: "#6abf47",
+                  }}
+                />
               </motion.div>
-
-              <h3 style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: i === 6 ? "22px" : "19px",
-                color: "white",
-                marginBottom: "12px", lineHeight: 1.2,
-              }}>
-                {service.title}
-              </h3>
-
-              <p style={{
-                fontSize: "13px", lineHeight: 1.75,
-                color: "rgba(255,255,255,0.4)",
-                maxWidth: i === 6 ? "600px" : "none",
-              }}>
-                {service.desc}
-              </p>
-
-              <motion.div
-                initial={{ width: 0 }}
-                whileHover={{ width: "48px" }}
-                transition={{ duration: 0.25 }}
-                style={{
-                  height: "2px", background: "#6abf47",
-                  borderRadius: "100px", marginTop: "20px",
-                }}
-              />
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileHover={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2 }}
-                style={{
-                  position: "absolute", top: "16px", right: "16px",
-                  width: "8px", height: "8px",
-                  borderRadius: "50%", background: "#6abf47",
-                }}
-              />
-            </motion.div>
+            </Link>
           ))}
         </div>
       </div>

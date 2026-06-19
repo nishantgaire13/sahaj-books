@@ -68,16 +68,6 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: "8px",
-            background: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.15)",
-            borderRadius: "100px", padding: "6px 16px", marginBottom: "36px",
-          }}>
-            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#6abf47", display: "inline-block" }} />
-            <span style={{ fontSize: "11px", fontWeight: 600, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.1em" }}>ACCA Qualified Team</span>
-          </div>
-
           <h1 style={{
             fontFamily: "'Instrument Serif', serif",
             fontSize: "clamp(42px, 4.5vw, 64px)",

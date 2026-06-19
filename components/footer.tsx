@@ -5,13 +5,13 @@ import Logo from "./logo"
 
 const footerLinks = {
   Services: [
-    { label: "Payroll & RTI", href: "#services" },
-    { label: "Bookkeeping & VAT", href: "#services" },
-    { label: "Corporation Tax", href: "#services" },
-    { label: "Year-End Accounts", href: "#services" },
-    { label: "Self Assessment", href: "#services" },
-    { label: "CIS Scheme", href: "#services" },
-    { label: "Management Accounts", href: "#services" },
+    { label: "Payroll & RTI", href: "/#services" },
+    { label: "Bookkeeping & VAT", href: "/#services" },
+    { label: "Corporation Tax", href: "/#services" },
+    { label: "Year-End Accounts", href: "/#services" },
+    { label: "Self Assessment", href: "/#services" },
+    { label: "CIS Scheme", href: "/#services" },
+    { label: "Management Accounts", href: "/#services" },
   ],
   Company: [
     { label: "About Us", href: "/about" },
@@ -131,11 +131,14 @@ export default function Footer() {
             © 2025 SahajBooks. All rights reserved.
           </span>
           <div style={{ display: "flex", gap: "24px" }}>
-            {["Privacy", "Terms", "Cookies"].map((item) => (
-              
-              <a  
-              key={item}
-                href="#"
+            {[
+              { label: "Privacy", href: "/privacy" },
+              { label: "Terms", href: "/terms" },
+              { label: "Cookies", href: "/privacy" },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
                 style={{
                   fontSize: "13px",
                   color: "rgba(255,255,255,0.25)",
@@ -145,8 +148,8 @@ export default function Footer() {
                 onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"}
                 onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.25)"}
               >
-                {item}
-              </a>
+                {item.label}
+              </Link>
             ))}
           </div>
         </div>

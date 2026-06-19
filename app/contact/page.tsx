@@ -5,6 +5,8 @@ import Navbar from "@/components/navbar"
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -15,9 +17,23 @@ export default function ContactPage() {
     message: "",
   })
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setSubmitted(true)
+    setLoading(true)
+    setError("")
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error("Failed to send")
+      setSubmitted(true)
+    } catch {
+      setError("Something went wrong. Please try emailing us directly at hello@sahajbooks.com")
+    } finally {
+      setLoading(false)
+    }
   }
 
   const services = [
@@ -168,19 +184,23 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {error && (
+                    <p style={{ fontSize: "13px", color: "#c0392b", marginBottom: "12px", textAlign: "center" }}>{error}</p>
+                  )}
                   <button
                     type="submit"
+                    disabled={loading}
                     style={{
                       width: "100%", padding: "15px",
-                      borderRadius: "12px", background: "#6abf47",
+                      borderRadius: "12px", background: loading ? "#aaa" : "#6abf47",
                       color: "white", fontWeight: 700, fontSize: "15px",
-                      border: "none", cursor: "pointer",
+                      border: "none", cursor: loading ? "not-allowed" : "pointer",
                       transition: "all 0.2s",
                     }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#1a3318"}
-                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#6abf47"}
+                    onMouseEnter={e => { if (!loading) (e.currentTarget as HTMLElement).style.background = "#1a3318" }}
+                    onMouseLeave={e => { if (!loading) (e.currentTarget as HTMLElement).style.background = "#6abf47" }}
                   >
-                    Send Message
+                    {loading ? "Sending…" : "Send Message"}
                   </button>
                 </form>
               )}

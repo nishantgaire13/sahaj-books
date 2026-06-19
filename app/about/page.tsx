@@ -254,8 +254,16 @@ export default function AboutPage() {
                   textDecoration: "none", position: "relative", zIndex: 1,
                   transition: "all 0.2s",
                 }}
-                onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "white"}
-                onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#6abf47"}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.background = "white"
+                  el.style.color = "#1a3318"
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.background = "#6abf47"
+                  el.style.color = "white"
+                }}
               >
                 Contact Us
               </a>
