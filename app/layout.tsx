@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ScrollToTop from "@/components/scroll-to-top";
 
 export const metadata: Metadata = {
   title: "SahajBooks — Accounting and Finance Solutions",
@@ -9,7 +10,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body style={{ overflowX: "hidden", margin: 0, padding: 0 }}>{children}</body>
+      <body style={{ overflowX: "hidden", margin: 0, padding: 0 }}>
+        <ScrollToTop />
+        {children}
+      </body>
     </html>
   );
 }

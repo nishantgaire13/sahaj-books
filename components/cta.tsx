@@ -111,13 +111,17 @@ export default function CTA() {
                   el.style.color = "white"
                 }}
               >
-                Get a Free Quote
+                Contact Us
               </Link>
             </motion.div>
 
             <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={{ width: isMobile ? "100%" : "auto" }}>
-              <Link
+              <a
                 href="#services"
+                onClick={e => {
+                  e.preventDefault()
+                  document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })
+                }}
                 style={{
                   display: "inline-block",
                   background: "transparent", color: "white",
@@ -127,7 +131,8 @@ export default function CTA() {
                   border: "1.5px solid rgba(255,255,255,0.25)",
                   transition: "all 0.2s",
                   width: isMobile ? "100%" : "auto",
-                  boxSizing: "border-box",
+                  boxSizing: "border-box" as const,
+                  cursor: "pointer",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement
@@ -141,7 +146,7 @@ export default function CTA() {
                 }}
               >
                 See Services
-              </Link>
+              </a>
             </motion.div>
           </div>
 

@@ -461,7 +461,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
           <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px", position: "relative", zIndex: 1 }}>
             {/* Breadcrumb */}
             <Link
-              href="/#services"
+              href="/"
               style={{
                 display: "inline-flex", alignItems: "center", gap: "6px",
                 fontSize: "13px", fontWeight: 600,
