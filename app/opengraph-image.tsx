@@ -17,23 +17,17 @@ export default function Image() {
           padding: "72px 80px",
         }}
       >
-        {/* Top: logo wordmark */}
+        {/* Top: logo wordmark with new geometric S mark */}
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <div
-            style={{
-              width: "52px",
-              height: "52px",
-              background: "#6abf47",
-              borderRadius: "12px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "26px",
-              color: "white",
-              fontWeight: 800,
-            }}
-          >
-            S
+          <div style={{ display: "flex", width: "56px", height: "56px" }}>
+            <svg width="56" height="56" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+              <rect width="160" height="160" rx="30" fill="#2d5a1b" />
+              <rect x="18" y="18" width="124" height="24" fill="white" />
+              <rect x="106" y="42" width="36" height="28" fill="white" />
+              <polygon points="106,70 142,70 54,90 18,90" fill="#6abf47" />
+              <rect x="18" y="90" width="36" height="28" fill="white" />
+              <rect x="18" y="118" width="124" height="24" fill="white" />
+            </svg>
           </div>
           <span
             style={{
@@ -41,6 +35,7 @@ export default function Image() {
               fontWeight: 700,
               color: "white",
               letterSpacing: "-0.5px",
+              display: "flex",
             }}
           >
             SahajBooks
