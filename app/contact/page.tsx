@@ -32,7 +32,7 @@ export default function ContactPage() {
       if (!res.ok) throw new Error("Failed to send")
       setSubmitted(true)
     } catch {
-      setError("Something went wrong. Please try emailing us directly at hello@sahajbooks.com")
+      setError("Something went wrong. Please try emailing us directly at sahajbooks10@gmail.com")
     } finally {
       setLoading(false)
     }
@@ -230,7 +230,7 @@ export default function ContactPage() {
 
               {/* Contact cards */}
               {[
-                { icon: "✉️", title: "Email Us", detail: "hello@sahajbooks.com", sub: "We reply within 24 hours", href: "mailto:hello@sahajbooks.com" },
+                { icon: "✉️", title: "Email Us", detail: "sahajbooks10@gmail.com", sub: "We reply within 24 hours", href: "mailto:sahajbooks10@gmail.com" },
                 { icon: "📞", title: "Call Us", detail: "+44 20 0000 0000", sub: "Mon to Fri, 9am to 5pm GMT", href: "tel:+442000000000" },
                 { icon: "📍", title: "Office", detail: "Kathmandu, Nepal", sub: "Serving UK clients remotely", href: "#" },
               ].map((item) => (
@@ -299,14 +299,14 @@ export default function ContactPage() {
                   <div style={{ fontSize: "11px", fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "16px" }}>Follow Us</div>
                   <div style={{ display: "flex", gap: "10px" }}>
                     {[
-                      { label: "LinkedIn", color: "#0077b5" },
-                      { label: "Twitter", color: "#1da1f2" },
-                      { label: "Instagram", color: "#e1306c" },
-                      { label: "Facebook", color: "#1877f2" },
+                      { label: "LinkedIn", color: "#0077b5", href: "https://www.linkedin.com/in/sahaj-books-02629b418/" },
+                      { label: "Instagram", color: "#e1306c", href: "https://www.instagram.com/sahajbooks.np/" },
                     ].map((s) => (
                       <a
                         key={s.label}
-                        href="#"
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{
                           flex: 1, padding: "10px 8px", borderRadius: "10px",
                           border: "1px solid #e8e8e4", fontSize: "12px",

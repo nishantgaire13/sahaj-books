@@ -13,8 +13,8 @@ export default function PrivacyPage() {
             { title: "Information we collect", body: "We collect information you provide when contacting us including your name, email address, phone number and business details. We also collect information about how you use our website." },
             { title: "How we use your information", body: "We use your information to provide accounting and compliance services, respond to enquiries, and improve our service. We do not sell your personal data to third parties." },
             { title: "Data security", body: "All client data is stored securely and handled in accordance with UK GDPR requirements. We use industry-standard encryption and access controls to protect your information." },
-            { title: "Your rights", body: "You have the right to access, correct or delete your personal data at any time. To exercise these rights, contact us at hello@sahajbooks.com." },
-            { title: "Contact", body: "For any privacy-related queries, email us at hello@sahajbooks.com or write to us at our registered address in Kathmandu, Nepal." },
+            { title: "Your rights", body: "You have the right to access, correct or delete your personal data at any time. To exercise these rights, contact us at sahajbooks10@gmail.com." },
+            { title: "Contact", body: "For any privacy-related queries, email us at sahajbooks10@gmail.com or write to us at our registered address in Kathmandu, Nepal." },
           ].map((section) => (
             <div key={section.title} style={{ marginBottom: "36px" }}>
               <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "24px", color: "#111", marginBottom: "12px" }}>{section.title}</h2>
