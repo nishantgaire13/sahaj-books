@@ -296,21 +296,6 @@ function MobileHero() {
       <div style={{ position: "absolute", top: "-180px", left: "50%", transform: "translateX(-50%)", width: "520px", height: "520px", borderRadius: "50%", background: "radial-gradient(circle, rgba(106,191,71,0.22) 0%, transparent 65%)", pointerEvents: "none" }} />
 
       <div style={{ position: "relative", padding: "0 20px 44px" }}>
-        {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease }}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: "7px",
-            background: "rgba(106,191,71,0.12)", border: "1px solid rgba(106,191,71,0.28)",
-            borderRadius: "100px", padding: "6px 13px", marginBottom: "22px",
-          }}
-        >
-          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", boxShadow: "0 0 8px #6abf47" }} />
-          <span style={{ fontSize: "12px", fontWeight: 600, color: "#cfeeb0", letterSpacing: "0.02em" }}>Built for UK businesses</span>
-        </motion.div>
-
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 18 }}
