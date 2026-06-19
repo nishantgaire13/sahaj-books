@@ -18,7 +18,7 @@ export default function Hero() {
     <section
       style={{
         background: "linear-gradient(180deg, #1a3318 0%, #2d5a1b 55%, #5aaa28 100%)",
-        minHeight: "100vh",
+        minHeight: isMobile ? "auto" : "100vh",
         overflow: "hidden",
         position: "relative",
       }}
@@ -38,10 +38,10 @@ export default function Hero() {
 
       <div style={{
         maxWidth: "1280px", margin: "0 auto",
-        padding: isMobile ? "100px 20px 60px" : "140px 64px 80px",
+        padding: isMobile ? "80px 22px 44px" : "140px 64px 80px",
         display: "grid",
         gridTemplateColumns: isMobile ? "1fr" : "1.1fr 0.9fr",
-        gap: isMobile ? "48px" : "80px",
+        gap: isMobile ? "0" : "80px",
         alignItems: "center",
       }}>
 
@@ -49,9 +49,9 @@ export default function Hero() {
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           <h1 style={{
             fontFamily: "'Instrument Serif', serif",
-            fontSize: isMobile ? "clamp(36px, 9vw, 52px)" : "clamp(42px, 4.5vw, 64px)",
-            color: "white", lineHeight: 1.1,
-            letterSpacing: "-0.5px", marginBottom: "20px",
+            fontSize: isMobile ? "clamp(24px, 6.5vw, 30px)" : "clamp(42px, 4.5vw, 64px)",
+            color: "white", lineHeight: 1.15,
+            letterSpacing: "-0.3px", marginBottom: isMobile ? "12px" : "20px",
           }}>
             Accounting and Finance<br />
             Solutions to<br />
@@ -59,10 +59,10 @@ export default function Hero() {
           </h1>
 
           <p style={{
-            fontSize: isMobile ? "15px" : "17px",
-            lineHeight: 1.75,
+            fontSize: isMobile ? "14px" : "17px",
+            lineHeight: isMobile ? 1.6 : 1.75,
             color: "rgba(255,255,255,0.55)",
-            marginBottom: "36px",
+            marginBottom: isMobile ? "22px" : "36px",
             maxWidth: isMobile ? "100%" : "460px",
           }}>
             Clean books, compliant filings, zero surprises. We handle your UK accounting end to end so you can focus entirely on growing your business.
@@ -72,11 +72,13 @@ export default function Hero() {
             <Link
               href="/contact"
               style={{
-                display: "inline-block",
+                display: isMobile ? "block" : "inline-block",
                 background: "#6abf47", color: "white",
                 fontWeight: 700, fontSize: "15px",
-                padding: "15px 36px", borderRadius: "12px",
+                padding: isMobile ? "13px 0" : "15px 36px",
+                borderRadius: "12px",
                 textDecoration: "none",
+                textAlign: isMobile ? "center" : "left" as const,
                 boxShadow: "0 4px 24px rgba(106,191,71,0.3)",
                 transition: "background 0.2s, box-shadow 0.2s",
               }}
@@ -93,7 +95,7 @@ export default function Hero() {
             </Link>
           </motion.div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "36px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: isMobile ? "20px" : "36px" }}>
             <div style={{ display: "flex" }}>
               {avatars.map((a, i) => (
                 <motion.div
@@ -130,7 +132,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.9 }}
-              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "28px" }}
+              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginTop: "18px" }}
             >
               {[
                 { emoji: "💼", title: "Payroll & RTI", status: "Filed on time" },
@@ -145,13 +147,13 @@ export default function Hero() {
                   transition={{ delay: 1.0 + i * 0.08 }}
                   style={{
                     background: "rgba(255,255,255,0.07)",
-                    borderRadius: "14px",
-                    padding: "14px",
+                    borderRadius: "12px",
+                    padding: "12px",
                     border: "1px solid rgba(255,255,255,0.1)",
                   }}
                 >
-                  <div style={{ fontSize: "20px", marginBottom: "8px" }}>{card.emoji}</div>
-                  <div style={{ fontSize: "12px", fontWeight: 700, color: "white", marginBottom: "8px", lineHeight: 1.3 }}>{card.title}</div>
+                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>{card.emoji}</div>
+                  <div style={{ fontSize: "11px", fontWeight: 700, color: "white", marginBottom: "6px", lineHeight: 1.3 }}>{card.title}</div>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "rgba(106,191,71,0.15)", borderRadius: "100px", padding: "3px 8px" }}>
                     <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#6abf47" }} />
                     <span style={{ fontSize: "10px", fontWeight: 700, color: "#6abf47" }}>{card.status}</span>
