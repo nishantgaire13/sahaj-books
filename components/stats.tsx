@@ -61,7 +61,7 @@ export default function Stats() {
             color: "#111", lineHeight: 1.1,
             letterSpacing: "-0.5px", marginBottom: "12px",
           }}>
-            Built for UK businesses,<br />delivered from Kathmandu
+            {isMobile ? "Built for UK businesses, delivered from Kathmandu" : <>Built for UK businesses,<br />delivered from Kathmandu</>}
           </h2>
           <p style={{
             fontSize: isMobile ? "14px" : "16px", color: "#6b6b6b",
@@ -74,10 +74,10 @@ export default function Stats() {
         {/* Stats row */}
         <div style={{
           display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
-          gap: "1px", background: "#e8e8e4",
-          borderRadius: "20px", overflow: "hidden",
-          border: "1px solid #e8e8e4",
-          marginBottom: isMobile ? "20px" : "64px",
+          gap: isMobile ? "10px" : "1px", background: isMobile ? "transparent" : "#e8e8e4",
+          borderRadius: "20px", overflow: isMobile ? "visible" : "hidden",
+          border: isMobile ? "none" : "1px solid #e8e8e4",
+          marginBottom: isMobile ? "24px" : "64px",
         }}>
           {stats.map((stat, i) => (
             <motion.div
@@ -86,10 +86,12 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              whileHover={{ backgroundColor: "#f0fae8" }}
+              whileHover={isMobile ? undefined : { backgroundColor: "#f0fae8" }}
               style={{
-                background: "white",
-                padding: isMobile ? "28px 16px" : "40px 32px",
+                background: isMobile ? "#f8f9f6" : "white",
+                border: isMobile ? "1px solid #eef0ec" : "none",
+                borderRadius: isMobile ? "16px" : "0",
+                padding: isMobile ? "24px 14px" : "40px 32px",
                 textAlign: "center",
               }}
             >

@@ -48,17 +48,19 @@ export default function CTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: "8px",
-            background: "rgba(106,191,71,0.12)",
-            border: "1px solid rgba(106,191,71,0.25)",
-            borderRadius: "100px", padding: "6px 16px", marginBottom: isMobile ? "28px" : "36px",
-          }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", display: "inline-block" }} />
-            <span style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-              Get started today
-            </span>
-          </div>
+          {!isMobile && (
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: "8px",
+              background: "rgba(106,191,71,0.12)",
+              border: "1px solid rgba(106,191,71,0.25)",
+              borderRadius: "100px", padding: "6px 16px", marginBottom: "36px",
+            }}>
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", display: "inline-block" }} />
+              <span style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                Get started today
+              </span>
+            </div>
+          )}
 
           <h2 style={{
             fontFamily: "'Instrument Serif', serif",
@@ -80,20 +82,20 @@ export default function CTA() {
 
           <div style={{
             display: "flex",
-            gap: "16px",
+            gap: isMobile ? "10px" : "16px",
             justifyContent: "center",
             flexWrap: "wrap",
-            flexDirection: isMobile ? "column" : "row",
-            alignItems: "center",
+            flexDirection: "row",
+            alignItems: "stretch",
           }}>
-            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={{ width: isMobile ? "100%" : "auto" }}>
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={{ flex: isMobile ? "1.35" : "0 1 auto" }}>
               <Link
                 href="/contact"
                 style={{
-                  display: "inline-block",
+                  display: "flex", alignItems: "center", justifyContent: "center",
                   background: "#6abf47", color: "white",
-                  fontWeight: 700, fontSize: "16px",
-                  padding: "16px 40px", borderRadius: "12px",
+                  fontWeight: 700, fontSize: isMobile ? "15px" : "16px",
+                  padding: isMobile ? "14px 0" : "16px 40px", borderRadius: "12px",
                   textDecoration: "none",
                   boxShadow: "0 8px 32px rgba(106,191,71,0.3)",
                   transition: "all 0.2s",
@@ -115,7 +117,7 @@ export default function CTA() {
               </Link>
             </motion.div>
 
-            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={{ width: isMobile ? "100%" : "auto" }}>
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={{ flex: isMobile ? "1" : "0 1 auto" }}>
               <a
                 href="#services"
                 onClick={e => {
@@ -123,10 +125,10 @@ export default function CTA() {
                   document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })
                 }}
                 style={{
-                  display: "inline-block",
+                  display: "flex", alignItems: "center", justifyContent: "center",
                   background: "transparent", color: "white",
-                  fontWeight: 700, fontSize: "16px",
-                  padding: "16px 40px", borderRadius: "12px",
+                  fontWeight: 700, fontSize: isMobile ? "15px" : "16px",
+                  padding: isMobile ? "14px 0" : "16px 40px", borderRadius: "12px",
                   textDecoration: "none",
                   border: "1.5px solid rgba(255,255,255,0.25)",
                   transition: "all 0.2s",

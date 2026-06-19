@@ -411,24 +411,16 @@ export default function Solutions() {
         <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 20px" }}>
 
           {/* Mobile header */}
-          <div style={{ marginBottom: "28px" }}>
-            <div style={{ fontSize: "12px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "14px" }}>
+          <div style={{ marginBottom: "24px" }}>
+            <div style={{ fontSize: "12px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "12px" }}>
               Solutions
             </div>
-            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "30px", color: "#111", lineHeight: 1.1, letterSpacing: "-0.5px", marginBottom: "14px" }}>
-              Handle your compliance end to end
+            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "32px", color: "#111", lineHeight: 1.12, letterSpacing: "-0.5px", marginBottom: "12px" }}>
+              Compliance, handled <span style={{ color: "#6abf47", fontStyle: "italic" }}>end to end</span>
             </h2>
-            <p style={{ fontSize: "14px", color: "#6b6b6b", lineHeight: 1.7, marginBottom: "18px" }}>
-              Everything your business needs to stay on the right side of HMRC, priced fairly, delivered on time.
+            <p style={{ fontSize: "15px", color: "#6b6b6b", lineHeight: 1.65 }}>
+              Everything your business needs to stay on the right side of HMRC — priced fairly, delivered on time.
             </p>
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" as const }}>
-              {["99% on-time", "ACCA qualified", "40% cheaper"].map((stat) => (
-                <div key={stat} style={{ display: "flex", alignItems: "center", gap: "5px", background: "rgba(106,191,71,0.08)", border: "1px solid rgba(106,191,71,0.2)", borderRadius: "100px", padding: "4px 10px" }}>
-                  <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#6abf47", flexShrink: 0 }} />
-                  <span style={{ fontSize: "11px", fontWeight: 700, color: "#1a3318" }}>{stat}</span>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Mobile solution cards */}
@@ -442,39 +434,43 @@ export default function Solutions() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 style={{ background: "white", borderRadius: "18px", border: "1px solid #e8e8e4", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.05)" }}
               >
-                {/* Card header */}
-                <div style={{ background: "#1a3318", padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-                    {card.label}
+                <div style={{ padding: "20px" }}>
+                  {/* Top row: index + label + icon */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "26px", color: "#d6e3cf", lineHeight: 1 }}>0{i + 1}</span>
+                      <span style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.09em" }}>{card.label}</span>
+                    </div>
+                    <div style={{ width: "38px", height: "38px", borderRadius: "11px", background: "#eef9e3", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      {i === 0 ? (
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4a8a2a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 3h14v18l-3-2-3 2-3-2-3 2V3z" /><line x1="9" y1="8" x2="15" y2="8" /><line x1="9" y1="12" x2="15" y2="12" /></svg>
+                      ) : (
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4a8a2a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                      )}
+                    </div>
                   </div>
-                  <div style={{ background: "rgba(106,191,71,0.2)", border: "1px solid rgba(106,191,71,0.35)", borderRadius: "100px", padding: "3px 10px", fontSize: "9px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                    Active
-                  </div>
-                </div>
 
-                {/* Card body */}
-                <div style={{ padding: "18px" }}>
-                  <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "20px", color: "#111", lineHeight: 1.2, marginBottom: "10px" }}>
+                  <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "21px", color: "#111", lineHeight: 1.2, marginBottom: "10px" }}>
                     {card.title}
                   </h3>
-                  <p style={{ fontSize: "13px", color: "#6b6b6b", lineHeight: 1.65, marginBottom: "16px" }}>
+                  <p style={{ fontSize: "13.5px", color: "#6b6b6b", lineHeight: 1.65, marginBottom: "16px" }}>
                     {card.desc}
                   </p>
 
-                  {/* Mini data grid */}
-                  <div style={{ display: "grid", gridTemplateColumns: card.cols === 3 ? "1fr 1fr 1fr" : "1fr 1fr", gap: "8px", marginBottom: "14px" }}>
-                    {card.metrics.map((m) => (
-                      <div key={m.label} style={{ background: "#f5f5f0", borderRadius: "10px", padding: "10px 12px" }}>
-                        <div style={{ fontSize: "9px", color: "#aaa", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>{m.label}</div>
-                        <div style={{ fontSize: "15px", fontWeight: 700, color: "#111", fontFamily: "'Instrument Serif', serif" }}>{m.value}</div>
+                  {/* Stat strip */}
+                  <div style={{ display: "flex", background: "#f8f9f6", borderRadius: "12px", overflow: "hidden", border: "1px solid #eef0ec" }}>
+                    {card.metrics.map((m, idx) => (
+                      <div key={m.label} style={{ flex: 1, padding: "12px 10px", borderLeft: idx === 0 ? "none" : "1px solid #e8e8e4" }}>
+                        <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "17px", fontWeight: 700, color: "#111", marginBottom: "3px" }}>{m.value}</div>
+                        <div style={{ fontSize: "9px", color: "#9a9a9a", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>{m.label}</div>
                       </div>
                     ))}
                   </div>
 
                   {/* Status row */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px", paddingTop: "12px", borderTop: "1px solid #f0f0f0" }}>
-                    <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", flexShrink: 0 }} />
-                    <span style={{ fontSize: "11px", fontWeight: 600, color: "#6b6b6b" }}>{card.status}</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "7px", marginTop: "14px" }}>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6abf47" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                    <span style={{ fontSize: "12px", fontWeight: 600, color: "#4a8a2a" }}>{card.status}</span>
                   </div>
                 </div>
               </motion.div>
