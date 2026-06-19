@@ -95,6 +95,7 @@ const mtdQuestions = [
 function MTDCalculator() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [showResult, setShowResult] = useState(false)
+  const isMobile = useIsMobile()
 
   const allAnswered = mtdQuestions.every(q => answers[q.id])
 
@@ -105,7 +106,7 @@ function MTDCalculator() {
   }
 
   return (
-    <div style={{ background: "white", borderRadius: "20px", padding: "40px", border: "1px solid #e8e8e4", maxWidth: "700px", margin: "0 auto" }}>
+    <div style={{ background: "white", borderRadius: "20px", padding: isMobile ? "24px 20px" : "40px", border: "1px solid #e8e8e4", maxWidth: "700px", margin: "0 auto" }}>
       <div style={{ textAlign: "center", marginBottom: "36px" }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#f0fae8", border: "1px solid rgba(106,191,71,0.3)", borderRadius: "100px", padding: "6px 16px", marginBottom: "16px" }}>
           <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", display: "inline-block" }} />

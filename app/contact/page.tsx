@@ -270,65 +270,69 @@ export default function ContactPage() {
                 </a>
               ))}
 
-              {/* Map placeholder */}
-              <div style={{
-                background: "white", borderRadius: "16px",
-                border: "1px solid #e8e8e4", overflow: "hidden",
-              }}>
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56516.31625951567!2d85.29111865!3d27.70895385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb198a307baabf%3A0xb96f1e81c2b77a90!2sKathmandu%2C%20Nepal!5e0!3m2!1sen!2s!4v1234567890"
-                  width="100%"
-                  height="180"
-                  style={{ border: 0, display: "block" }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-                <div style={{ padding: "14px 20px", display: "flex", alignItems: "center", gap: "8px" }}>
-                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47" }} />
-                  <span style={{ fontSize: "13px", fontWeight: 600, color: "#111" }}>Kathmandu, Nepal</span>
-                  <span style={{ fontSize: "12px", color: "#aaa", marginLeft: "4px" }}>Serving UK clients remotely</span>
+              {/* Map placeholder — desktop only */}
+              {!isMobile && (
+                <div style={{
+                  background: "white", borderRadius: "16px",
+                  border: "1px solid #e8e8e4", overflow: "hidden",
+                }}>
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56516.31625951567!2d85.29111865!3d27.70895385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb198a307baabf%3A0xb96f1e81c2b77a90!2sKathmandu%2C%20Nepal!5e0!3m2!1sen!2s!4v1234567890"
+                    width="100%"
+                    height="180"
+                    style={{ border: 0, display: "block" }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                  <div style={{ padding: "14px 20px", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47" }} />
+                    <span style={{ fontSize: "13px", fontWeight: 600, color: "#111" }}>Kathmandu, Nepal</span>
+                    <span style={{ fontSize: "12px", color: "#aaa", marginLeft: "4px" }}>Serving UK clients remotely</span>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Social links */}
-              <div style={{ background: "white", borderRadius: "16px", padding: "20px 24px", border: "1px solid #e8e8e4" }}>
-                <div style={{ fontSize: "11px", fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "16px" }}>Follow Us</div>
-                <div style={{ display: "flex", gap: "10px" }}>
-                  {[
-                    { label: "LinkedIn", color: "#0077b5" },
-                    { label: "Twitter", color: "#1da1f2" },
-                    { label: "Instagram", color: "#e1306c" },
-                    { label: "Facebook", color: "#1877f2" },
-                  ].map((s) => (
-                    <a
-                      key={s.label}
-                      href="#"
-                      style={{
-                        flex: 1, padding: "10px 8px", borderRadius: "10px",
-                        border: "1px solid #e8e8e4", fontSize: "12px",
-                        fontWeight: 700, color: "#6b6b6b",
-                        textDecoration: "none", textAlign: "center",
-                        transition: "all 0.2s",
-                      }}
-                      onMouseEnter={e => {
-                        const el = e.currentTarget as HTMLElement
-                        el.style.borderColor = s.color
-                        el.style.color = s.color
-                        el.style.background = `${s.color}10`
-                      }}
-                      onMouseLeave={e => {
-                        const el = e.currentTarget as HTMLElement
-                        el.style.borderColor = "#e8e8e4"
-                        el.style.color = "#6b6b6b"
-                        el.style.background = "transparent"
-                      }}
-                    >
-                      {s.label}
-                    </a>
-                  ))}
+              {/* Social links — desktop only */}
+              {!isMobile && (
+                <div style={{ background: "white", borderRadius: "16px", padding: "20px 24px", border: "1px solid #e8e8e4" }}>
+                  <div style={{ fontSize: "11px", fontWeight: 700, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "16px" }}>Follow Us</div>
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    {[
+                      { label: "LinkedIn", color: "#0077b5" },
+                      { label: "Twitter", color: "#1da1f2" },
+                      { label: "Instagram", color: "#e1306c" },
+                      { label: "Facebook", color: "#1877f2" },
+                    ].map((s) => (
+                      <a
+                        key={s.label}
+                        href="#"
+                        style={{
+                          flex: 1, padding: "10px 8px", borderRadius: "10px",
+                          border: "1px solid #e8e8e4", fontSize: "12px",
+                          fontWeight: 700, color: "#6b6b6b",
+                          textDecoration: "none", textAlign: "center",
+                          transition: "all 0.2s",
+                        }}
+                        onMouseEnter={e => {
+                          const el = e.currentTarget as HTMLElement
+                          el.style.borderColor = s.color
+                          el.style.color = s.color
+                          el.style.background = `${s.color}10`
+                        }}
+                        onMouseLeave={e => {
+                          const el = e.currentTarget as HTMLElement
+                          el.style.borderColor = "#e8e8e4"
+                          el.style.color = "#6b6b6b"
+                          el.style.background = "transparent"
+                        }}
+                      >
+                        {s.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

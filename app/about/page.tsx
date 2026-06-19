@@ -120,7 +120,7 @@ export default function AboutPage() {
               gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
               gap: "1px", background: "#e8e8e4",
               borderRadius: "16px", overflow: "hidden",
-              transform: "translateY(-32px)",
+              transform: isMobile ? "translateY(-12px)" : "translateY(-32px)",
               boxShadow: "0 8px 40px rgba(0,0,0,0.08)",
             }}>
               {[
