@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const services = [
   {
@@ -213,19 +214,21 @@ function GeometricIllustration() {
 }
 
 export default function Services() {
+  const isMobile = useIsMobile()
+
   return (
     <section
       style={{
         background: "linear-gradient(180deg, #0f1f0f 0%, #1a3318 50%, #0f1f0f 100%)",
-        padding: "120px 0",
+        padding: isMobile ? "60px 0" : "120px 0",
       }}
       id="services"
     >
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 64px" }}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
 
         <div style={{
-          display: "grid", gridTemplateColumns: "1fr 1fr",
-          gap: "80px", alignItems: "center", marginBottom: "96px",
+          display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+          gap: isMobile ? "32px" : "80px", alignItems: "center", marginBottom: isMobile ? "48px" : "96px",
         }}>
           <div>
             <div style={{
@@ -264,12 +267,12 @@ export default function Services() {
             </div>
           </div>
 
-          <GeometricIllustration />
+          {!isMobile && <GeometricIllustration />}
         </div>
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
           gap: "1px",
           background: "rgba(106,191,71,0.08)",
           borderRadius: "20px",

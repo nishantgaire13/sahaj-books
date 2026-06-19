@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const services = [
   {
@@ -196,6 +197,8 @@ function MTDCalculator() {
 }
 
 export default function PricingPage() {
+  const isMobile = useIsMobile()
+
   return (
     <>
       <Navbar />
@@ -204,7 +207,8 @@ export default function PricingPage() {
         {/* Hero */}
         <section style={{
           background: "linear-gradient(180deg, #1a3318 0%, #2d5a1b 60%, #f5f5f0 100%)",
-          paddingTop: "140px", paddingBottom: "100px",
+          paddingTop: isMobile ? "100px" : "140px",
+          paddingBottom: isMobile ? "60px" : "100px",
           position: "relative", overflow: "hidden",
         }}>
           <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.08, pointerEvents: "none" }}>
@@ -212,15 +216,15 @@ export default function PricingPage() {
             <rect width="100%" height="100%" fill="url(#pricing-dots)" />
           </svg>
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
-            style={{ maxWidth: "700px", margin: "0 auto", padding: "0 64px", textAlign: "center", position: "relative", zIndex: 1 }}>
+            style={{ maxWidth: "700px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px", textAlign: "center", position: "relative", zIndex: 1 }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(106,191,71,0.12)", border: "1px solid rgba(106,191,71,0.25)", borderRadius: "100px", padding: "6px 16px", marginBottom: "28px" }}>
               <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", display: "inline-block" }} />
               <span style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, letterSpacing: "0.1em" }}>Pricing</span>
             </div>
-            <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(40px, 6vw, 64px)", color: "white", lineHeight: 1.1, letterSpacing: "-0.5px", marginBottom: "20px" }}>
+            <h1 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(36px, 6vw, 64px)", color: "white", lineHeight: 1.1, letterSpacing: "-0.5px", marginBottom: "20px" }}>
               Simple, transparent<br /><span style={{ color: "#a8e070", fontStyle: "italic" }}>pricing</span>
             </h1>
-            <p style={{ fontSize: "18px", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: "16px" }}>
+            <p style={{ fontSize: isMobile ? "16px" : "18px", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: "16px" }}>
               No hidden fees, no surprises. All prices are exclusive of VAT at 20%.
             </p>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "10px", background: "rgba(106,191,71,0.1)", border: "1px solid rgba(106,191,71,0.25)", borderRadius: "100px", padding: "10px 20px" }}>
@@ -238,7 +242,7 @@ export default function PricingPage() {
         </section>
 
         {/* VAT Notice */}
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "24px 48px 0" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "20px 20px 0" : "24px 48px 0" }}>
           <div style={{ background: "#1a3318", borderRadius: "12px", padding: "14px 20px", display: "flex", alignItems: "center", gap: "12px" }}>
             <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "rgba(106,191,71,0.15)", border: "1px solid rgba(106,191,71,0.25)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#6abf47" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -252,22 +256,22 @@ export default function PricingPage() {
         </div>
 
         {/* Per-service pricing */}
-        <section style={{ padding: "72px 0 0" }}>
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 48px" }}>
-            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+        <section style={{ padding: isMobile ? "48px 0 0" : "72px 0 0" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px" }}>
+            <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "48px" }}>
               <div style={{ fontSize: "13px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: "14px" }}>Individual Services</div>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(32px, 4vw, 46px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.5px" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 4vw, 46px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.5px" }}>
                 Pay only for what you need
               </h2>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", marginBottom: "80px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "16px" : "20px", marginBottom: isMobile ? "48px" : "80px" }}>
               {services.map((s, i) => (
                 <motion.div key={s.name}
                   initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                   whileHover={{ y: -4 }}
-                  style={{ background: "white", borderRadius: "16px", padding: "28px", border: "1px solid #e8e8e4", cursor: "default" }}
+                  style={{ background: "white", borderRadius: "16px", padding: isMobile ? "22px" : "28px", border: "1px solid #e8e8e4", cursor: "default" }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
                     <div style={{ fontSize: "14px", fontWeight: 700, color: "#111" }}>{s.name}</div>
@@ -287,16 +291,16 @@ export default function PricingPage() {
 
         {/* Bundle Plans */}
         <section style={{ padding: "0 0 80px" }}>
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 48px" }}>
-            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px" }}>
+            <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "48px" }}>
               <div style={{ fontSize: "13px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: "14px" }}>Bundle Plans</div>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(32px, 4vw, 46px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.5px", marginBottom: "12px" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 4vw, 46px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.5px", marginBottom: "12px" }}>
                 Or bundle and save
               </h2>
               <p style={{ fontSize: "16px", color: "#6b6b6b" }}>Combine services under one monthly plan for a simpler billing experience.</p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px", marginBottom: "48px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "20px" : "24px", marginBottom: isMobile ? "32px" : "48px" }}>
               {plans.map((plan, i) => (
                 <motion.div key={plan.name}
                   initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
@@ -304,11 +308,11 @@ export default function PricingPage() {
                   whileHover={{ y: plan.highlight ? 0 : -6 }}
                   style={{
                     background: plan.highlight ? "#1a3318" : "white",
-                    borderRadius: "20px", padding: "36px 32px",
+                    borderRadius: "20px", padding: isMobile ? "28px 24px" : "36px 32px",
                     border: plan.highlight ? "none" : "1px solid #e8e8e4",
                     position: "relative",
                     boxShadow: plan.highlight ? "0 32px 80px rgba(26,51,24,0.3)" : "0 4px 24px rgba(0,0,0,0.04)",
-                    transform: plan.highlight ? "scale(1.03)" : "none",
+                    transform: (!isMobile && plan.highlight) ? "scale(1.03)" : "none",
                     cursor: "default",
                   }}
                 >
@@ -319,7 +323,7 @@ export default function PricingPage() {
                   )}
                   <div style={{ fontSize: "12px", fontWeight: 700, color: plan.highlight ? "rgba(255,255,255,0.4)" : "#aaa", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: "10px" }}>{plan.name}</div>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "6px" }}>
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "52px", color: plan.highlight ? "white" : "#111", lineHeight: 1 }}>{plan.price}</span>
+                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "44px" : "52px", color: plan.highlight ? "white" : "#111", lineHeight: 1 }}>{plan.price}</span>
                     <span style={{ fontSize: "14px", color: plan.highlight ? "rgba(255,255,255,0.35)" : "#aaa" }}>{plan.period} + VAT</span>
                   </div>
                   <p style={{ fontSize: "13px", color: plan.highlight ? "rgba(255,255,255,0.45)" : "#6b6b6b", marginBottom: "24px", lineHeight: 1.6 }}>{plan.desc}</p>
@@ -347,16 +351,27 @@ export default function PricingPage() {
 
             {/* Free consultation banner */}
             <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              style={{ background: "linear-gradient(135deg, #1a3318 0%, #2d5a1b 100%)", borderRadius: "20px", padding: "36px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "80px" }}>
+              style={{
+                background: "linear-gradient(135deg, #1a3318 0%, #2d5a1b 100%)",
+                borderRadius: "20px",
+                padding: isMobile ? "28px 24px" : "36px 40px",
+                display: "flex",
+                flexDirection: isMobile ? "column" : "row",
+                justifyContent: "space-between",
+                alignItems: isMobile ? "flex-start" : "center",
+                gap: isMobile ? "20px" : "0",
+                marginBottom: "80px",
+              }}>
               <div>
                 <div style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: "8px" }}>Included with every plan</div>
-                <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "26px", color: "white", marginBottom: "6px" }}>Free 15-minute ACCA consultation</h3>
+                <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "22px" : "26px", color: "white", marginBottom: "6px" }}>Free 15-minute ACCA consultation</h3>
                 <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)" }}>Speak directly with a qualified ACCA professional before you commit to anything.</p>
               </div>
               <a href="/contact" style={{
                 background: "#6abf47", color: "white", fontWeight: 700,
                 fontSize: "14px", padding: "14px 28px", borderRadius: "12px",
-                textDecoration: "none", whiteSpace: "nowrap" as const, flexShrink: 0, marginLeft: "32px",
+                textDecoration: "none", whiteSpace: "nowrap" as const, flexShrink: 0, marginLeft: isMobile ? "0" : "32px",
+                display: "block", textAlign: "center" as const,
               }}>
                 Book free call
               </a>
@@ -366,10 +381,10 @@ export default function PricingPage() {
 
         {/* MTD Calculator */}
         <section style={{ padding: "0 0 80px", background: "#f5f5f0" }}>
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 48px" }}>
-            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px" }}>
+            <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "48px" }}>
               <div style={{ fontSize: "13px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: "14px" }}>MTD Check</div>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(32px, 4vw, 46px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.5px", marginBottom: "12px" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 4vw, 46px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.5px", marginBottom: "12px" }}>
                 Do you need to use Making Tax Digital?
               </h2>
               <p style={{ fontSize: "16px", color: "#6b6b6b", maxWidth: "520px", margin: "0 auto" }}>
@@ -382,13 +397,28 @@ export default function PricingPage() {
 
         {/* Custom quote */}
         <section style={{ padding: "0 0 80px" }}>
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 48px" }}>
-            <div style={{ background: "white", borderRadius: "16px", padding: "28px 32px", border: "1px solid #e8e8e4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px" }}>
+            <div style={{
+              background: "white", borderRadius: "16px",
+              padding: isMobile ? "24px" : "28px 32px",
+              border: "1px solid #e8e8e4",
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              justifyContent: "space-between",
+              alignItems: isMobile ? "flex-start" : "center",
+              gap: isMobile ? "20px" : "0",
+            }}>
               <div>
                 <div style={{ fontSize: "16px", fontWeight: 700, color: "#111", marginBottom: "4px" }}>Need a custom plan?</div>
                 <div style={{ fontSize: "14px", color: "#6b6b6b" }}>We work with larger businesses and accounting firms. Contact us for a bespoke quote.</div>
               </div>
-              <a href="/contact" style={{ background: "#f0fae8", color: "#1a3318", fontWeight: 700, fontSize: "14px", padding: "12px 24px", borderRadius: "10px", textDecoration: "none", whiteSpace: "nowrap" as const, border: "1px solid rgba(106,191,71,0.3)", flexShrink: 0, marginLeft: "24px" }}>
+              <a href="/contact" style={{
+                background: "#f0fae8", color: "#1a3318", fontWeight: 700, fontSize: "14px",
+                padding: "12px 24px", borderRadius: "10px", textDecoration: "none",
+                whiteSpace: "nowrap" as const, border: "1px solid rgba(106,191,71,0.3)",
+                flexShrink: 0, marginLeft: isMobile ? "0" : "24px",
+                display: "block", textAlign: "center" as const,
+              }}>
                 Get a custom quote
               </a>
             </div>

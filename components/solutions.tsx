@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const solutions = [
   {
@@ -376,12 +377,14 @@ function PayrollMockup() {
 }
 
 export default function Solutions() {
+  const isMobile = useIsMobile()
+
   return (
-    <section style={{ background: "white", padding: "120px 0" }} id="solutions">
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 64px" }}>
+    <section style={{ background: "white", padding: isMobile ? "60px 0" : "120px 0" }} id="solutions">
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: "96px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }}>
+        <div style={{ marginBottom: isMobile ? "48px" : "96px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "32px" : "80px", alignItems: "center" }}>
           <div>
             <div style={{
               fontSize: "13px", fontWeight: 700,
@@ -424,13 +427,13 @@ export default function Solutions() {
             key={sol.label}
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "80px",
+              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+              gap: isMobile ? "32px" : "80px",
               alignItems: "center",
-              marginBottom: "120px",
+              marginBottom: isMobile ? "64px" : "120px",
             }}
           >
-            <div style={{ order: i % 2 === 1 ? 2 : 1 }}>
+            <div style={{ order: isMobile ? 2 : (i % 2 === 1 ? 2 : 1) }}>
               <div style={{
                 fontSize: "11px", fontWeight: 700,
                 color: "#aaa", textTransform: "uppercase",
@@ -467,7 +470,7 @@ export default function Solutions() {
               </button>
             </div>
 
-            <div style={{ order: i % 2 === 1 ? 1 : 2 }}>
+            <div style={{ order: isMobile ? 1 : (i % 2 === 1 ? 1 : 2) }}>
               {sol.mockup === "vat" ? <VATMockup /> : <PayrollMockup />}
             </div>
           </div>

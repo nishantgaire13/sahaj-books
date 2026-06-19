@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { TestimonialsColumn } from "@/components/ui/testimonials-columns"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const testimonials = [
   {
@@ -74,16 +75,18 @@ const secondColumn = testimonials.slice(3, 6)
 const thirdColumn = testimonials.slice(6, 9)
 
 export default function Testimonials() {
+  const isMobile = useIsMobile()
+
   return (
-    <section style={{ background: "#f5f5f0", padding: "120px 0", position: "relative" }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 64px" }}>
+    <section style={{ background: "#f5f5f0", padding: isMobile ? "60px 0" : "120px 0", position: "relative" }}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: "center", marginBottom: "72px" }}
+          style={{ textAlign: "center", marginBottom: isMobile ? "36px" : "72px" }}
         >
           <div style={{
             fontSize: "13px", fontWeight: 700, color: "#6abf47",
@@ -107,19 +110,32 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "24px",
-          maxHeight: "720px",
-          overflow: "hidden",
-          maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-        }}>
-          <TestimonialsColumn testimonials={firstColumn} duration={18} />
-          <TestimonialsColumn testimonials={secondColumn} duration={22} />
-          <TestimonialsColumn testimonials={thirdColumn} duration={20} />
-        </div>
+        {isMobile ? (
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            maxHeight: "720px",
+            overflow: "hidden",
+            maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+          }}>
+            <TestimonialsColumn testimonials={firstColumn} duration={18} />
+          </div>
+        ) : (
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "24px",
+            maxHeight: "720px",
+            overflow: "hidden",
+            maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+          }}>
+            <TestimonialsColumn testimonials={firstColumn} duration={18} />
+            <TestimonialsColumn testimonials={secondColumn} duration={22} />
+            <TestimonialsColumn testimonials={thirdColumn} duration={20} />
+          </div>
+        )}
       </div>
     </section>
   )

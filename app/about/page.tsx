@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const team = [
   { initials: "N", name: "Nishant Gaire", role: "Co-founder", bg: "#1a3318", desc: "Specialises in UK corporation tax, year-end accounts and financial reporting." },
@@ -31,6 +32,8 @@ function FloatingCard({ children, delay = 0, style = {} }: { children: React.Rea
 }
 
 export default function AboutPage() {
+  const isMobile = useIsMobile()
+
   return (
     <>
       <Navbar />
@@ -39,7 +42,8 @@ export default function AboutPage() {
         {/* Hero */}
         <section style={{
           background: "linear-gradient(180deg, #1a3318 0%, #2d5a1b 60%, #f5f5f0 100%)",
-          paddingTop: "140px", paddingBottom: "120px",
+          paddingTop: isMobile ? "100px" : "140px",
+          paddingBottom: isMobile ? "60px" : "120px",
           position: "relative", overflow: "hidden",
         }}>
           {/* Dot pattern */}
@@ -52,31 +56,33 @@ export default function AboutPage() {
             <rect width="100%" height="100%" fill="url(#about-dots)" />
           </svg>
 
-          {/* Rotating rings */}
-          <div style={{ position: "absolute", top: "50%", right: "10%", transform: "translateY(-50%)", pointerEvents: "none" }}>
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              style={{ width: "300px", height: "300px", border: "1px solid rgba(106,191,71,0.15)", borderRadius: "50%" }}
-            />
-            <motion.div
-              animate={{ rotate: [0, -360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              style={{ position: "absolute", top: "50px", left: "50px", width: "200px", height: "200px", border: "1px solid rgba(106,191,71,0.2)", borderRadius: "50%" }}
-            />
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              style={{
-                position: "absolute", top: "100px", left: "100px",
-                width: "100px", height: "100px",
-                background: "rgba(106,191,71,0.1)", borderRadius: "50%",
-                border: "1px solid rgba(106,191,71,0.3)",
-              }}
-            />
-          </div>
+          {/* Rotating rings — desktop only */}
+          {!isMobile && (
+            <div style={{ position: "absolute", top: "50%", right: "10%", transform: "translateY(-50%)", pointerEvents: "none" }}>
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                style={{ width: "300px", height: "300px", border: "1px solid rgba(106,191,71,0.15)", borderRadius: "50%" }}
+              />
+              <motion.div
+                animate={{ rotate: [0, -360] }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                style={{ position: "absolute", top: "50px", left: "50px", width: "200px", height: "200px", border: "1px solid rgba(106,191,71,0.2)", borderRadius: "50%" }}
+              />
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  position: "absolute", top: "100px", left: "100px",
+                  width: "100px", height: "100px",
+                  background: "rgba(106,191,71,0.1)", borderRadius: "50%",
+                  border: "1px solid rgba(106,191,71,0.3)",
+                }}
+              />
+            </div>
+          )}
 
-          <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 64px", position: "relative", zIndex: 1 }}>
+          <div style={{ maxWidth: "900px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px", position: "relative", zIndex: 1 }}>
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -92,15 +98,15 @@ export default function AboutPage() {
               </div>
               <h1 style={{
                 fontFamily: "'Instrument Serif', serif",
-                fontSize: "clamp(40px, 6vw, 64px)",
+                fontSize: "clamp(36px, 6vw, 64px)",
                 color: "white", lineHeight: 1.1,
                 letterSpacing: "-0.5px", marginBottom: "24px",
               }}>
                 Built by accountants,<br />
                 <span style={{ color: "#a8e070", fontStyle: "italic" }}>for UK businesses</span>
               </h1>
-              <p style={{ fontSize: "18px", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, maxWidth: "580px" }}>
-                We built SahajBooks because UK small businesses were overpaying for accounting work that deserved better. A dedicated team, faster turnaround, and a fraction of the cost,that is what we set out to deliver. And that is exactly what we do.
+              <p style={{ fontSize: isMobile ? "16px" : "18px", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, maxWidth: "580px" }}>
+                We built SahajBooks because UK small businesses were overpaying for accounting work that deserved better. A dedicated team, faster turnaround, and a fraction of the cost — that is what we set out to deliver. And that is exactly what we do.
               </p>
             </motion.div>
           </div>
@@ -108,9 +114,10 @@ export default function AboutPage() {
 
         {/* Stats strip */}
         <section style={{ background: "white", padding: "0" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 64px" }}>
+          <div style={{ maxWidth: "900px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
             <div style={{
-              display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
+              display: "grid",
+              gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
               gap: "1px", background: "#e8e8e4",
               borderRadius: "16px", overflow: "hidden",
               transform: "translateY(-32px)",
@@ -128,9 +135,9 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  style={{ background: "white", padding: "24px", textAlign: "center" }}
+                  style={{ background: "white", padding: isMobile ? "20px 16px" : "24px", textAlign: "center" }}
                 >
-                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: "36px", color: "#1a3318", lineHeight: 1 }}>{s.num}</div>
+                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "28px" : "36px", color: "#1a3318", lineHeight: 1 }}>{s.num}</div>
                   <div style={{ fontSize: "12px", color: "#aaa", fontWeight: 600, marginTop: "6px" }}>{s.label}</div>
                 </motion.div>
               ))}
@@ -139,12 +146,12 @@ export default function AboutPage() {
         </section>
 
         {/* Who we are */}
-        <section style={{ padding: "60px 0 80px", background: "white" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 64px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "center" }}>
+        <section style={{ padding: isMobile ? "24px 0 48px" : "60px 0 80px", background: "white" }}>
+          <div style={{ maxWidth: "900px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "32px" : "48px", alignItems: "center" }}>
               <FloatingCard delay={0}>
                 <div style={{ fontSize: "13px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "16px" }}>Who we are</div>
-                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "36px", color: "#111", marginBottom: "20px", lineHeight: 1.2 }}>
+                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "28px" : "36px", color: "#111", marginBottom: "20px", lineHeight: 1.2 }}>
                   A small team with a big commitment
                 </h2>
                 <p style={{ fontSize: "15px", color: "#6b6b6b", lineHeight: 1.8, marginBottom: "16px" }}>
@@ -187,15 +194,15 @@ export default function AboutPage() {
         </section>
 
         {/* Values */}
-        <section style={{ padding: "80px 0", background: "#f5f5f0" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 64px" }}>
-            <div style={{ textAlign: "center", marginBottom: "56px" }}>
+        <section style={{ padding: isMobile ? "48px 0" : "80px 0", background: "#f5f5f0" }}>
+          <div style={{ maxWidth: "900px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
+            <div style={{ textAlign: "center", marginBottom: isMobile ? "36px" : "56px" }}>
               <div style={{ fontSize: "13px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "16px" }}>Our Values</div>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "40px", color: "#111", lineHeight: 1.1 }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "32px" : "40px", color: "#111", lineHeight: 1.1 }}>
                 What we stand for
               </h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "20px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "20px" }}>
               {values.map((v, i) => (
                 <motion.div
                   key={v.title}
@@ -206,7 +213,7 @@ export default function AboutPage() {
                   whileHover={{ y: -4, boxShadow: "0 16px 48px rgba(26,51,24,0.1)" }}
                   style={{
                     background: "white", borderRadius: "16px",
-                    padding: "28px 32px", border: "1px solid #e8e8e4",
+                    padding: isMobile ? "24px" : "28px 32px", border: "1px solid #e8e8e4",
                     cursor: "default",
                   }}
                 >
@@ -220,15 +227,15 @@ export default function AboutPage() {
         </section>
 
         {/* CTA */}
-        <section style={{ padding: "80px 0", background: "white" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 64px" }}>
+        <section style={{ padding: isMobile ? "48px 0" : "80px 0", background: "white" }}>
+          <div style={{ maxWidth: "900px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               style={{
                 background: "linear-gradient(135deg, #1a3318 0%, #2d5a1b 100%)",
-                borderRadius: "24px", padding: "56px",
+                borderRadius: "24px", padding: isMobile ? "40px 28px" : "56px",
                 textAlign: "center", position: "relative", overflow: "hidden",
               }}
             >
@@ -237,13 +244,13 @@ export default function AboutPage() {
                 background: "radial-gradient(circle at 70% 50%, rgba(106,191,71,0.1) 0%, transparent 60%)",
                 pointerEvents: "none",
               }} />
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "36px", color: "white", marginBottom: "16px", position: "relative", zIndex: 1 }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "28px" : "36px", color: "white", marginBottom: "16px", position: "relative", zIndex: 1 }}>
                 Ready to work with us?
               </h2>
               <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.5)", marginBottom: "32px", position: "relative", zIndex: 1 }}>
                 Get a free quote today. No contract, no setup fee.
               </p>
-              
+
               <a
                 href="/contact"
                 style={{

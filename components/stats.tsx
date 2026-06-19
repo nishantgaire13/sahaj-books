@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef, useEffect, useState } from "react"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0)
@@ -40,12 +41,14 @@ const filings = [
 ]
 
 export default function Stats() {
+  const isMobile = useIsMobile()
+
   return (
-    <section style={{ background: "#ffffff", padding: "120px 0" }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 64px" }}>
+    <section style={{ background: "#ffffff", padding: isMobile ? "60px 0" : "120px 0" }}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
 
         {/* Top label + heading centered */}
-        <div style={{ textAlign: "center", marginBottom: "80px" }}>
+        <div style={{ textAlign: "center", marginBottom: isMobile ? "40px" : "80px" }}>
           <div style={{
             fontSize: "13px", fontWeight: 700, color: "#6abf47",
             textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "16px",
@@ -70,7 +73,7 @@ export default function Stats() {
 
         {/* Stats row */}
         <div style={{
-          display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
+          display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
           gap: "1px", background: "#e8e8e4",
           borderRadius: "20px", overflow: "hidden",
           border: "1px solid #e8e8e4",
@@ -86,7 +89,7 @@ export default function Stats() {
               whileHover={{ backgroundColor: "#f0fae8" }}
               style={{
                 background: "white",
-                padding: "40px 32px",
+                padding: isMobile ? "24px 16px" : "40px 32px",
                 textAlign: "center",
               }}
             >
@@ -112,7 +115,7 @@ export default function Stats() {
 
         {/* Bottom — two columns */}
         <div style={{
-          display: "grid", gridTemplateColumns: "1fr 1fr",
+          display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
           gap: "32px", alignItems: "stretch",
         }}>
 

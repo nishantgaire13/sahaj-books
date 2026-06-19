@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const rows = [
   { feature: "Pricing", ours: "40–60% below UK market", theirs: "£200–500+/month" },
@@ -43,11 +44,13 @@ function Cross() {
 }
 
 export default function Comparison() {
-  return (
-    <section style={{ background: "#f5f5f0", padding: "120px 0" }}>
-      <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 64px" }}>
+  const isMobile = useIsMobile()
 
-        <div style={{ textAlign: "center", marginBottom: "64px" }}>
+  return (
+    <section style={{ background: "#f5f5f0", padding: isMobile ? "60px 0" : "120px 0" }}>
+      <div style={{ maxWidth: "900px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
+
+        <div style={{ textAlign: "center", marginBottom: isMobile ? "36px" : "64px" }}>
           <div style={{
             fontSize: "13px", fontWeight: 700, color: "#6abf47",
             textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "16px",
@@ -70,84 +73,168 @@ export default function Comparison() {
           </p>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{
-            background: "white",
-            borderRadius: "20px",
-            overflow: "hidden",
-            border: "1px solid #e8e8e4",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.06)",
-          }}
-        >
-          <div style={{
-            display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
-            background: "#1a3318",
-          }}>
-            <div style={{
-              padding: "18px 28px", fontSize: "12px", fontWeight: 700,
-              color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em",
-            }}>
-              Feature
-            </div>
-            <div style={{
-              padding: "18px 28px", fontSize: "12px", fontWeight: 700,
-              color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.08em",
-              background: "rgba(106,191,71,0.1)",
-              display: "flex", alignItems: "center", gap: "8px",
-            }}>
-              <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47" }} />
-              SahajBooks
-            </div>
-            <div style={{
-              padding: "18px 28px", fontSize: "12px", fontWeight: 700,
-              color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em",
-            }}>
-              Typical UK Firm
-            </div>
-          </div>
-
-          {rows.map((row, i) => (
+        {isMobile ? (
+          <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch", margin: "0 -20px", padding: "0 20px" }}>
             <motion.div
-              key={row.feature}
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.06 }}
+              transition={{ duration: 0.6 }}
               style={{
-                display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
-                borderBottom: i < rows.length - 1 ? "1px solid #e8e8e4" : "none",
-                background: i % 2 === 0 ? "white" : "#fafafa",
+                background: "white",
+                borderRadius: "20px",
+                overflow: "hidden",
+                border: "1px solid #e8e8e4",
+                boxShadow: "0 8px 40px rgba(0,0,0,0.06)",
+                minWidth: "560px",
               }}
             >
               <div style={{
-                padding: "16px 28px",
-                fontSize: "14px", fontWeight: 600, color: "#111",
-                display: "flex", alignItems: "center",
+                display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+                background: "#1a3318",
               }}>
-                {row.feature}
+                <div style={{
+                  padding: "18px 28px", fontSize: "12px", fontWeight: 700,
+                  color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em",
+                }}>
+                  Feature
+                </div>
+                <div style={{
+                  padding: "18px 28px", fontSize: "12px", fontWeight: 700,
+                  color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.08em",
+                  background: "rgba(106,191,71,0.1)",
+                  display: "flex", alignItems: "center", gap: "8px",
+                }}>
+                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47" }} />
+                  SahajBooks
+                </div>
+                <div style={{
+                  padding: "18px 28px", fontSize: "12px", fontWeight: 700,
+                  color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em",
+                }}>
+                  Typical UK Firm
+                </div>
               </div>
-              <div style={{
-                padding: "16px 28px",
-                background: i % 2 === 0 ? "rgba(106,191,71,0.03)" : "rgba(106,191,71,0.05)",
-                display: "flex", alignItems: "center", gap: "10px",
-              }}>
-                <Check />
-                <span style={{ fontSize: "14px", fontWeight: 600, color: "#1a3318" }}>{row.ours}</span>
-              </div>
-              <div style={{
-                padding: "16px 28px",
-                display: "flex", alignItems: "center", gap: "10px",
-              }}>
-                <Cross />
-                <span style={{ fontSize: "14px", color: "#6b6b6b" }}>{row.theirs}</span>
-              </div>
+
+              {rows.map((row, i) => (
+                <motion.div
+                  key={row.feature}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.06 }}
+                  style={{
+                    display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+                    borderBottom: i < rows.length - 1 ? "1px solid #e8e8e4" : "none",
+                    background: i % 2 === 0 ? "white" : "#fafafa",
+                  }}
+                >
+                  <div style={{
+                    padding: "12px 14px",
+                    fontSize: "12px", fontWeight: 600, color: "#111",
+                    display: "flex", alignItems: "center",
+                  }}>
+                    {row.feature}
+                  </div>
+                  <div style={{
+                    padding: "12px 14px",
+                    background: i % 2 === 0 ? "rgba(106,191,71,0.03)" : "rgba(106,191,71,0.05)",
+                    display: "flex", alignItems: "center", gap: "10px",
+                  }}>
+                    <Check />
+                    <span style={{ fontSize: "12px", fontWeight: 600, color: "#1a3318" }}>{row.ours}</span>
+                  </div>
+                  <div style={{
+                    padding: "12px 14px",
+                    display: "flex", alignItems: "center", gap: "10px",
+                  }}>
+                    <Cross />
+                    <span style={{ fontSize: "12px", color: "#6b6b6b" }}>{row.theirs}</span>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{
+              background: "white",
+              borderRadius: "20px",
+              overflow: "hidden",
+              border: "1px solid #e8e8e4",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.06)",
+            }}
+          >
+            <div style={{
+              display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+              background: "#1a3318",
+            }}>
+              <div style={{
+                padding: "18px 28px", fontSize: "12px", fontWeight: 700,
+                color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em",
+              }}>
+                Feature
+              </div>
+              <div style={{
+                padding: "18px 28px", fontSize: "12px", fontWeight: 700,
+                color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.08em",
+                background: "rgba(106,191,71,0.1)",
+                display: "flex", alignItems: "center", gap: "8px",
+              }}>
+                <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47" }} />
+                SahajBooks
+              </div>
+              <div style={{
+                padding: "18px 28px", fontSize: "12px", fontWeight: 700,
+                color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em",
+              }}>
+                Typical UK Firm
+              </div>
+            </div>
+
+            {rows.map((row, i) => (
+              <motion.div
+                key={row.feature}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                style={{
+                  display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+                  borderBottom: i < rows.length - 1 ? "1px solid #e8e8e4" : "none",
+                  background: i % 2 === 0 ? "white" : "#fafafa",
+                }}
+              >
+                <div style={{
+                  padding: "16px 28px",
+                  fontSize: "14px", fontWeight: 600, color: "#111",
+                  display: "flex", alignItems: "center",
+                }}>
+                  {row.feature}
+                </div>
+                <div style={{
+                  padding: "16px 28px",
+                  background: i % 2 === 0 ? "rgba(106,191,71,0.03)" : "rgba(106,191,71,0.05)",
+                  display: "flex", alignItems: "center", gap: "10px",
+                }}>
+                  <Check />
+                  <span style={{ fontSize: "14px", fontWeight: 600, color: "#1a3318" }}>{row.ours}</span>
+                </div>
+                <div style={{
+                  padding: "16px 28px",
+                  display: "flex", alignItems: "center", gap: "10px",
+                }}>
+                  <Cross />
+                  <span style={{ fontSize: "14px", color: "#6b6b6b" }}>{row.theirs}</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

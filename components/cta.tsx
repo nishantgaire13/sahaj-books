@@ -2,12 +2,15 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function CTA() {
+  const isMobile = useIsMobile()
+
   return (
     <section style={{
       background: "linear-gradient(135deg, #1a3318 0%, #2d5a1b 50%, #1a3318 100%)",
-      padding: "140px 0",
+      padding: isMobile ? "72px 0" : "140px 0",
       position: "relative",
       overflow: "hidden",
     }}>
@@ -36,7 +39,7 @@ export default function CTA() {
 
       <div style={{
         maxWidth: "800px", margin: "0 auto",
-        padding: "0 64px", textAlign: "center",
+        padding: isMobile ? "0 20px" : "0 64px", textAlign: "center",
         position: "relative", zIndex: 1,
       }}>
         <motion.div
@@ -49,7 +52,7 @@ export default function CTA() {
             display: "inline-flex", alignItems: "center", gap: "8px",
             background: "rgba(106,191,71,0.12)",
             border: "1px solid rgba(106,191,71,0.25)",
-            borderRadius: "100px", padding: "6px 16px", marginBottom: "36px",
+            borderRadius: "100px", padding: "6px 16px", marginBottom: isMobile ? "28px" : "36px",
           }}>
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", display: "inline-block" }} />
             <span style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase", letterSpacing: "0.1em" }}>
@@ -69,14 +72,21 @@ export default function CTA() {
 
           <p style={{
             fontSize: "18px", color: "rgba(255,255,255,0.5)",
-            lineHeight: 1.7, marginBottom: "48px",
-            maxWidth: "520px", margin: "0 auto 48px",
+            lineHeight: 1.7, marginBottom: isMobile ? "28px" : "48px",
+            maxWidth: "520px", margin: `0 auto ${isMobile ? "28px" : "48px"}`,
           }}>
             Join UK businesses already working with SahajBooks. Clean books, zero stress, fair pricing.
           </p>
 
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+          <div style={{
+            display: "flex",
+            gap: "16px",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: "center",
+          }}>
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={{ width: isMobile ? "100%" : "auto" }}>
               <Link
                 href="/contact"
                 style={{
@@ -87,6 +97,8 @@ export default function CTA() {
                   textDecoration: "none",
                   boxShadow: "0 8px 32px rgba(106,191,71,0.3)",
                   transition: "all 0.2s",
+                  width: isMobile ? "100%" : "auto",
+                  boxSizing: "border-box",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement
@@ -103,7 +115,7 @@ export default function CTA() {
               </Link>
             </motion.div>
 
-            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={{ width: isMobile ? "100%" : "auto" }}>
               <Link
                 href="#services"
                 style={{
@@ -114,6 +126,8 @@ export default function CTA() {
                   textDecoration: "none",
                   border: "1.5px solid rgba(255,255,255,0.25)",
                   transition: "all 0.2s",
+                  width: isMobile ? "100%" : "auto",
+                  boxSizing: "border-box",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement
@@ -134,7 +148,7 @@ export default function CTA() {
           {/* Trust row */}
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "center",
-            gap: "32px", marginTop: "64px", flexWrap: "wrap",
+            gap: "32px", marginTop: isMobile ? "36px" : "64px", flexWrap: "wrap",
           }}>
             {[
               "No contract required",

@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 type Row = { label: string; value: string; highlight?: boolean }
 
@@ -298,7 +299,7 @@ function ServiceIllustration({ card }: { card: Service["card"] }) {
         }}
       />
 
-      {/* Floating status chip — top right */}
+      {/* Floating status chip */}
       <motion.div
         animate={{ y: [0, -7, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -406,7 +407,7 @@ function ServiceIllustration({ card }: { card: Service["card"] }) {
         </motion.div>
       </motion.div>
 
-      {/* Floating ACCA chip — bottom left */}
+      {/* Floating ACCA chip */}
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
@@ -428,6 +429,7 @@ function ServiceIllustration({ card }: { card: Service["card"] }) {
 export default function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params)
   const service = services.find(s => s.slug === slug)
+  const isMobile = useIsMobile()
 
   if (!service) {
     notFound()
@@ -442,7 +444,8 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
         {/* Hero */}
         <section style={{
           background: "linear-gradient(180deg, #1a3318 0%, #2d5a1b 55%, #f5f5f0 100%)",
-          paddingTop: "110px", paddingBottom: "100px",
+          paddingTop: isMobile ? "88px" : "110px",
+          paddingBottom: isMobile ? "60px" : "100px",
           position: "relative", overflow: "hidden",
         }}>
           {/* Dot pattern */}
@@ -455,7 +458,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
             <rect width="100%" height="100%" fill="url(#svc-dots)" />
           </svg>
 
-          <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 64px", position: "relative", zIndex: 1 }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px", position: "relative", zIndex: 1 }}>
             {/* Breadcrumb */}
             <Link
               href="/#services"
@@ -463,7 +466,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                 display: "inline-flex", alignItems: "center", gap: "6px",
                 fontSize: "13px", fontWeight: 600,
                 color: "rgba(255,255,255,0.4)", textDecoration: "none",
-                marginBottom: "36px",
+                marginBottom: isMobile ? "24px" : "36px",
                 transition: "color 0.2s",
               }}
               onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.8)"}
@@ -475,7 +478,12 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
               All Services
             </Link>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }}>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+              gap: isMobile ? "40px" : "80px",
+              alignItems: "center",
+            }}>
 
               {/* Left — text */}
               <motion.div
@@ -496,7 +504,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
 
                 <h1 style={{
                   fontFamily: "'Instrument Serif', serif",
-                  fontSize: "clamp(36px, 4.5vw, 58px)",
+                  fontSize: "clamp(32px, 4.5vw, 58px)",
                   color: "white", lineHeight: 1.1,
                   letterSpacing: "-0.5px", marginBottom: "20px",
                 }}>
@@ -504,7 +512,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                 </h1>
 
                 <p style={{
-                  fontSize: "20px", fontWeight: 500,
+                  fontSize: isMobile ? "17px" : "20px", fontWeight: 500,
                   color: "#a8e070", lineHeight: 1.5,
                   marginBottom: "16px",
                 }}>
@@ -525,6 +533,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                     border: "1px solid rgba(255,255,255,0.12)",
                     borderRadius: "14px", padding: "14px 20px",
                     marginBottom: "32px",
+                    flexWrap: "wrap" as const,
                   }}>
                     <div>
                       <div style={{ fontSize: "11px", fontWeight: 700, color: "rgba(255,255,255,0.35)", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: "2px" }}>Starting from</div>
@@ -573,37 +582,39 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                 </Link>
               </motion.div>
 
-              {/* Right — illustration */}
-              <motion.div
-                initial={{ opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.15 }}
-              >
-                <ServiceIllustration card={service.card} />
-              </motion.div>
+              {/* Right — illustration (desktop only) */}
+              {!isMobile && (
+                <motion.div
+                  initial={{ opacity: 0, x: 24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.15 }}
+                >
+                  <ServiceIllustration card={service.card} />
+                </motion.div>
+              )}
             </div>
           </div>
         </section>
 
         {/* What we take care of */}
-        <section style={{ background: "white", padding: "96px 0" }}>
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 64px" }}>
+        <section style={{ background: "white", padding: isMobile ? "56px 0" : "96px 0" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              style={{ marginBottom: "56px" }}
+              style={{ marginBottom: isMobile ? "32px" : "56px" }}
             >
               <div style={{ fontSize: "12px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: "14px" }}>
                 Scope of work
               </div>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 3.5vw, 42px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.3px" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(24px, 3.5vw, 42px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.3px" }}>
                 What we take care of
               </h2>
             </motion.div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "12px" }}>
               {service.handles.map((item, i) => (
                 <motion.div
                   key={i}
@@ -638,24 +649,24 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
         </section>
 
         {/* Who this is for */}
-        <section style={{ background: "#f5f5f0", padding: "96px 0" }}>
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 64px" }}>
+        <section style={{ background: "#f5f5f0", padding: isMobile ? "56px 0" : "96px 0" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              style={{ marginBottom: "48px" }}
+              style={{ marginBottom: isMobile ? "28px" : "48px" }}
             >
               <div style={{ fontSize: "12px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: "14px" }}>
                 Best suited for
               </div>
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 3.5vw, 42px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.3px" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(24px, 3.5vw, 42px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.3px" }}>
                 Who this is for
               </h2>
             </motion.div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "16px" }}>
               {service.whoFor.map((item, i) => (
                 <motion.div
                   key={i}
@@ -691,24 +702,24 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
 
         {/* Pricing — only when price is listed */}
         {service.price && (
-          <section style={{ background: "white", padding: "96px 0" }}>
-            <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 64px" }}>
+          <section style={{ background: "white", padding: isMobile ? "56px 0" : "96px 0" }}>
+            <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                style={{ marginBottom: "48px" }}
+                style={{ marginBottom: isMobile ? "28px" : "48px" }}
               >
                 <div style={{ fontSize: "12px", fontWeight: 700, color: "#6abf47", textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: "14px" }}>
                   Pricing
                 </div>
-                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 3.5vw, 42px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.3px" }}>
+                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(24px, 3.5vw, 42px)", color: "#111", lineHeight: 1.1, letterSpacing: "-0.3px" }}>
                   Clear, transparent pricing
                 </h2>
               </motion.div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", alignItems: "start" }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "24px", alignItems: "start" }}>
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -716,7 +727,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                   transition={{ duration: 0.5 }}
                   style={{
                     background: "#1a3318", borderRadius: "20px",
-                    padding: "40px", position: "relative", overflow: "hidden",
+                    padding: isMobile ? "32px 24px" : "40px", position: "relative", overflow: "hidden",
                   }}
                 >
                   <div style={{
@@ -729,7 +740,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                     {service.title}
                   </div>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "4px" }}>
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "56px", color: "white", lineHeight: 1 }}>
+                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: isMobile ? "48px" : "56px", color: "white", lineHeight: 1 }}>
                       {service.price}
                     </span>
                     <span style={{ fontSize: "15px", color: "rgba(255,255,255,0.35)" }}>
@@ -807,7 +818,7 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
         {/* CTA */}
         <section style={{
           background: "linear-gradient(135deg, #1a3318 0%, #2d5a1b 100%)",
-          padding: "100px 0", position: "relative", overflow: "hidden",
+          padding: isMobile ? "64px 0" : "100px 0", position: "relative", overflow: "hidden",
         }}>
           <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.07, pointerEvents: "none" }}>
             <defs>
@@ -819,20 +830,26 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
           </svg>
           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "600px", height: "300px", background: "radial-gradient(ellipse, rgba(106,191,71,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-          <div style={{ maxWidth: "700px", margin: "0 auto", padding: "0 64px", textAlign: "center", position: "relative", zIndex: 1 }}>
+          <div style={{ maxWidth: "700px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px", textAlign: "center", position: "relative", zIndex: 1 }}>
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(32px, 5vw, 52px)", color: "white", lineHeight: 1.1, marginBottom: "16px" }}>
+              <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 5vw, 52px)", color: "white", lineHeight: 1.1, marginBottom: "16px" }}>
                 Ready to get started?
               </h2>
               <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.45)", lineHeight: 1.7, marginBottom: "36px" }}>
                 Get in touch and we will come back to you within 24 hours. No pressure, no commitment required.
               </p>
-              <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" as const }}>
+              <div style={{
+                display: "flex",
+                flexDirection: isMobile ? "column" : "row",
+                gap: "12px",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
                 <Link
                   href="/contact"
                   style={{
@@ -840,6 +857,9 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                     fontWeight: 700, fontSize: "15px",
                     padding: "14px 36px", borderRadius: "12px",
                     textDecoration: "none", transition: "all 0.2s",
+                    width: isMobile ? "100%" : "auto",
+                    textAlign: "center" as const,
+                    boxSizing: "border-box" as const,
                   }}
                   onMouseEnter={e => {
                     const el = e.currentTarget as HTMLElement
@@ -863,6 +883,9 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
                     textDecoration: "none",
                     border: "1.5px solid rgba(255,255,255,0.2)",
                     transition: "all 0.2s",
+                    width: isMobile ? "100%" : "auto",
+                    textAlign: "center" as const,
+                    boxSizing: "border-box" as const,
                   }}
                   onMouseEnter={e => {
                     const el = e.currentTarget as HTMLElement

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import Logo from "./logo"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const footerLinks = {
   Services: [
@@ -28,20 +29,22 @@ const footerLinks = {
 }
 
 export default function Footer() {
+  const isMobile = useIsMobile()
+
   return (
-    <footer style={{ background: "#0f1f0f", paddingTop: "80px" }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 64px" }}>
+    <footer style={{ background: "#0f1f0f", paddingTop: isMobile ? "48px" : "80px" }}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
 
         {/* Top row */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "2fr 1fr 1fr 1fr",
-          gap: "60px",
-          paddingBottom: "64px",
+          gridTemplateColumns: isMobile ? "1fr 1fr" : "2fr 1fr 1fr 1fr",
+          gap: isMobile ? "32px" : "60px",
+          paddingBottom: isMobile ? "40px" : "64px",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}>
           {/* Brand */}
-          <div>
+          <div style={{ gridColumn: isMobile ? "1 / -1" : "auto" }}>
             <Logo size={36} variant="light" />
             <p style={{
               fontSize: "14px", color: "rgba(255,255,255,0.35)",
@@ -57,9 +60,8 @@ export default function Footer() {
                 { label: "LinkedIn", path: "M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z" },
                 { label: "Twitter", path: "M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" },
               ].map((s) => (
-                
-                <a  
-                key={s.label}
+                <a
+                  key={s.label}
                   href="#"
                   style={{
                     width: "36px", height: "36px",
@@ -124,7 +126,12 @@ export default function Footer() {
 
         {/* Bottom row */}
         <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: isMobile ? "center" : "center",
+          flexDirection: isMobile ? "column" : "row",
+          gap: isMobile ? "12px" : "0",
+          textAlign: isMobile ? "center" : "left",
           padding: "28px 0",
         }}>
           <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.25)" }}>

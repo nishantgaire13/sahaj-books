@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Navbar from "@/components/navbar"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -16,6 +17,7 @@ export default function ContactPage() {
     service: "",
     message: "",
   })
+  const isMobile = useIsMobile()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -55,14 +57,26 @@ export default function ContactPage() {
     { code: "+971", label: "UAE +971" },
   ]
 
+  const inputStyle = {
+    width: "100%",
+    padding: "12px 16px",
+    borderRadius: "10px",
+    border: "1px solid #e8e8e4",
+    background: "#f5f5f0",
+    fontSize: "14px",
+    color: "#111",
+    outline: "none",
+    boxSizing: "border-box" as const,
+  }
+
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "100vh", background: "#f5f5f0", paddingTop: "100px", paddingBottom: "80px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 48px" }}>
+      <main style={{ minHeight: "100vh", background: "#f5f5f0", paddingTop: isMobile ? "90px" : "100px", paddingBottom: "80px" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px" }}>
 
           {/* Header */}
-          <div style={{ textAlign: "center", marginBottom: "64px" }}>
+          <div style={{ textAlign: "center", marginBottom: isMobile ? "36px" : "64px" }}>
             <div style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
               background: "#f0fae8", border: "1px solid rgba(106,191,71,0.3)",
@@ -73,20 +87,25 @@ export default function ContactPage() {
             </div>
             <h1 style={{
               fontFamily: "'Instrument Serif', serif",
-              fontSize: "clamp(36px, 5vw, 56px)",
+              fontSize: "clamp(30px, 5vw, 56px)",
               color: "#1a3318", marginBottom: "16px", lineHeight: 1.1,
             }}>
               Let us handle the numbers
             </h1>
-            <p style={{ fontSize: "17px", color: "#6b6b6b", maxWidth: "480px", margin: "0 auto", lineHeight: 1.7 }}>
+            <p style={{ fontSize: isMobile ? "15px" : "17px", color: "#6b6b6b", maxWidth: "480px", margin: "0 auto", lineHeight: 1.7 }}>
               Tell us what you need and we will get back to you within 24 hours.
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "32px", alignItems: "start" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : "1.2fr 1fr",
+            gap: isMobile ? "24px" : "32px",
+            alignItems: "start",
+          }}>
 
             {/* Form */}
-            <div style={{ background: "white", borderRadius: "20px", padding: "40px", border: "1px solid #e8e8e4" }}>
+            <div style={{ background: "white", borderRadius: "20px", padding: isMobile ? "24px 20px" : "40px", border: "1px solid #e8e8e4" }}>
               {submitted ? (
                 <div style={{ textAlign: "center", padding: "60px 0" }}>
                   <div style={{
@@ -100,7 +119,7 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
                     <div>
                       <label style={{ display: "block", fontSize: "13px", fontWeight: 700, color: "#111", marginBottom: "8px" }}>Full Name</label>
                       <input
@@ -108,7 +127,7 @@ export default function ContactPage() {
                         value={form.name}
                         onChange={e => setForm({ ...form, name: e.target.value })}
                         placeholder="Your full name"
-                        style={{ width: "100%", padding: "12px 16px", borderRadius: "10px", border: "1px solid #e8e8e4", background: "#f5f5f0", fontSize: "14px", color: "#111", outline: "none" }}
+                        style={inputStyle}
                       />
                     </div>
                     <div>
@@ -118,18 +137,18 @@ export default function ContactPage() {
                         value={form.email}
                         onChange={e => setForm({ ...form, email: e.target.value })}
                         placeholder="your@email.com"
-                        style={{ width: "100%", padding: "12px 16px", borderRadius: "10px", border: "1px solid #e8e8e4", background: "#f5f5f0", fontSize: "14px", color: "#111", outline: "none" }}
+                        style={inputStyle}
                       />
                     </div>
                   </div>
 
-                  <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: "12px", marginBottom: "20px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "140px 1fr", gap: "12px", marginBottom: "20px" }}>
                     <div>
                       <label style={{ display: "block", fontSize: "13px", fontWeight: 700, color: "#111", marginBottom: "8px" }}>Country Code</label>
                       <select
                         value={form.country}
                         onChange={e => setForm({ ...form, country: e.target.value })}
-                        style={{ width: "100%", padding: "12px 16px", borderRadius: "10px", border: "1px solid #e8e8e4", background: "#f5f5f0", fontSize: "14px", color: "#111", outline: "none" }}
+                        style={inputStyle}
                       >
                         {countryCodes.map(c => (
                           <option key={c.code} value={c.code}>{c.label}</option>
@@ -143,7 +162,7 @@ export default function ContactPage() {
                         value={form.phone}
                         onChange={e => setForm({ ...form, phone: e.target.value })}
                         placeholder="07700 000000"
-                        style={{ width: "100%", padding: "12px 16px", borderRadius: "10px", border: "1px solid #e8e8e4", background: "#f5f5f0", fontSize: "14px", color: "#111", outline: "none" }}
+                        style={inputStyle}
                       />
                     </div>
                   </div>
@@ -155,7 +174,7 @@ export default function ContactPage() {
                       value={form.address}
                       onChange={e => setForm({ ...form, address: e.target.value })}
                       placeholder="Your business address"
-                      style={{ width: "100%", padding: "12px 16px", borderRadius: "10px", border: "1px solid #e8e8e4", background: "#f5f5f0", fontSize: "14px", color: "#111", outline: "none" }}
+                      style={inputStyle}
                     />
                   </div>
 
@@ -164,7 +183,7 @@ export default function ContactPage() {
                     <select
                       value={form.service}
                       onChange={e => setForm({ ...form, service: e.target.value })}
-                      style={{ width: "100%", padding: "12px 16px", borderRadius: "10px", border: "1px solid #e8e8e4", background: "#f5f5f0", fontSize: "14px", color: "#111", outline: "none" }}
+                      style={inputStyle}
                     >
                       <option value="">Select a service</option>
                       {services.map(s => (
@@ -180,7 +199,7 @@ export default function ContactPage() {
                       value={form.message}
                       onChange={e => setForm({ ...form, message: e.target.value })}
                       placeholder="Tell us about your business and what you need help with"
-                      style={{ width: "100%", padding: "12px 16px", borderRadius: "10px", border: "1px solid #e8e8e4", background: "#f5f5f0", fontSize: "14px", color: "#111", outline: "none", resize: "none" }}
+                      style={{ ...inputStyle, resize: "none" }}
                     />
                   </div>
 
@@ -215,7 +234,6 @@ export default function ContactPage() {
                 { icon: "📞", title: "Call Us", detail: "+44 20 0000 0000", sub: "Mon to Fri, 9am to 5pm GMT", href: "tel:+442000000000" },
                 { icon: "📍", title: "Office", detail: "Kathmandu, Nepal", sub: "Serving UK clients remotely", href: "#" },
               ].map((item) => (
-                
                 <a
                   key={item.title}
                   href={item.href}
@@ -283,7 +301,6 @@ export default function ContactPage() {
                     { label: "Instagram", color: "#e1306c" },
                     { label: "Facebook", color: "#1877f2" },
                   ].map((s) => (
-                    
                     <a
                       key={s.label}
                       href="#"
