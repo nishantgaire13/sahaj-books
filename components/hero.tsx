@@ -14,6 +14,8 @@ const avatars = [
 export default function Hero() {
   const isMobile = useIsMobile()
 
+  if (isMobile) return <MobileHero />
+
   return (
     <section
       style={{
@@ -126,42 +128,6 @@ export default function Hero() {
             </motion.span>
           </div>
 
-          {/* Mobile service cards */}
-          {isMobile && (
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginTop: "18px" }}
-            >
-              {[
-                { emoji: "💼", title: "Payroll & RTI", status: "Filed on time" },
-                { emoji: "📋", title: "VAT Returns", status: "MTD compliant" },
-                { emoji: "📊", title: "Bookkeeping", status: "Always current" },
-                { emoji: "📑", title: "Corporation Tax", status: "CT600 handled" },
-              ].map((card, i) => (
-                <motion.div
-                  key={card.title}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.0 + i * 0.08 }}
-                  style={{
-                    background: "rgba(255,255,255,0.07)",
-                    borderRadius: "12px",
-                    padding: "12px",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                  }}
-                >
-                  <div style={{ fontSize: "18px", marginBottom: "6px" }}>{card.emoji}</div>
-                  <div style={{ fontSize: "11px", fontWeight: 700, color: "white", marginBottom: "6px", lineHeight: 1.3 }}>{card.title}</div>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "rgba(106,191,71,0.15)", borderRadius: "100px", padding: "3px 8px" }}>
-                    <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#6abf47" }} />
-                    <span style={{ fontSize: "10px", fontWeight: 700, color: "#6abf47" }}>{card.status}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
         </motion.div>
 
         {/* RIGHT — dashboard (hidden on mobile) */}
@@ -279,6 +245,244 @@ export default function Hero() {
           </motion.div>
         )}
 
+      </div>
+    </section>
+  )
+}
+
+/* ─────────────────────────── MOBILE ─────────────────────────── */
+
+const ease = [0.22, 1, 0.36, 1] as const
+
+function CheckIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6abf47" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+  )
+}
+
+function MobileHero() {
+  const stats = [
+    { label: "Revenue", value: "£48.2k", change: "12.4%", up: true },
+    { label: "Expenses", value: "£19.6k", change: "3.1%", up: false },
+    { label: "Profit", value: "£28.6k", change: "18.2%", up: true },
+  ]
+  const bars = [42, 58, 38, 70, 52, 64, 86, 76, 60, 94, 80, 100]
+  const filings = [
+    { name: "VAT Q3 filed", sub: "HMRC · Today", tag: "On time" },
+    { name: "Payroll November", sub: "RTI submitted", tag: "£6,240" },
+  ]
+
+  return (
+    <section
+      style={{
+        background: "linear-gradient(168deg, #102609 0%, #1a3a12 50%, #27501c 100%)",
+        position: "relative",
+        overflow: "hidden",
+        paddingTop: "80px",
+      }}
+    >
+      {/* Dot texture */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.12, pointerEvents: "none" }}>
+        <defs>
+          <pattern id="dots-m" x="0" y="0" width="34" height="34" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.1" fill="rgba(168,224,112,0.8)" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dots-m)" />
+      </svg>
+      {/* Top glow */}
+      <div style={{ position: "absolute", top: "-180px", left: "50%", transform: "translateX(-50%)", width: "520px", height: "520px", borderRadius: "50%", background: "radial-gradient(circle, rgba(106,191,71,0.22) 0%, transparent 65%)", pointerEvents: "none" }} />
+
+      <div style={{ position: "relative", padding: "0 20px 44px" }}>
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease }}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "7px",
+            background: "rgba(106,191,71,0.12)", border: "1px solid rgba(106,191,71,0.28)",
+            borderRadius: "100px", padding: "6px 13px", marginBottom: "22px",
+          }}
+        >
+          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47", boxShadow: "0 0 8px #6abf47" }} />
+          <span style={{ fontSize: "12px", fontWeight: 600, color: "#cfeeb0", letterSpacing: "0.02em" }}>Built for UK businesses</span>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease, delay: 0.05 }}
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "clamp(36px, 11vw, 46px)",
+            color: "white", lineHeight: 1.08, letterSpacing: "-0.5px",
+            margin: 0, marginBottom: "18px",
+          }}
+        >
+          Accounting and finance for{" "}
+          <span style={{ color: "#a8e070", fontStyle: "italic" }}>your business</span>
+        </motion.h1>
+
+        {/* Subtext */}
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease, delay: 0.12 }}
+          style={{
+            fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.62)",
+            margin: 0, marginBottom: "28px",
+          }}
+        >
+          Clean books, compliant filings, zero surprises. We handle your UK accounting end to end.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease, delay: 0.18 }}
+          style={{ display: "flex", flexDirection: "column", gap: "11px", marginBottom: "26px" }}
+        >
+          <Link
+            href="/contact"
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+              background: "#6abf47", color: "#0f2609", fontWeight: 700, fontSize: "16px",
+              padding: "16px 0", borderRadius: "14px", textDecoration: "none",
+              boxShadow: "0 10px 30px rgba(106,191,71,0.35)",
+            }}
+          >
+            Contact Us
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </Link>
+          <Link
+            href="/pricing"
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center",
+              background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.16)",
+              color: "white", fontWeight: 600, fontSize: "15px",
+              padding: "14px 0", borderRadius: "14px", textDecoration: "none",
+            }}
+          >
+            View pricing
+          </Link>
+        </motion.div>
+
+        {/* Social proof */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "34px" }}
+        >
+          <div style={{ display: "flex" }}>
+            {avatars.map((a, i) => (
+              <div
+                key={a.letter}
+                style={{
+                  width: "34px", height: "34px", borderRadius: "50%",
+                  border: "2px solid #14300f", background: a.bg,
+                  marginLeft: i === 0 ? 0 : -10,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "13px", fontWeight: 700, color: "white",
+                  position: "relative", zIndex: 4 - i,
+                }}
+              >
+                {a.letter}
+              </div>
+            ))}
+          </div>
+          <div>
+            <div style={{ display: "flex", gap: "2px", marginBottom: "3px" }}>
+              {[0, 1, 2, 3, 4].map((s) => (
+                <svg key={s} width="13" height="13" viewBox="0 0 24 24" fill="#6abf47"><path d="M12 2l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 17.8 5.9 20.3 7.2 13.6 2.2 9l6.8-.8z" /></svg>
+              ))}
+            </div>
+            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", fontWeight: 500 }}>Trusted by UK businesses</span>
+          </div>
+        </motion.div>
+
+        {/* Dashboard preview */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease, delay: 0.34 }}
+          style={{ background: "white", borderRadius: "20px", overflow: "hidden", boxShadow: "0 30px 70px rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.08)" }}
+        >
+          {/* Chrome */}
+          <div style={{ background: "#142e14", padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", gap: "6px" }}>
+              <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ff5f57" }} />
+              <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ffbd2e" }} />
+              <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#28c840" }} />
+            </div>
+            <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)", fontWeight: 600, letterSpacing: "0.14em" }}>SAHAJBOOKS</div>
+            <div style={{ width: "42px" }} />
+          </div>
+
+          {/* Body */}
+          <div style={{ background: "#f8f9f6", padding: "16px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+              <span style={{ fontSize: "14px", fontWeight: 700, color: "#111" }}>Financial Overview</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#eef9e3", borderRadius: "100px", padding: "4px 9px" }}>
+                <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#6abf47" }} />
+                <span style={{ fontSize: "10px", fontWeight: 700, color: "#4a8a2a" }}>Live</span>
+              </span>
+            </div>
+
+            {/* Stat tiles */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "8px", marginBottom: "12px" }}>
+              {stats.map((s) => (
+                <div key={s.label} style={{ background: "white", borderRadius: "11px", padding: "10px 9px", border: "1px solid #e8e8e4" }}>
+                  <div style={{ fontSize: "8px", color: "#7a7a7a", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "4px" }}>{s.label}</div>
+                  <div style={{ fontSize: "16px", fontWeight: 700, color: "#111", lineHeight: 1, marginBottom: "4px" }}>{s.value}</div>
+                  <div style={{ fontSize: "9px", fontWeight: 700, color: s.up ? "#52a72c" : "#e0962a" }}>{s.up ? "↑" : "↓"} {s.change}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Chart */}
+            <div style={{ background: "white", borderRadius: "11px", border: "1px solid #e8e8e4", padding: "12px", marginBottom: "12px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                <span style={{ fontSize: "11px", fontWeight: 700, color: "#111" }}>Monthly Revenue</span>
+                <span style={{ fontSize: "9px", color: "#7a7a7a", background: "#f1f1ec", padding: "2px 8px", borderRadius: "5px", fontWeight: 600 }}>2024</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "flex-end", gap: "4px", height: "56px" }}>
+                {bars.map((h, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ height: 0 }}
+                    animate={{ height: `${h}%` }}
+                    transition={{ duration: 0.6, delay: 0.5 + i * 0.04, ease }}
+                    style={{ flex: 1, borderRadius: "3px 3px 0 0", background: h > 80 ? "#6abf47" : h > 55 ? "#a8d990" : "#dfe3da" }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Filings */}
+            <div style={{ background: "white", borderRadius: "11px", border: "1px solid #e8e8e4", overflow: "hidden" }}>
+              {filings.map((f, i) => (
+                <div key={f.name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 12px", borderTop: i === 0 ? "none" : "1px solid #eef0ec" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <div style={{ width: "28px", height: "28px", borderRadius: "9px", background: "#eef9e3", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <CheckIcon />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "11px", fontWeight: 700, color: "#111", lineHeight: 1.2 }}>{f.name}</div>
+                      <div style={{ fontSize: "9px", color: "#8a8a8a", marginTop: "2px" }}>{f.sub}</div>
+                    </div>
+                  </div>
+                  <span style={{ fontSize: "11px", fontWeight: 700, color: "#52a72c" }}>{f.tag}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
