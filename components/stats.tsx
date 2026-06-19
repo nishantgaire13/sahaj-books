@@ -77,7 +77,7 @@ export default function Stats() {
           gap: "1px", background: "#e8e8e4",
           borderRadius: "20px", overflow: "hidden",
           border: "1px solid #e8e8e4",
-          marginBottom: "64px",
+          marginBottom: isMobile ? "0" : "64px",
         }}>
           {stats.map((stat, i) => (
             <motion.div
@@ -95,7 +95,7 @@ export default function Stats() {
             >
               <div style={{
                 fontFamily: "'Instrument Serif', serif",
-                fontSize: "56px", color: "#1a3318",
+                fontSize: isMobile ? "40px" : "56px", color: "#1a3318",
                 lineHeight: 1, marginBottom: "12px",
               }}>
                 <CountUp target={stat.num} suffix={stat.suffix} />
@@ -113,9 +113,9 @@ export default function Stats() {
           ))}
         </div>
 
-        {/* Bottom — two columns */}
-        <div style={{
-          display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+        {/* Bottom — two columns (desktop only) */}
+        {!isMobile && <div style={{
+          display: "grid", gridTemplateColumns: "1fr 1fr",
           gap: "32px", alignItems: "stretch",
         }}>
 
@@ -226,7 +226,7 @@ export default function Stats() {
               </div>
             </motion.div>
           </div>
-        </div>
+        </div>}
       </div>
     </section>
   )

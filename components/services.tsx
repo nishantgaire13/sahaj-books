@@ -270,117 +270,138 @@ export default function Services() {
           {!isMobile && <GeometricIllustration />}
         </div>
 
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
-          gap: "1px",
-          background: "rgba(106,191,71,0.08)",
-          borderRadius: "20px",
-          overflow: "hidden",
-          border: "1px solid rgba(106,191,71,0.1)",
-        }}>
-          {services.map((service, i) => (
-            <Link
-              key={service.num}
-              href={`/services/${service.slug}`}
-              style={{
-                textDecoration: "none",
-                display: "block",
-                gridColumn: i === 6 ? "1 / -1" : "auto",
-              }}
-            >
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-                whileHover={{
-                  y: -6,
-                  backgroundColor: "rgba(106,191,71,0.12)",
-                  transition: { duration: 0.2 },
-                }}
+        {/* Desktop: 3-col grid cards */}
+        {!isMobile && (
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "1px",
+            background: "rgba(106,191,71,0.08)",
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1px solid rgba(106,191,71,0.1)",
+          }}>
+            {services.map((service, i) => (
+              <Link
+                key={service.num}
+                href={`/services/${service.slug}`}
                 style={{
-                  background: "rgba(255,255,255,0.03)",
-                  padding: "36px 32px",
-                  cursor: "pointer",
-                  borderBottom: i < 6 ? "1px solid rgba(106,191,71,0.08)" : "none",
-                  position: "relative",
-                  height: "100%",
+                  textDecoration: "none",
+                  display: "block",
+                  gridColumn: i === 6 ? "1 / -1" : "auto",
                 }}
               >
-                <div style={{
-                  fontSize: "11px", fontWeight: 700,
-                  color: "rgba(255,255,255,0.2)",
-                  letterSpacing: "0.1em", marginBottom: "20px",
-                }}>
-                  {service.num}
-                </div>
-
                 <motion.div
-                  whileHover={{ scale: 1.12, rotate: 6 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+                  whileHover={{
+                    y: -6,
+                    backgroundColor: "rgba(106,191,71,0.12)",
+                    transition: { duration: 0.2 },
+                  }}
                   style={{
-                    width: "44px", height: "44px",
-                    background: "rgba(106,191,71,0.08)",
-                    border: "1px solid rgba(106,191,71,0.15)",
-                    borderRadius: "12px",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    marginBottom: "18px",
+                    background: "rgba(255,255,255,0.03)",
+                    padding: "36px 32px",
+                    cursor: "pointer",
+                    borderBottom: i < 6 ? "1px solid rgba(106,191,71,0.08)" : "none",
+                    position: "relative",
+                    height: "100%",
                   }}
                 >
-                  {service.icon}
-                </motion.div>
-
-                <h3 style={{
-                  fontFamily: "'Instrument Serif', serif",
-                  fontSize: i === 6 ? "22px" : "19px",
-                  color: "white",
-                  marginBottom: "12px", lineHeight: 1.2,
-                }}>
-                  {service.title}
-                </h3>
-
-                <p style={{
-                  fontSize: "13px", lineHeight: 1.75,
-                  color: "rgba(255,255,255,0.4)",
-                  maxWidth: i === 6 ? "600px" : "none",
-                }}>
-                  {service.desc}
-                </p>
-
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "20px" }}>
+                  <div style={{ fontSize: "11px", fontWeight: 700, color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", marginBottom: "20px" }}>
+                    {service.num}
+                  </div>
                   <motion.div
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "48px" }}
-                    transition={{ duration: 0.25 }}
+                    whileHover={{ scale: 1.12, rotate: 6 }}
                     style={{
-                      height: "2px", background: "#6abf47",
-                      borderRadius: "100px",
+                      width: "44px", height: "44px",
+                      background: "rgba(106,191,71,0.08)",
+                      border: "1px solid rgba(106,191,71,0.15)",
+                      borderRadius: "12px",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      marginBottom: "18px",
                     }}
-                  />
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                    style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", whiteSpace: "nowrap" as const }}
                   >
-                    Learn more →
-                  </motion.span>
-                </div>
+                    {service.icon}
+                  </motion.div>
+                  <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: i === 6 ? "22px" : "19px", color: "white", marginBottom: "12px", lineHeight: 1.2 }}>
+                    {service.title}
+                  </h3>
+                  <p style={{ fontSize: "13px", lineHeight: 1.75, color: "rgba(255,255,255,0.4)", maxWidth: i === 6 ? "600px" : "none" }}>
+                    {service.desc}
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "20px" }}>
+                    <motion.div initial={{ width: 0 }} whileHover={{ width: "48px" }} transition={{ duration: 0.25 }} style={{ height: "2px", background: "#6abf47", borderRadius: "100px" }} />
+                    <motion.span initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} transition={{ duration: 0.2 }} style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", whiteSpace: "nowrap" as const }}>
+                      Learn more →
+                    </motion.span>
+                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileHover={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ position: "absolute", top: "16px", right: "16px", width: "8px", height: "8px", borderRadius: "50%", background: "#6abf47" }}
+                  />
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        )}
 
+        {/* Mobile: compact list */}
+        {isMobile && (
+          <div style={{
+            background: "rgba(255,255,255,0.04)",
+            borderRadius: "16px",
+            overflow: "hidden",
+            border: "1px solid rgba(106,191,71,0.12)",
+          }}>
+            {services.map((service, i) => (
+              <Link
+                key={service.num}
+                href={`/services/${service.slug}`}
+                style={{ textDecoration: "none", display: "block" }}
+              >
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileHover={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.2 }}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
                   style={{
-                    position: "absolute", top: "16px", right: "16px",
-                    width: "8px", height: "8px",
-                    borderRadius: "50%", background: "#6abf47",
+                    display: "flex", alignItems: "center", gap: "14px",
+                    padding: "16px 18px",
+                    borderBottom: i < 6 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                    background: "transparent",
+                    cursor: "pointer",
                   }}
-                />
-              </motion.div>
-            </Link>
-          ))}
-        </div>
+                >
+                  <div style={{
+                    width: "36px", height: "36px", borderRadius: "10px",
+                    background: "rgba(106,191,71,0.1)",
+                    border: "1px solid rgba(106,191,71,0.15)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    flexShrink: 0,
+                  }}>
+                    {service.icon}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: "14px", fontWeight: 700, color: "white", lineHeight: 1.3 }}>
+                      {service.title}
+                    </div>
+                    <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginTop: "2px", fontWeight: 500 }}>
+                      {service.num}
+                    </div>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgba(106,191,71,0.6)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <path d="M6 12l4-4-4-4" />
+                  </svg>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

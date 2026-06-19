@@ -384,7 +384,7 @@ export default function Solutions() {
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 64px" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: isMobile ? "48px" : "96px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "32px" : "80px", alignItems: "center" }}>
+        <div style={{ marginBottom: isMobile ? "32px" : "96px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "32px" : "80px", alignItems: "center" }}>
           <div>
             <div style={{
               fontSize: "13px", fontWeight: 700,
@@ -418,7 +418,7 @@ export default function Solutions() {
             </div>
           </div>
 
-          <SolutionsIllustration />
+          {!isMobile && <SolutionsIllustration />}
         </div>
 
         {/* Solution rows */}
@@ -430,10 +430,10 @@ export default function Solutions() {
               gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
               gap: isMobile ? "32px" : "80px",
               alignItems: "center",
-              marginBottom: isMobile ? "64px" : "120px",
+              marginBottom: isMobile ? "32px" : "120px",
             }}
           >
-            <div style={{ order: isMobile ? 2 : (i % 2 === 1 ? 2 : 1) }}>
+            <div style={{ order: isMobile ? 1 : (i % 2 === 1 ? 2 : 1) }}>
               <div style={{
                 fontSize: "11px", fontWeight: 700,
                 color: "#aaa", textTransform: "uppercase",
@@ -470,9 +470,11 @@ export default function Solutions() {
               </button>
             </div>
 
-            <div style={{ order: isMobile ? 1 : (i % 2 === 1 ? 1 : 2) }}>
-              {sol.mockup === "vat" ? <VATMockup /> : <PayrollMockup />}
-            </div>
+            {!isMobile && (
+              <div style={{ order: i % 2 === 1 ? 1 : 2 }}>
+                {sol.mockup === "vat" ? <VATMockup /> : <PayrollMockup />}
+              </div>
+            )}
           </div>
         ))}
       </div>

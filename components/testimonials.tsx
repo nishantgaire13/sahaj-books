@@ -114,10 +114,10 @@ export default function Testimonials() {
           <div style={{
             display: "flex",
             justifyContent: "center",
-            maxHeight: "720px",
+            maxHeight: "440px",
             overflow: "hidden",
-            maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+            maskImage: "linear-gradient(to bottom, transparent, black 10%, black 80%, transparent)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 80%, transparent)",
           }}>
             <TestimonialsColumn testimonials={firstColumn} duration={18} />
           </div>
