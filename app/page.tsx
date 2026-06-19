@@ -8,9 +8,11 @@ import Comparison from "@/components/comparison"
 import Testimonials from "@/components/testimonials"
 import CTA from "@/components/cta"
 import Footer from "@/components/footer"
+import HomeScrollHandler from "@/components/home-scroll-handler"
 export default function Home() {
   return (
     <main>
+      <HomeScrollHandler />
       <Navbar />
       <Hero />
       <Ticker />

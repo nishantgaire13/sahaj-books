@@ -1,22 +1,40 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, type CSSProperties } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Logo from "./logo"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 const navLinks = [
+  { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
   { label: "About", href: "/about" },
   { label: "Pricing", href: "/pricing" },
   { label: "Contact", href: "/contact" },
 ]
 
+const menuLinkStyle: CSSProperties = {
+  fontSize: "22px", fontWeight: 600,
+  color: "#111", textDecoration: "none",
+  padding: "14px 0",
+  borderBottom: "1px solid #f0f0f0",
+  display: "flex", alignItems: "center", justifyContent: "space-between",
+  fontFamily: "'Instrument Serif', serif",
+  cursor: "pointer",
+}
+
+const ChevronRight = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#6abf47" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 9h10M9 4l5 5-5 5" />
+  </svg>
+)
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
   const isMobile = useIsMobile()
   const isLightPage = pathname === "/contact" || pathname === "/about" || pathname === "/pricing" || pathname === "/privacy" || pathname === "/terms" || pathname?.startsWith("/services/")
 
@@ -37,6 +55,24 @@ export default function Navbar() {
   }, [menuOpen])
 
   const isDark = !scrolled && !isLightPage
+
+  // Services needs special handling: hash navigation is unreliable because
+  // ScrollToTop fires on pathname change and cancels the anchor scroll.
+  // Instead: if already on homepage scroll directly; otherwise signal via
+  // sessionStorage and navigate to "/" — HomeScrollHandler picks it up.
+  const handleServicesClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setMenuOpen(false)
+    if (pathname === "/") {
+      const delay = menuOpen ? 350 : 0
+      setTimeout(() => {
+        document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })
+      }, delay)
+    } else {
+      sessionStorage.setItem("pendingScroll", "services")
+      router.push("/")
+    }
+  }
 
   return (
     <>
@@ -63,37 +99,72 @@ export default function Navbar() {
             <ul style={{ display: "flex", alignItems: "center", gap: "36px", listStyle: "none", margin: 0, padding: 0 }}>
               {navLinks.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    style={{
-                      fontSize: "14px", fontWeight: 500,
-                      color: isDark ? "rgba(255,255,255,0.7)" : "#6b6b6b",
-                      textDecoration: "none",
-                      position: "relative", paddingBottom: "4px",
-                      transition: "color 0.2s",
-                    }}
-                    onMouseEnter={e => {
-                      const el = e.currentTarget as HTMLElement
-                      el.style.color = isDark ? "white" : "#111"
-                      const line = el.querySelector(".nav-line") as HTMLElement
-                      if (line) line.style.width = "100%"
-                    }}
-                    onMouseLeave={e => {
-                      const el = e.currentTarget as HTMLElement
-                      el.style.color = isDark ? "rgba(255,255,255,0.7)" : "#6b6b6b"
-                      const line = el.querySelector(".nav-line") as HTMLElement
-                      if (line) line.style.width = "0%"
-                    }}
-                  >
-                    {link.label}
-                    <span className="nav-line" style={{
-                      position: "absolute", bottom: 0, left: 0,
-                      height: "1.5px", width: "0%",
-                      background: "#6abf47",
-                      transition: "width 0.25s ease",
-                      display: "block",
-                    }} />
-                  </Link>
+                  {link.label === "Services" ? (
+                    <a
+                      href="/#services"
+                      onClick={handleServicesClick}
+                      style={{
+                        fontSize: "14px", fontWeight: 500,
+                        color: isDark ? "rgba(255,255,255,0.7)" : "#6b6b6b",
+                        textDecoration: "none",
+                        position: "relative", paddingBottom: "4px",
+                        transition: "color 0.2s", cursor: "pointer",
+                      }}
+                      onMouseEnter={e => {
+                        const el = e.currentTarget as HTMLElement
+                        el.style.color = isDark ? "white" : "#111"
+                        const line = el.querySelector(".nav-line") as HTMLElement
+                        if (line) line.style.width = "100%"
+                      }}
+                      onMouseLeave={e => {
+                        const el = e.currentTarget as HTMLElement
+                        el.style.color = isDark ? "rgba(255,255,255,0.7)" : "#6b6b6b"
+                        const line = el.querySelector(".nav-line") as HTMLElement
+                        if (line) line.style.width = "0%"
+                      }}
+                    >
+                      {link.label}
+                      <span className="nav-line" style={{
+                        position: "absolute", bottom: 0, left: 0,
+                        height: "1.5px", width: "0%",
+                        background: "#6abf47",
+                        transition: "width 0.25s ease",
+                        display: "block",
+                      }} />
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      style={{
+                        fontSize: "14px", fontWeight: 500,
+                        color: isDark ? "rgba(255,255,255,0.7)" : "#6b6b6b",
+                        textDecoration: "none",
+                        position: "relative", paddingBottom: "4px",
+                        transition: "color 0.2s",
+                      }}
+                      onMouseEnter={e => {
+                        const el = e.currentTarget as HTMLElement
+                        el.style.color = isDark ? "white" : "#111"
+                        const line = el.querySelector(".nav-line") as HTMLElement
+                        if (line) line.style.width = "100%"
+                      }}
+                      onMouseLeave={e => {
+                        const el = e.currentTarget as HTMLElement
+                        el.style.color = isDark ? "rgba(255,255,255,0.7)" : "#6b6b6b"
+                        const line = el.querySelector(".nav-line") as HTMLElement
+                        if (line) line.style.width = "0%"
+                      }}
+                    >
+                      {link.label}
+                      <span className="nav-line" style={{
+                        position: "absolute", bottom: 0, left: 0,
+                        height: "1.5px", width: "0%",
+                        background: "#6abf47",
+                        transition: "width 0.25s ease",
+                        display: "block",
+                      }} />
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -173,26 +244,29 @@ export default function Navbar() {
           overflowY: "auto",
         }}>
           <nav style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "32px" }}>
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                style={{
-                  fontSize: "22px", fontWeight: 600,
-                  color: "#111", textDecoration: "none",
-                  padding: "14px 0",
-                  borderBottom: "1px solid #f0f0f0",
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  fontFamily: "'Instrument Serif', serif",
-                }}
-              >
-                {link.label}
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#6abf47" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 9h10M9 4l5 5-5 5" />
-                </svg>
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.label === "Services" ? (
+                <a
+                  key={link.label}
+                  href="/#services"
+                  onClick={handleServicesClick}
+                  style={menuLinkStyle}
+                >
+                  {link.label}
+                  <ChevronRight />
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  style={menuLinkStyle}
+                >
+                  {link.label}
+                  <ChevronRight />
+                </Link>
+              )
+            )}
           </nav>
 
           <Link
