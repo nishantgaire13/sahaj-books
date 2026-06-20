@@ -57,9 +57,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error("Contact form error:", error)
-    // TEMPORARY: expose the reason so we can diagnose the live failure.
-    // Remove `debug` once email is confirmed working.
-    const debug = error instanceof Error ? error.message : String(error)
-    return NextResponse.json({ error: "Failed to send message", debug }, { status: 500 })
+    return NextResponse.json({ error: "Failed to send message" }, { status: 500 })
   }
 }
