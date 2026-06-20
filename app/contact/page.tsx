@@ -62,7 +62,7 @@ const countryCodes = [
 
 const contactMethods = [
   { icon: "mail", title: "Email us", detail: "sahajbooks10@gmail.com", sub: "Reply within 24 hours", href: "mailto:sahajbooks10@gmail.com" },
-  { icon: "phone", title: "Call us", detail: "+44 20 0000 0000", sub: "Mon to Fri, 9am to 5pm GMT", href: "tel:+442000000000" },
+  { icon: "phone", title: "Call us", detail: "+977 984 729 6992", sub: "Mon to Fri, 9am to 5pm GMT", href: "tel:+9779847296992" },
   { icon: "pin", title: "Where we are", detail: "Kathmandu, Nepal", sub: "Serving UK clients remotely", href: "#map" },
 ]
 
@@ -334,7 +334,7 @@ function MobileContact() {
             {/* Quick action buttons */}
             <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease, delay: 0.18 }}
               style={{ display: "flex", gap: "10px" }}>
-              <a href="tel:+442000000000" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "#6abf47", color: "#0f2609", fontWeight: 700, fontSize: "14px", padding: "13px 0", borderRadius: "12px", textDecoration: "none", boxShadow: "0 8px 22px rgba(106,191,71,0.3)" }}>
+              <a href="tel:+9779847296992" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "#6abf47", color: "#0f2609", fontWeight: 700, fontSize: "14px", padding: "13px 0", borderRadius: "12px", textDecoration: "none", boxShadow: "0 8px 22px rgba(106,191,71,0.3)" }}>
                 <Icon name="phone" color="#0f2609" size={16} /> Call
               </a>
               <a href="mailto:sahajbooks10@gmail.com" style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", color: "white", fontWeight: 600, fontSize: "14px", padding: "13px 0", borderRadius: "12px", textDecoration: "none" }}>
