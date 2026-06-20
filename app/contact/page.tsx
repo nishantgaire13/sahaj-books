@@ -82,10 +82,13 @@ function useFormState() {
     setError("")
     try {
       const res = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) })
-      if (!res.ok) throw new Error("Failed to send")
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.debug || "Failed to send")
       setSubmitted(true)
-    } catch {
-      setError("Something went wrong. Please email us directly at sahajbooks10@gmail.com")
+    } catch (err) {
+      // TEMPORARY: surfacing the server reason to debug the live email failure.
+      const reason = err instanceof Error ? err.message : ""
+      setError(`Something went wrong${reason ? `: ${reason}` : ""}. Or email us directly at sahajbooks10@gmail.com`)
     } finally {
       setLoading(false)
     }

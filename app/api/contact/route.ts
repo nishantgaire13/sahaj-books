@@ -10,16 +10,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
+    const gmailUser = process.env.GMAIL_USER
+    // Gmail shows app passwords as "abcd efgh ijkl mnop"; strip any spaces so a
+    // pasted-with-spaces value still authenticates.
+    const gmailPass = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, "")
+
+    if (!gmailUser || !gmailPass) {
+      console.error("Contact form: missing GMAIL_USER or GMAIL_APP_PASSWORD env var")
+      return NextResponse.json({ error: "Email is not configured on the server." }, { status: 500 })
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
+        user: gmailUser,
+        pass: gmailPass,
       },
     })
 
     await transporter.sendMail({
-      from: `"SahajBooks Website" <${process.env.GMAIL_USER}>`,
+      from: `"SahajBooks Website" <${gmailUser}>`,
       to: "sahajbooks10@gmail.com",
       replyTo: email,
       subject: `New enquiry from ${name} via SahajBooks website`,
@@ -47,6 +57,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error("Contact form error:", error)
-    return NextResponse.json({ error: "Failed to send message" }, { status: 500 })
+    // TEMPORARY: expose the reason so we can diagnose the live failure.
+    // Remove `debug` once email is confirmed working.
+    const debug = error instanceof Error ? error.message : String(error)
+    return NextResponse.json({ error: "Failed to send message", debug }, { status: 500 })
   }
 }
