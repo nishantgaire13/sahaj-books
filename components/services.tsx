@@ -96,120 +96,174 @@ const services = [
   },
 ]
 
-function GeometricIllustration() {
+const calendarLeading = 2 // Jan 2025 starts on a Wednesday (Monday-first grid)
+const calendarToday = 14
+const calendarDeadlines: Record<number, boolean> = { 9: true, 22: true, 31: true }
+const upcomingDeadlines = [
+  { day: "22", month: "Jan", label: "PAYE & CIS payment", note: "Submitted to HMRC", status: "Filed", done: true },
+  { day: "31", month: "Jan", label: "Self Assessment SA100", note: "Prepared and scheduled", status: "Scheduled", done: false },
+]
+
+function ComplianceCalendar() {
   return (
-    <div style={{ position: "relative", width: "100%", height: "420px" }}>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      style={{ position: "relative", padding: "14px 6px" }}
+    >
+      {/* Soft brand glow */}
+      <div style={{
+        position: "absolute", top: "12%", left: "8%",
+        width: "300px", height: "300px", borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(106,191,71,0.16) 0%, transparent 70%)",
+        pointerEvents: "none",
+      }} />
+
       <motion.div
-        animate={{ y: [0, -12, 0], rotate: [-1, 1, -1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ y: [0, -9, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          position: "absolute", top: "20px", right: "20px",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(106,191,71,0.2)",
-          backdropFilter: "blur(10px)",
-          borderRadius: "16px",
-          padding: "20px 24px", width: "220px",
+          position: "relative",
+          background: "linear-gradient(165deg, #102408 0%, #0b1806 100%)",
+          border: "1px solid rgba(106,191,71,0.16)",
+          borderRadius: "22px",
+          boxShadow: "0 30px 70px rgba(0,0,0,0.45)",
+          overflow: "hidden",
         }}
       >
-        <div style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Corporation Tax</div>
-        <div style={{ fontSize: "28px", fontWeight: 600, color: "white", fontFamily: "'Instrument Serif', serif", marginBottom: "4px" }}>£12,400</div>
-        <div style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", marginBottom: "14px" }}>CT600 Filed on time</div>
-        <div style={{ height: "4px", background: "rgba(255,255,255,0.08)", borderRadius: "100px", overflow: "hidden" }}>
-          <motion.div
-            initial={{ width: "0%" }}
-            whileInView={{ width: "78%" }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: 0.5 }}
-            style={{ height: "100%", background: "#6abf47", borderRadius: "100px" }}
-          />
+        {/* Header */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "20px 24px",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "11px" }}>
+            <div style={{
+              width: "32px", height: "32px", borderRadius: "9px",
+              background: "rgba(106,191,71,0.14)", border: "1px solid rgba(106,191,71,0.2)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6abf47" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 9h18M8 3v4M16 3v4" /></svg>
+            </div>
+            <div>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: "white" }}>Filing calendar</div>
+              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)" }}>January 2025</div>
+            </div>
+          </div>
+          <span style={{
+            display: "inline-flex", alignItems: "center", gap: "6px",
+            background: "rgba(106,191,71,0.12)", border: "1px solid rgba(106,191,71,0.22)",
+            borderRadius: "100px", padding: "6px 12px",
+          }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47" }} />
+            <span style={{ fontSize: "11px", fontWeight: 700, color: "#a8e070" }}>On track</span>
+          </span>
+        </div>
+
+        {/* Calendar grid */}
+        <div style={{ padding: "20px 24px 8px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "6px", marginBottom: "8px" }}>
+            {["M", "T", "W", "T", "F", "S", "S"].map((d, idx) => (
+              <div key={idx} style={{ textAlign: "center", fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.28)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                {d}
+              </div>
+            ))}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "6px" }}>
+            {Array.from({ length: calendarLeading }).map((_, i) => <div key={`b-${i}`} />)}
+            {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => {
+              const isDeadline = calendarDeadlines[day]
+              const isToday = day === calendarToday
+              return (
+                <motion.div
+                  key={day}
+                  {...(isDeadline ? { animate: { scale: [1, 1.08, 1] }, transition: { duration: 2.4, repeat: Infinity, ease: "easeInOut", delay: (day % 5) * 0.15 } } : {})}
+                  style={{
+                    height: "30px", borderRadius: "8px",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "12px",
+                    fontWeight: isDeadline ? 700 : 500,
+                    color: isDeadline ? "#0c1c06" : isToday ? "white" : "rgba(255,255,255,0.45)",
+                    background: isDeadline ? "#6abf47" : "transparent",
+                    border: isToday && !isDeadline ? "1px solid rgba(106,191,71,0.55)" : "1px solid transparent",
+                    boxShadow: isDeadline ? "0 4px 14px rgba(106,191,71,0.3)" : "none",
+                  }}
+                >
+                  {day}
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Upcoming deadlines */}
+        <div style={{ padding: "12px 24px 22px" }}>
+          <div style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px" }}>
+            Upcoming deadlines
+          </div>
+          {upcomingDeadlines.map((d, i) => (
+            <motion.div
+              key={d.label}
+              initial={{ opacity: 0, x: 12 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.2 + i * 0.12 }}
+              style={{
+                display: "flex", alignItems: "center", gap: "13px",
+                padding: "11px 0",
+                borderTop: i === 0 ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              <div style={{
+                width: "42px", height: "42px", borderRadius: "11px", flexShrink: 0,
+                background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+              }}>
+                <span style={{ fontSize: "15px", fontWeight: 700, color: "white", lineHeight: 1 }}>{d.day}</span>
+                <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.04em" }}>{d.month}</span>
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: "13px", fontWeight: 700, color: "white", lineHeight: 1.3 }}>{d.label}</div>
+                <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", marginTop: "2px" }}>{d.note}</div>
+              </div>
+              <span style={{
+                flexShrink: 0,
+                display: "inline-flex", alignItems: "center", gap: "5px",
+                fontSize: "11px", fontWeight: 700,
+                color: d.done ? "#a8e070" : "rgba(255,255,255,0.55)",
+                background: d.done ? "rgba(106,191,71,0.12)" : "rgba(255,255,255,0.05)",
+                border: d.done ? "1px solid rgba(106,191,71,0.22)" : "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "100px", padding: "5px 11px",
+              }}>
+                {d.done && <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#6abf47" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>}
+                {d.status}
+              </span>
+            </motion.div>
+          ))}
         </div>
       </motion.div>
 
+      {/* Floating streak badge */}
       <motion.div
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        animate={{ y: [0, -7, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
         style={{
-          position: "absolute", top: "90px", left: "30px",
-          width: "160px", height: "160px",
-          border: "1.5px solid rgba(106,191,71,0.15)",
-          borderRadius: "28px",
-        }}
-      />
-      <motion.div
-        animate={{ rotate: [0, -360] }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: "absolute", top: "115px", left: "55px",
-          width: "110px", height: "110px",
-          border: "1.5px solid rgba(106,191,71,0.25)",
-          borderRadius: "18px",
-        }}
-      />
-
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        style={{
-          position: "absolute", top: "210px", left: "0px",
-          background: "#6abf47",
-          borderRadius: "16px",
-          padding: "18px 22px", width: "195px",
+          position: "absolute", bottom: "0px", right: "-12px",
+          display: "flex", alignItems: "center", gap: "11px",
+          background: "#6abf47", borderRadius: "14px",
+          padding: "12px 16px",
+          boxShadow: "0 18px 40px rgba(106,191,71,0.32)",
         }}
       >
-        <div style={{ fontSize: "10px", fontWeight: 700, color: "rgba(0,0,0,0.45)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>SA100 Return</div>
-        <div style={{ fontSize: "20px", fontWeight: 700, color: "#1a3318", fontFamily: "'Instrument Serif', serif", marginBottom: "4px" }}>Submitted</div>
-        <div style={{ fontSize: "11px", fontWeight: 600, color: "#1a3318", opacity: 0.7 }}>17 days before deadline</div>
+        <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: "26px", fontWeight: 700, color: "#0c1c06", lineHeight: 1 }}>0</span>
+        <div>
+          <div style={{ fontSize: "12px", fontWeight: 700, color: "#0c1c06", lineHeight: 1.2 }}>Missed deadlines</div>
+          <div style={{ fontSize: "10px", fontWeight: 600, color: "rgba(12,28,6,0.6)" }}>Across every client</div>
+        </div>
       </motion.div>
-
-      <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        style={{
-          position: "absolute", bottom: "20px", right: "0px",
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(255,255,255,0.08)",
-          borderRadius: "14px",
-          padding: "16px 20px", width: "180px",
-        }}
-      >
-        <div style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px" }}>Active Services</div>
-        {["Payroll", "VAT Returns", "CT600"].map((s) => (
-          <div key={s} style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-            <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#6abf47" }} />
-            <span style={{ fontSize: "12px", fontWeight: 500, color: "rgba(255,255,255,0.6)" }}>{s}</span>
-          </div>
-        ))}
-        <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", marginTop: "4px" }}>+4 more</div>
-      </motion.div>
-
-      <div style={{ position: "absolute", top: "170px", right: "240px" }}>
-        {[0, 1, 2, 3, 4].map((row) => (
-          <div key={row} style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
-            {[0, 1, 2, 3, 4].map((col) => (
-              <motion.div
-                key={col}
-                animate={{ opacity: [0.15, 0.6, 0.15] }}
-                transition={{ duration: 2 + (row + col) * 0.3, repeat: Infinity, delay: (row + col) * 0.1 }}
-                style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#6abf47" }}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-
-      <motion.div
-        animate={{ scale: [1, 1.04, 1], opacity: [0.06, 0.1, 0.06] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          position: "absolute", top: "50%", left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "320px", height: "320px",
-          borderRadius: "50%",
-          border: "1px solid rgba(106,191,71,0.3)",
-          pointerEvents: "none",
-        }}
-      />
-    </div>
+    </motion.div>
   )
 }
 
@@ -230,11 +284,20 @@ export default function Services() {
           display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
           gap: isMobile ? "32px" : "80px", alignItems: "center", marginBottom: isMobile ? "48px" : "96px",
         }}>
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div style={{
-              fontSize: "13px", fontWeight: 700, color: "#6abf47",
-              textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "20px",
+              display: "inline-flex", alignItems: "center", gap: "8px",
+              fontSize: "12px", fontWeight: 700, color: "#a8e070",
+              textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "22px",
+              background: "rgba(106,191,71,0.1)", border: "1px solid rgba(106,191,71,0.2)",
+              borderRadius: "100px", padding: "7px 14px",
             }}>
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47" }} />
               Services
             </div>
             <h2 style={{
@@ -243,31 +306,31 @@ export default function Services() {
               color: "white", lineHeight: 1.1,
               letterSpacing: "-0.5px", marginBottom: "24px",
             }}>
-              Everything your<br />business needs
+              Everything your<br />business needs, <span style={{ color: "#a8e070", fontStyle: "italic" }}>covered</span>
             </h2>
             <p style={{
-              fontSize: "16px", color: "rgba(255,255,255,0.45)",
-              lineHeight: 1.75, maxWidth: "400px", marginBottom: "36px",
+              fontSize: "16px", color: "rgba(255,255,255,0.5)",
+              lineHeight: 1.75, maxWidth: "410px", marginBottom: "36px",
             }}>
-              Seven specialist services. One dedicated team. Clean delivery, no missed deadlines, no surprises.
+              Seven specialist services delivered by one dedicated team. Clean records, every deadline met, and no surprises along the way.
             </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              {["99% on-time filing rate", "ACCA qualified team", "40% below UK market rates"].map((stat) => (
-                <div key={stat} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
+              {["99% on-time filing rate", "ACCA qualified team", "Around 40% below UK market rates"].map((stat) => (
+                <div key={stat} style={{ display: "flex", alignItems: "center", gap: "11px" }}>
                   <div style={{
-                    width: "18px", height: "18px", borderRadius: "50%",
-                    background: "rgba(106,191,71,0.15)",
+                    width: "22px", height: "22px", borderRadius: "7px",
+                    background: "rgba(106,191,71,0.14)", border: "1px solid rgba(106,191,71,0.2)",
                     display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                   }}>
-                    <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#6abf47" }} />
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6abf47" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
                   </div>
-                  <span style={{ fontSize: "14px", fontWeight: 500, color: "rgba(255,255,255,0.6)" }}>{stat}</span>
+                  <span style={{ fontSize: "14px", fontWeight: 500, color: "rgba(255,255,255,0.65)" }}>{stat}</span>
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {!isMobile && <GeometricIllustration />}
+          {!isMobile && <ComplianceCalendar />}
         </div>
 
         {/* Desktop: 3-col grid cards */}
@@ -276,77 +339,146 @@ export default function Services() {
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "1px",
-            background: "rgba(106,191,71,0.08)",
-            borderRadius: "20px",
+            background: "rgba(106,191,71,0.1)",
+            borderRadius: "22px",
             overflow: "hidden",
-            border: "1px solid rgba(106,191,71,0.1)",
+            border: "1px solid rgba(106,191,71,0.12)",
           }}>
-            {services.map((service, i) => (
-              <Link
-                key={service.num}
-                href={`/services/${service.slug}`}
-                style={{
-                  textDecoration: "none",
-                  display: "block",
-                  gridColumn: i === 6 ? "1 / -1" : "auto",
-                }}
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-                  whileHover={{
-                    y: -6,
-                    backgroundColor: "rgba(106,191,71,0.12)",
-                    transition: { duration: 0.2 },
-                  }}
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    padding: "36px 32px",
-                    cursor: "pointer",
-                    borderBottom: i < 6 ? "1px solid rgba(106,191,71,0.08)" : "none",
-                    position: "relative",
-                    height: "100%",
-                  }}
+            {services.map((service, i) => {
+              const featured = i === 6
+              return (
+                <Link
+                  key={service.num}
+                  href={`/services/${service.slug}`}
+                  style={{ textDecoration: "none", display: "block", gridColumn: featured ? "1 / -1" : "auto" }}
                 >
-                  <div style={{ fontSize: "11px", fontWeight: 700, color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", marginBottom: "20px" }}>
-                    {service.num}
-                  </div>
                   <motion.div
-                    whileHover={{ scale: 1.12, rotate: 6 }}
-                    style={{
-                      width: "44px", height: "44px",
-                      background: "rgba(106,191,71,0.08)",
-                      border: "1px solid rgba(106,191,71,0.15)",
-                      borderRadius: "12px",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      marginBottom: "18px",
-                    }}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.55, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ height: "100%" }}
                   >
-                    {service.icon}
+                    <motion.div
+                      initial="rest"
+                      animate="rest"
+                      whileHover="hover"
+                      variants={{
+                        rest: { backgroundColor: "rgba(255,255,255,0.025)" },
+                        hover: { backgroundColor: "rgba(106,191,71,0.07)" },
+                      }}
+                      transition={{ duration: 0.25 }}
+                      style={{
+                        position: "relative",
+                        padding: featured ? "40px 44px" : "38px 34px",
+                        cursor: "pointer",
+                        height: "100%",
+                        overflow: "hidden",
+                        display: featured ? "flex" : "block",
+                        alignItems: "center",
+                        gap: "44px",
+                      }}
+                    >
+                      {/* Top accent bar */}
+                      <motion.div
+                        variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                        style={{
+                          position: "absolute", top: 0, left: 0, right: 0, height: "2px",
+                          background: "linear-gradient(90deg, #6abf47, #a8e070)",
+                          transformOrigin: "left",
+                        }}
+                      />
+
+                      {/* Watermark number */}
+                      <div style={{
+                        position: "absolute", top: featured ? "24px" : "26px", right: featured ? "32px" : "28px",
+                        fontFamily: "'Instrument Serif', serif",
+                        fontSize: featured ? "40px" : "34px",
+                        color: "rgba(168,224,112,0.1)", lineHeight: 1, pointerEvents: "none",
+                      }}>
+                        {service.num}
+                      </div>
+
+                      {/* Icon */}
+                      <motion.div
+                        variants={{
+                          rest: { backgroundColor: "rgba(106,191,71,0.07)", borderColor: "rgba(106,191,71,0.16)" },
+                          hover: { backgroundColor: "rgba(106,191,71,0.16)", borderColor: "rgba(106,191,71,0.4)" },
+                        }}
+                        transition={{ duration: 0.25 }}
+                        style={{
+                          width: featured ? "60px" : "46px",
+                          height: featured ? "60px" : "46px",
+                          borderWidth: "1px", borderStyle: "solid",
+                          borderRadius: "13px",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          marginBottom: featured ? 0 : "20px",
+                          flexShrink: 0,
+                        }}
+                      >
+                        {service.icon}
+                      </motion.div>
+
+                      <div style={{ flex: featured ? 1 : undefined, minWidth: 0 }}>
+                        <h3 style={{
+                          fontFamily: "'Instrument Serif', serif",
+                          fontSize: featured ? "26px" : "20px",
+                          color: "white", marginBottom: "12px", lineHeight: 1.2,
+                        }}>
+                          {service.title}
+                        </h3>
+                        <p style={{
+                          fontSize: "13.5px", lineHeight: 1.7,
+                          color: "rgba(255,255,255,0.45)",
+                          maxWidth: featured ? "620px" : "none",
+                          marginBottom: featured ? 0 : "22px",
+                        }}>
+                          {service.desc}
+                        </p>
+
+                        {!featured && (
+                          <motion.div
+                            variants={{ rest: { color: "rgba(255,255,255,0.4)" }, hover: { color: "#a8e070" } }}
+                            transition={{ duration: 0.2 }}
+                            style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "12px", fontWeight: 700 }}
+                          >
+                            Learn more
+                            <motion.svg
+                              variants={{ rest: { x: 0 }, hover: { x: 5 } }}
+                              transition={{ duration: 0.25 }}
+                              width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
+                            >
+                              <path d="M5 12h14M13 6l6 6-6 6" />
+                            </motion.svg>
+                          </motion.div>
+                        )}
+                      </div>
+
+                      {featured && (
+                        <motion.div
+                          variants={{
+                            rest: { backgroundColor: "rgba(106,191,71,0.1)", x: 0 },
+                            hover: { backgroundColor: "#6abf47", x: 4 },
+                          }}
+                          transition={{ duration: 0.25 }}
+                          style={{
+                            flexShrink: 0,
+                            display: "inline-flex", alignItems: "center", gap: "9px",
+                            border: "1px solid rgba(106,191,71,0.3)",
+                            borderRadius: "100px", padding: "12px 22px",
+                            fontSize: "13.5px", fontWeight: 700, color: "white",
+                          }}
+                        >
+                          Explore service
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                        </motion.div>
+                      )}
+                    </motion.div>
                   </motion.div>
-                  <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: i === 6 ? "22px" : "19px", color: "white", marginBottom: "12px", lineHeight: 1.2 }}>
-                    {service.title}
-                  </h3>
-                  <p style={{ fontSize: "13px", lineHeight: 1.75, color: "rgba(255,255,255,0.4)", maxWidth: i === 6 ? "600px" : "none" }}>
-                    {service.desc}
-                  </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "20px" }}>
-                    <motion.div initial={{ width: 0 }} whileHover={{ width: "48px" }} transition={{ duration: 0.25 }} style={{ height: "2px", background: "#6abf47", borderRadius: "100px" }} />
-                    <motion.span initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} transition={{ duration: 0.2 }} style={{ fontSize: "11px", fontWeight: 700, color: "#6abf47", whiteSpace: "nowrap" as const }}>
-                      Learn more →
-                    </motion.span>
-                  </div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileHover={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.2 }}
-                    style={{ position: "absolute", top: "16px", right: "16px", width: "8px", height: "8px", borderRadius: "50%", background: "#6abf47" }}
-                  />
-                </motion.div>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
           </div>
         )}
 
